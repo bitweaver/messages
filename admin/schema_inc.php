@@ -39,7 +39,7 @@ $gBitInstaller->registerPackageInfo( MESSAGES_PKG_NAME, array(
 
 
 // ### Default User Permissions
-$gBitInstaller->registerUserPermissions( FISHEYE_PKG_NAME, array(
+$gBitInstaller->registerUserPermissions( MESSAGES_PKG_NAME, array(
 	array('bit_p_messages', 'Can use the messaging system', 'registered', 'messages'),
 ) );
 
