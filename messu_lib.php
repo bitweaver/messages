@@ -1,5 +1,18 @@
 <?php
+/**
+* message package modules
+*
+* @author   
+* @version  $Revision: 1.1.1.1.2.1 $
+* @package  messages
+*/
 
+/**
+* Messu base class
+*
+* @package  messages
+* @subpackage  Messu
+*/
 class Messu extends BitBase {
 
 	function Messu() {
