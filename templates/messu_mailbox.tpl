@@ -17,12 +17,12 @@
 			<input type="hidden" name="priority" value="{$priority|escape}" />
 
 			<a class="floaticon" href="{$gBitLoc.MESSU_PKG_URL}compose.php">{biticon ipackage=messu iname=send_mail iexplain="{tr}Compose Message{/tr}"}</a>
-
+{assign var=displayName value=$gBitSystem->getPreference("display_name","real_name") }
 			<table class="data">
 				<tr>
 					<th style="width:1%">&nbsp;</th>
 					<th style="width:1%">{smartlink ititle="Flagged" isort=is_flagged ibiticon="messu/flagged" find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
-					<th>{smartlink ititle="From" isort=username find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
+					<th>{smartlink ititle="From" isort=$displayName find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
 					<th>{smartlink ititle="Subject" isort=subject find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
 					<th>{smartlink ititle="Date" isort=date find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
 					<th>{tr}Size{/tr}</th>
