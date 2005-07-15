@@ -39,7 +39,7 @@
     </td>
   </tr>
   <tr>
-    <td><label for="broadcast-subject">{tr}Subject{/tr}:</label></td><td><input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="80" maxlength="255"/></td>
+    <td><label for="broadcast-subject">{tr}Subject{/tr}:</label></td><td><input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="50" maxlength="255"/></td>
   </tr>
   <tr>
     <td><label for="broadcast-body">{tr}Body{/tr}:</label></td><td align="center"><textarea rows="20" cols="80" name="body">{$body|escape}</textarea></td>

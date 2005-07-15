@@ -54,7 +54,7 @@
 				<div class="row">
 					{formlabel label="Subject" for="subject"}
 					{forminput}
-						<input type="text" name="subject" id="subject" size="52" value="{$subject|escape}" />
+						<input type="text" name="subject" id="subject" size="50" value="{$subject|escape}" />
 					{/forminput}
 				</div>
 

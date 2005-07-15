@@ -21,7 +21,7 @@
     </td>
   </tr>
   <tr>
-    <td>{tr}Subject{/tr}:</td><td><input type="text" name="subject" value="" size="80" maxlength="255" /></td>
+    <td>{tr}Subject{/tr}:</td><td><input type="text" name="subject" value="" size="50" maxlength="255" /></td>
   </tr>
   <tr><td>&nbsp;</td>
       <td><textarea rows="20" cols="80" name="body"></textarea></td>
