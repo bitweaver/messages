@@ -1,5 +1,5 @@
 <a class="pagetitle" href="{$gBitLoc.MESSU_PKG_URL}contact.php">{tr}Contact us{/tr}</a><br /><br />
-{if $gBitSystemPrefs.feature_messages eq 'y' and $bit_p_messages eq 'y'}
+{if $gBitSystem->isFeatureActive( 'feature_messages' ) and $bit_p_messages eq 'y'}
 {if $message}
 {$message}
 {/if}
