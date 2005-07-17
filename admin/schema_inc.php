@@ -26,10 +26,10 @@ $tables = array(
 global $gBitInstaller;
 
 foreach( array_keys( $tables ) AS $tableName ) {
-	$gBitInstaller->registerSchemaTable( MESSAGES_PKG_NAME, $tableName, $tables[$tableName] );
+	$gBitInstaller->registerSchemaTable( MESSU_PKG_NAME, $tableName, $tables[$tableName] );
 }
 
-$gBitInstaller->registerPackageInfo( MESSAGES_PKG_NAME, array(
+$gBitInstaller->registerPackageInfo( MESSU_PKG_NAME, array(
 	'description' => "An intra-site messaging system for users.",
 	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
 	'version' => '0.1',
@@ -39,7 +39,7 @@ $gBitInstaller->registerPackageInfo( MESSAGES_PKG_NAME, array(
 
 
 // ### Default User Permissions
-$gBitInstaller->registerUserPermissions( MESSAGES_PKG_NAME, array(
+$gBitInstaller->registerUserPermissions( MESSU_PKG_NAME, array(
 	array('bit_p_messages', 'Can use the messaging system', 'registered', 'messages'),
 ) );
 
@@ -50,6 +50,6 @@ $indices = array (
 );
 // TODO - SPIDERR - following seems to cause time _decrease_ cause bigint on postgres. need more investigation
 //	'tiki_blog_posts_created_idx' => array( 'table' => 'tiki_blog_posts', 'cols' => 'created', 'opts' => NULL ),
-$gBitInstaller->registerSchemaIndexes( MESSAGES_PKG_NAME, $indices );
+$gBitInstaller->registerSchemaIndexes( MESSU_PKG_NAME, $indices );
 
 ?>

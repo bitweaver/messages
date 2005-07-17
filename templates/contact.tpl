@@ -1,5 +1,5 @@
 <a class="pagetitle" href="{$gBitLoc.MESSU_PKG_URL}contact.php">{tr}Contact us{/tr}</a><br /><br />
-{if $gBitSystemPrefs.feature_messages eq 'y' and $bit_p_messages eq 'y'}
+{if $gBitSystem->isFeatureActive( 'feature_messages' ) and $bit_p_messages eq 'y'}
 {if $message}
 {$message}
 {/if}
@@ -21,7 +21,7 @@
     </td>
   </tr>
   <tr>
-    <td>{tr}Subject{/tr}:</td><td><input type="text" name="subject" value="" size="80" maxlength="255" /></td>
+    <td>{tr}Subject{/tr}:</td><td><input type="text" name="subject" value="" size="50" maxlength="255" /></td>
   </tr>
   <tr><td>&nbsp;</td>
       <td><textarea rows="20" cols="80" name="body"></textarea></td>
