@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.2 2005/06/28 07:45:52 spiderr Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.3 2005/07/25 20:02:15 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -17,54 +17,32 @@
  */
 require_once( '../bit_setup_inc.php' );
 
-include_once( MESSU_PKG_PATH.'messu_lib.php' );
-
-if (!$user) {
-	$smarty->assign('msg', tra("You are not logged in"));
-
-	$gBitSystem->display( 'error.tpl' );
-	die;
+if( !$gBitSystem->isFeatureActive( 'feature_contact' ) ) {
+	$gBitSystem->fatalError( "The Contact feature is disabled." );
 }
 
-if ($feature_contact != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_contact");
+include_once( MESSU_PKG_PATH.'messu_lib.php' );
 
-	$gBitSystem->display( 'error.tpl' );
-	die;
+$userInfo = $gBitUser->getUserInfo( array( 'login' => $gBitSystem->getPreference( 'contact_user' ) ) );
+$email = $userInfo['email'];
+if( empty( $email ) ) {
+	$gBitSystem->fatalError( "This feature is not correctly set up. The email address is missing." );
+} else {
+	$smarty->assign( 'email', $email );
+}
+
+if( $gBitSystem->isPackageActive( 'quicktags' ) ) {
+	include_once( QUICKTAGS_PKG_PATH.'quicktags_inc.php' );
+}
+
+if (!empty($_REQUEST['send'])) {
+	if( empty( $_REQUEST['subject'] ) && empty( $_REQUEST['body'] ) ) {
+		$gBitSystem->fatalError( "Either a subject or a message body is required." );
+	}
+	$messulib->post_message( $userInfo['login'], $gBitUser->mUsername, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+	$feedback['success'] = tra( 'Your message was sent to' ).': '.( !empty( $userInfo['real_name'] ) ? $userInfo['real_name'] : $userInfo['login'] );
+	$smarty->assign( 'feedback', $feedback );
 }
 
 $gBitSystem->display( 'bitpackage:messu/contact.tpl');
-
-$email = $userlib->get_user_email($contact_user);
-$smarty->assign('email', $email);
-
-if ($user and $feature_messages == 'y' and $bit_p_messages == 'y') {
-	$smarty->assign('sent', 0);
-
-	if (isset($_REQUEST['send'])) {
-		
-		$smarty->assign('sent', 1);
-
-		$message = '';
-
-		// Validation:
-		// must have a subject or body non-empty (or both)
-		if (empty($_REQUEST['subject']) && empty($_REQUEST['body'])) {
-			$smarty->assign('message', tra('ERROR: Either the subject or body must be non-empty'));
-
-						die;
-		}
-
-		$message = tra('Message sent to'). ':' . $contact_user . '<br/>';
-		$messulib->post_message($contact_user, $user, $_REQUEST['to'],
-			'', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
-
-		$smarty->assign('message', $message);
-	}
-}
-
-$smarty->assign('priority', 3);
-
-
-
 ?>
