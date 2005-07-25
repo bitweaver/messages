@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.1.1.1.2.1 $
+* @version  $Revision: 1.1.1.1.2.2 $
 * @package  messages
 */
 
@@ -21,8 +21,14 @@ class Messu extends BitBase {
 
 	function post_message( $pToLogin, $to, $cc, $bcc, $subject, $body, $priority) {
 		global $smarty, $gBitUser, $gBitSystem;
-
+		
 		$userInfo = $gBitUser->getUserInfo( array('login' => $pToLogin) );
+		if (!$userInfo) {
+			if (is_numeric($pToLogin)) {
+				$userInfo = $gBitUser->getUserInfo( array('user_id' => $pToLogin) );
+			}
+		}
+		
 		if( $userInfo ) {
 			if ($gBitUser->getPreference('allowMsgs', 'y', $userInfo['user_id'] )) {
 				$subject = strip_tags($subject);
