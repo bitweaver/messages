@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.1.1.1.2.2 2005/07/24 12:05:49 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.1.1.1.2.3 2005/07/26 15:50:22 drewslater Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -28,7 +28,7 @@ $email = $userInfo['email'];
 if( empty( $email ) ) {
 	$gBitSystem->fatalError( "This feature is not correctly set up. The email address is missing." );
 } else {
-	$smarty->assign( 'email', $email );
+	$gBitSmarty->assign( 'email', $email );
 }
 
 if( $gBitSystem->isPackageActive( 'quicktags' ) ) {
@@ -41,7 +41,7 @@ if (!empty($_REQUEST['send'])) {
 	}
 	$messulib->post_message( $userInfo['login'], $gBitUser->mUsername, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 	$feedback['success'] = tra( 'Your message was sent to' ).': '.( !empty( $userInfo['real_name'] ) ? $userInfo['real_name'] : $userInfo['login'] );
-	$smarty->assign( 'feedback', $feedback );
+	$gBitSmarty->assign( 'feedback', $feedback );
 }
 
 $gBitSystem->display( 'bitpackage:messu/contact.tpl');

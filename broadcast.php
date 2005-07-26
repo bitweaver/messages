@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.1.1.1.2.1 2005/06/27 14:42:29 lsces Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.1.1.1.2.2 2005/07/26 15:50:22 drewslater Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -20,21 +20,21 @@ require_once( '../bit_setup_inc.php' );
 include_once( MESSU_PKG_PATH.'messu_lib.php' );
 
 if (!$user) {
-	$smarty->assign('msg', tra("You are not logged in"));
+	$gBitSmarty->assign('msg', tra("You are not logged in"));
 
 	$gBitSystem->display( 'error.tpl' );
 	die;
 }
 
 if ($feature_messages != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_messages");
+	$gBitSmarty->assign('msg', tra("This feature is disabled").": feature_messages");
 
 	$gBitSystem->display( 'error.tpl' );
 	die;
 }
 
 if ($bit_p_broadcast != 'y') {
-	$smarty->assign('msg', tra("Permission denied"));
+	$gBitSmarty->assign('msg', tra("Permission denied"));
 
 	$gBitSystem->display( 'error.tpl' );
 	die;
@@ -58,16 +58,16 @@ if (!isset($_REQUEST['body']))
 if (!isset($_REQUEST['priority']))
 	$_REQUEST['priority'] = 3;
 
-$smarty->assign('to', $_REQUEST['to']);
-$smarty->assign('cc', $_REQUEST['cc']);
-$smarty->assign('bcc', $_REQUEST['bcc']);
-$smarty->assign('subject', $_REQUEST['subject']);
-$smarty->assign('body', $_REQUEST['body']);
-$smarty->assign('priority', $_REQUEST['priority']);
+$gBitSmarty->assign('to', $_REQUEST['to']);
+$gBitSmarty->assign('cc', $_REQUEST['cc']);
+$gBitSmarty->assign('bcc', $_REQUEST['bcc']);
+$gBitSmarty->assign('subject', $_REQUEST['subject']);
+$gBitSmarty->assign('body', $_REQUEST['body']);
+$gBitSmarty->assign('priority', $_REQUEST['priority']);
 
 $gBitSystem->display( 'bitpackage:messu/messu_broadcast.tpl');
 
-$smarty->assign('sent', 0);
+$gBitSmarty->assign('sent', 0);
 
 if (isset($_REQUEST['reply']) || isset($_REQUEST['replyall'])) {
 	$messulib->flag_message($user, $_REQUEST['msg_id'], 'is_replied', 'y');
@@ -89,14 +89,14 @@ if (isset($_REQUEST['group'])) {
 
 if (isset($_REQUEST['send'])) {
 	
-	$smarty->assign('sent', 1);
+	$gBitSmarty->assign('sent', 1);
 
 	$message = '';
 
 	// Validation:
 	// must have a subject or body non-empty (or both)
 	if (empty($_REQUEST['subject']) && empty($_REQUEST['body'])) {
-		$smarty->assign('message', tra('ERROR: Either the subject or body must be non-empty'));
+		$gBitSmarty->assign('message', tra('ERROR: Either the subject or body must be non-empty'));
 
 				die;
 	}
@@ -127,7 +127,7 @@ if (isset($_REQUEST['send'])) {
 	} else {
 		$message = tra('ERROR: No valid users to send the message');
 
-		$smarty->assign('message', $message);
+		$gBitSmarty->assign('message', $message);
 				die;
 	}
 
@@ -136,12 +136,12 @@ if (isset($_REQUEST['send'])) {
 		$messulib->post_message($a_user, $user, $a_user, '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 	}
 
-	$smarty->assign('message', $message);
+	$gBitSmarty->assign('message', $message);
 }
 
 
 $groups = $userlib->get_groups(0, -1, 'group_name_asc', '');
-$smarty->assign_by_ref('groups', $groups["data"]);
+$gBitSmarty->assign_by_ref('groups', $groups["data"]);
 
 $section = 'user_messages';
 ?>
