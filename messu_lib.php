@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.3 $
+* @version  $Revision: 1.4 $
 * @package  messages
 */
 
@@ -20,7 +20,7 @@ class Messu extends BitBase {
 	}
 
 	function post_message( $pToLogin, $to, $cc, $bcc, $subject, $body, $priority) {
-		global $smarty, $gBitUser, $gBitSystem;
+		global $gBitSmarty, $gBitUser, $gBitSystem;
 		
 		$userInfo = $gBitUser->getUserInfo( array('login' => $pToLogin) );
 		if (!$userInfo) {
@@ -52,14 +52,14 @@ class Messu extends BitBase {
 
 					if ($gBitUser->getPreference( 'minPrio', 3 ) <= $priority) {
 						$mailSite = $gBitSystem->getPreference( 'feature_server_name', $_SERVER["SERVER_NAME"] );
-						$smarty->assign( 'mail_site', $mailSite );
-						$smarty->assign( 'mail_machine', $machine);
-						$smarty->assign( 'mail_date', date("U"));
-						$smarty->assign( 'mail_user', stripslashes( $userInfo['login'] ) );
-						$smarty->assign( 'mail_from', stripslashes( $gBitUser->getDisplayName() ) );
-						$smarty->assign( 'mail_subject', stripslashes($subject));
-						$smarty->assign( 'mail_body', stripslashes($body));
-						$mail_data = $smarty->fetch('bitpackage:messu/messu_message_notification.tpl');
+						$gBitSmarty->assign( 'mail_site', $mailSite );
+						$gBitSmarty->assign( 'mail_machine', $machine);
+						$gBitSmarty->assign( 'mail_date', date("U"));
+						$gBitSmarty->assign( 'mail_user', stripslashes( $userInfo['login'] ) );
+						$gBitSmarty->assign( 'mail_from', stripslashes( $gBitUser->getDisplayName() ) );
+						$gBitSmarty->assign( 'mail_subject', stripslashes($subject));
+						$gBitSmarty->assign( 'mail_body', stripslashes($body));
+						$mail_data = $gBitSmarty->fetch('bitpackage:messu/messu_message_notification.tpl');
 
 						if( !empty( $userInfo['email'] ) ) {
 							@mail($userInfo['email'], tra('New message arrived from '). $mailSite, $mail_data,

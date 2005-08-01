@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.2 2005/06/28 07:45:52 spiderr Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.3 2005/08/01 18:41:08 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -19,7 +19,7 @@ require_once( '../bit_setup_inc.php' );
 require_once( MESSU_PKG_PATH.'messu_lib.php' );
 
 if( !$gBitUser->isRegistered() ) {
-	$smarty->assign('msg', tra("You are not logged in"));
+	$gBitSmarty->assign('msg', tra("You are not logged in"));
 	$gBitSystem->display( 'error.tpl' );
 	die;
 }
@@ -81,33 +81,33 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 
-$smarty->assign_by_ref('flag', $_REQUEST['flag']);
-$smarty->assign_by_ref('priority', $_REQUEST['priority']);
-$smarty->assign_by_ref('flagval', $_REQUEST['flagval']);
-$smarty->assign_by_ref('offset', $offset);
-$smarty->assign_by_ref('sort_mode', $sort_mode);
-$smarty->assign('find', $find);
+$gBitSmarty->assign_by_ref('flag', $_REQUEST['flag']);
+$gBitSmarty->assign_by_ref('priority', $_REQUEST['priority']);
+$gBitSmarty->assign_by_ref('flagval', $_REQUEST['flagval']);
+$gBitSmarty->assign_by_ref('offset', $offset);
+$gBitSmarty->assign_by_ref('sort_mode', $sort_mode);
+$gBitSmarty->assign('find', $find);
 // What are we paginating: items
 $items = $messulib->list_messages( $gBitUser->mUserId, $offset, $maxRecords, $sort_mode,
 	$find, $_REQUEST["flag"], $_REQUEST["flagval"], $_REQUEST['priority']);
 
 $cant_pages = ceil($items["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$gBitSmarty->assign_by_ref('cant_pages', $cant_pages);
+$gBitSmarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
 if ($items["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
+	$gBitSmarty->assign('next_offset', $offset + $maxRecords);
 } else {
-	$smarty->assign('next_offset', -1);
+	$gBitSmarty->assign('next_offset', -1);
 }
 
 if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
+	$gBitSmarty->assign('prev_offset', $offset - $maxRecords);
 } else {
-	$smarty->assign('prev_offset', -1);
+	$gBitSmarty->assign('prev_offset', -1);
 }
 
-$smarty->assign_by_ref('items', $items["data"]);
+$gBitSmarty->assign_by_ref('items', $items["data"]);
 
 $section = 'user_messages';
 

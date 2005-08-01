@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.2 2005/06/28 07:45:52 spiderr Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.3 2005/08/01 18:41:08 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -20,7 +20,7 @@ require_once( MESSU_PKG_PATH.'messu_lib.php' );
 require_once( USERS_PKG_PATH.'BitUser.php' );
 
 if( !$gBitUser->isRegistered() ) {
-	$smarty->assign('msg', tra("You are not logged in"));
+	$gBitSmarty->assign('msg', tra("You are not logged in"));
 	$gBitSystem->display( 'error.tpl' );
 	die;
 }
@@ -65,16 +65,16 @@ if(isset($_REQUEST['action']['reply']) || isset($_REQUEST['action']['replyall'])
 	$_REQUEST['subject'] = tra("Re: ").preg_replace("/^(".tra("Re: ").")+/i", "", $_REQUEST['subject']);
 }
 
-$smarty->assign('to', $_REQUEST['to']);
-$smarty->assign('cc', $_REQUEST['cc']);
-$smarty->assign('bcc', $_REQUEST['bcc']);
-$smarty->assign('subject', $_REQUEST['subject']);
-$smarty->assign('body', $_REQUEST['body']);
-$smarty->assign('priority', $_REQUEST['priority']);
+$gBitSmarty->assign('to', $_REQUEST['to']);
+$gBitSmarty->assign('cc', $_REQUEST['cc']);
+$gBitSmarty->assign('bcc', $_REQUEST['bcc']);
+$gBitSmarty->assign('subject', $_REQUEST['subject']);
+$gBitSmarty->assign('body', $_REQUEST['body']);
+$gBitSmarty->assign('priority', $_REQUEST['priority']);
 
-$smarty->assign('sent', 0);
+$gBitSmarty->assign('sent', 0);
 $feedback = array();
-$smarty->assign_by_ref( 'feedback', $feedback );
+$gBitSmarty->assign_by_ref( 'feedback', $feedback );
 
 if (isset($_REQUEST['replyto']) || isset($_REQUEST['replyallto'])) {
 	$messulib->flag_message( $gBitUser->mUserId, $_REQUEST['msg_id'], 'is_replied', 'y' );
@@ -103,7 +103,7 @@ if (isset($_REQUEST['send'])) {
 					}
 				}
 			}
-			$smarty->assign('sent', 1);
+			$gBitSmarty->assign('sent', 1);
 		} else {
 			$feedback['error'][] = tra('ERROR: No valid users to send the message.');
 		}
