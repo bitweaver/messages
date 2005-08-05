@@ -106,7 +106,7 @@
 {*
 			<table class="panel">
 				<tr class="panelsubmitrow"><td>
-					<form method="post" action="{$gBitLoc.MESSU_PKG_URL}read.php">
+					<form method="post" action="{$smarty.const.MESSU_PKG_URL}read.php">
 						<input type="hidden" name="offset" value="{$offset}" />
 						<input type="hidden" name="find" value="{$find|escape}" />
 						<input type="hidden" name="sort_mode" value="{$sort_mode}" />
@@ -125,7 +125,7 @@
 					</form>
 					</td>
 					<td>
-					<form method="post" action="{$gBitLoc.MESSU_PKG_URL}compose.php">
+					<form method="post" action="{$smarty.const.MESSU_PKG_URL}compose.php">
 					<input type="hidden" name="offset" value="{$offset}" />
 					<input type="hidden" name="msg_id" value="{$msg_id}" />
 					<input type="hidden" name="find" value="{$find|escape}" />
@@ -140,7 +140,7 @@
 					</form>
 					</td>
 					<td>
-					<form method="post" action="{$gBitLoc.MESSU_PKG_URL}compose.php">
+					<form method="post" action="{$smarty.const.MESSU_PKG_URL}compose.php">
 					<input type="hidden" name="offset" value="{$offset}" />
 					<input type="hidden" name="find" value="{$find|escape}" />
 					<input type="hidden" name="msg_id" value="{$msg_id}" />
