@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.4 $
+* @version  $Revision: 1.5 $
 * @package  messages
 */
 
@@ -36,7 +36,7 @@ class Messu extends BitBase {
 				// Prevent duplicates
 				$hash = md5($subject . $body);
 
-				if ($this->getOne("select count(*) from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `from_user_id`=? and `hash`=?", array( $userInfo['user_id'], $gBitUser->mUserId, $hash ) ) ) {
+				if ($this->mDb->getOne("select count(*) from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `from_user_id`=? and `hash`=?", array( $userInfo['user_id'], $gBitUser->mUserId, $hash ) ) ) {
 					$this->mErrors['compose'] = $pToLogin.' '.tra( 'has already received this message' );
 				} else {
 
@@ -44,7 +44,7 @@ class Messu extends BitBase {
 					$query = "INSERT INTO `".BIT_DB_PREFIX."messu_messages`
 							  (`to_user_id`, `from_user_id`, `msg_to`, `msg_cc`, `msg_bcc`, `subject`, `body`, `date`, `is_read`, `is_replied`, `is_flagged`, `priority`, `hash` )
 							  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-					$this->query( $query, array( $userInfo['user_id'], $gBitUser->mUserId, $to, $cc, $bcc, $subject, $body,(int) $now,'n','n','n',(int) $priority,$hash ) );
+					$this->mDb->query( $query, array( $userInfo['user_id'], $gBitUser->mUserId, $to, $cc, $bcc, $subject, $body,(int) $now,'n','n','n',(int) $priority,$hash ) );
 
 					// Now check if the user should be notified by email
 					$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -100,10 +100,10 @@ class Messu extends BitBase {
 
 		$query = "SELECT uu.`login` AS `user`, uu.`real_name`, uu.`user_id`, mm.* from `".BIT_DB_PREFIX."messu_messages` mm INNER JOIN `".BIT_DB_PREFIX."users_users` uu ON( mm.`from_user_id`=uu.`user_id` )
 				  WHERE `to_user_id`=? $mid
-				  ORDER BY ".$this->convert_sortmode($sort_mode).",".$this->convert_sortmode("msg_id_desc");
+				  ORDER BY ".$this->mDb->convert_sortmode($sort_mode).",".$this->mDb->convert_sortmode("msg_id_desc");
 		$query_cant = "select count(*) from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$result = $this->mDb->query($query,$bindvars,$maxRecords,$offset);
+		$cant = $this->mDb->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
@@ -125,14 +125,14 @@ class Messu extends BitBase {
 		if (!$msg_id)
 			return false;
 		$query = "update `".BIT_DB_PREFIX."messu_messages` set `$flag`=? where `to_user_id`=? and `msg_id`=?";
-		$this->query($query,array($val,$pUserId,(int)$msg_id));
+		$this->mDb->query($query,array($val,$pUserId,(int)$msg_id));
 	}
 
 	function delete_message($pUserId, $msg_id) {
 		if (!$msg_id)
 			return false;
 		$query = "delete from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `msg_id`=?";
-		$this->query($query,array($pUserId,(int)$msg_id));
+		$this->mDb->query($query,array($pUserId,(int)$msg_id));
 	}
 
 	function get_next_message($pUserId, $msg_id, $sort_mode, $find, $flag, $flagval, $prio) {
@@ -159,7 +159,7 @@ class Messu extends BitBase {
 		}
 
 		$query = "select min(`msg_id`) as `nextmsg` from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `msg_id` > ? $mid ";
-		$result = $this->query($query,$bindvars,1,0);
+		$result = $this->mDb->query($query,$bindvars,1,0);
 		$res = $result->fetchRow();
 
 		if (!$res)
@@ -190,7 +190,7 @@ class Messu extends BitBase {
 			$bindvars[] = $findesc;
 		}
 		$query = "select max(`msg_id`) as `prevmsg` from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `msg_id` < ? $mid";
-		$result = $this->query( $query, $bindvars, 1, 0 );
+		$result = $this->mDb->query( $query, $bindvars, 1, 0 );
 		$res = $result->fetchRow();
 
 		if (!$res)
@@ -202,7 +202,7 @@ class Messu extends BitBase {
 	function get_message( $pUserId, $msg_id ) {
 		$bindvars = array( $pUserId, (int)$msg_id );
 		$query = "select * from `".BIT_DB_PREFIX."messu_messages` WHERE `to_user_id`=? and `msg_id`=?";
-		$result = $this->query($query,$bindvars);
+		$result = $this->mDb->query($query,$bindvars);
 		$res = $result->fetchRow();
 		$content = new LibertyContent();
 		$res['parsed'] = $content->parseData( $res['body'], PLUGIN_GUID_TIKIWIKI );
@@ -215,7 +215,7 @@ class Messu extends BitBase {
 
 	/*shared*/
 	function user_unread_messages( $pUserId ) {
-		return $this->getOne( "select count( * ) from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `is_read`=?",array( $pUserId,'n' ) );
+		return $this->mDb->getOne( "select count( * ) from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `is_read`=?",array( $pUserId,'n' ) );
 	}
 }
 

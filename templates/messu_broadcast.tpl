@@ -1,7 +1,7 @@
 <div class="floaticon">{bithelp}</div>
 <div class="contain usermessages">
 <div class="header">
-<h1><a href="{$gBitLoc.MESSU_PKG_URL}broadcast.php">{tr}Broadcast message{/tr}</a></h1>
+<h1><a href="{$smarty.const.MESSU_PKG_URL}broadcast.php">{tr}Broadcast message{/tr}</a></h1>
 </div>
 
 {include file="bitpackage:users/my_bitweaver_bar.tpl"}
@@ -12,7 +12,7 @@
 {if $sent}
 	{$message}
 {else}
-<form action="{$gBitLoc.MESSU_PKG_URL}broadcast.php" method="post">
+<form action="{$smarty.const.MESSU_PKG_URL}broadcast.php" method="post">
 <table class="panel">
   <tr>
     <td><label for="broadcast-group">{tr}Group{/tr}:</label></td>

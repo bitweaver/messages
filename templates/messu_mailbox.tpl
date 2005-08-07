@@ -16,7 +16,7 @@
 			<input type="hidden" name="flagval" value="{$flagval|escape}" />
 			<input type="hidden" name="priority" value="{$priority|escape}" />
 
-			<a class="floaticon" href="{$gBitLoc.MESSU_PKG_URL}compose.php">{biticon ipackage=messu iname=send_mail iexplain="{tr}Compose Message{/tr}"}</a>
+			<a class="floaticon" href="{$smarty.const.MESSU_PKG_URL}compose.php">{biticon ipackage=messu iname=send_mail iexplain="{tr}Compose Message{/tr}"}</a>
 {assign var=displayName value=$gBitSystem->getPreference("display_name","real_name") }
 			<table class="data">
 				<tr>
@@ -33,7 +33,7 @@
 						<td><input type="checkbox" name="msg[{$items[user].msg_id}]" /></td>
 						<td>{if $items[user].is_flagged eq 'y'}{biticon ipackage=messu iname=flagged iexplain="Flagged"}{/if}</td>
 						<td>{displayname hash=$items[user]}</td>
-						<td><a href="{$gBitLoc.MESSU_PKG_URL}read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msg_id={$items[user].msg_id}">{$items[user].subject}</a></td>
+						<td><a href="{$smarty.const.MESSU_PKG_URL}read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msg_id={$items[user].msg_id}">{$items[user].subject}</a></td>
 						<td style="text-align:right;">{$items[user].date|bit_short_datetime}</td>
 						<td style="text-align:right;">{$items[user].len|kbsize}</td>
 					</tr>

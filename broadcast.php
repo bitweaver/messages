@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.3 2005/08/01 18:41:08 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.4 2005/08/07 17:41:17 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -107,7 +107,7 @@ if (isset($_REQUEST['send'])) {
 	foreach ($all_users as $a_user) {
 		if (!empty($a_user)) {
 			if ($messulib->user_exists($a_user)) {
-				if ($messulib->get_user_preference($a_user, 'allowMsgs', 'y')) {
+				if ($messulib->getPreference('allowMsgs', 'y',$a_user )) {
 					$users[] = $a_user;
 				} else {
 					// TODO: needs translation as soon as there is a solution for strings with embedded variables
