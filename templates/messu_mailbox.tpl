@@ -16,9 +16,11 @@
 			<input type="hidden" name="flagval" value="{$flagval|escape}" />
 			<input type="hidden" name="priority" value="{$priority|escape}" />
 
-			<a class="floaticon" href="{$smarty.const.MESSU_PKG_URL}compose.php">{biticon ipackage=messu iname=send_mail iexplain="{tr}Compose Message{/tr}"}</a>
-{assign var=displayName value=$gBitSystem->getPreference("display_name","real_name") }
+			<a href="{$smarty.const.MESSU_PKG_URL}compose.php">{biticon ipackage=messu iname=send_mail iexplain="Compose Message" iforce=icon_text}</a>
+
+			{assign var=displayName value=$gBitSystem->getPreference("display_name","real_name") }
 			<table class="data">
+				<caption>{tr}Messages{/tr}</caption>
 				<tr>
 					<th style="width:1%">&nbsp;</th>
 					<th style="width:1%">{smartlink ititle="Flagged" isort=is_flagged ibiticon="messu/flagged" find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
