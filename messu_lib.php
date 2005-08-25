@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.1.1.1.2.5 $
+* @version  $Revision: 1.1.1.1.2.6 $
 * @package  messages
 */
 
@@ -40,7 +40,7 @@ class Messu extends BitBase {
 					$this->mErrors['compose'] = $pToLogin.' '.tra( 'has already received this message' );
 				} else {
 
-					$now = date('U');
+					$now = $gBitSystem->getUTCTime();
 					$query = "INSERT INTO `".BIT_DB_PREFIX."messu_messages`
 							  (`to_user_id`, `from_user_id`, `msg_to`, `msg_cc`, `msg_bcc`, `subject`, `body`, `date`, `is_read`, `is_replied`, `is_flagged`, `priority`, `hash` )
 							  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -54,7 +54,7 @@ class Messu extends BitBase {
 						$mailSite = $gBitSystem->getPreference( 'feature_server_name', $_SERVER["SERVER_NAME"] );
 						$gBitSmarty->assign( 'mail_site', $mailSite );
 						$gBitSmarty->assign( 'mail_machine', $machine);
-						$gBitSmarty->assign( 'mail_date', date("U"));
+						$gBitSmarty->assign( 'mail_date', $now);
 						$gBitSmarty->assign( 'mail_user', stripslashes( $userInfo['login'] ) );
 						$gBitSmarty->assign( 'mail_from', stripslashes( $gBitUser->getDisplayName() ) );
 						$gBitSmarty->assign( 'mail_subject', stripslashes($subject));
