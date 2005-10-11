@@ -5,10 +5,9 @@
 </div>
 
 {include file="bitpackage:users/my_bitweaver_bar.tpl"}
-{include file="bitpackage:messu/messu_nav.tpl"}
 
 <div class="body">
-
+{formfeedback error=$errors success=$message}
 {if $sent}
 	{$message}
 {else}
@@ -18,11 +17,11 @@
     <td><label for="broadcast-group">{tr}Group{/tr}:</label></td>
     <td>
     <select name="group" id="broadcast-group">
-    {if $bit_p_broadcast_all eq 'y'}
-      <option value="all" selected="selected">{tr}All users{/tr}</option>
-    {/if}
+    
 	{section name=ix loop=$groups}
-	  <option value="{$groups[ix].group_name|escape}">{$groups[ix].group_name}</option>
+		{if $groups[ix].group_id && $groups[ix].group_name}
+	  		<option value="{$groups[ix].group_id}">{$groups[ix].group_name}</option>
+	  	{/if}
 	{/section}
     </select>
     </td>

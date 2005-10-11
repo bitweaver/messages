@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.1.1.1.2.2 2005/07/26 15:50:22 drewslater Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.1.1.1.2.3 2005/10/11 19:50:14 drewslater Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -49,7 +49,7 @@ $gBitSmarty->assign('legend', '');
 
 if (!isset($_REQUEST['msg_id']) || $_REQUEST['msg_id'] == 0) {
 	$gBitSmarty->assign('legend', tra("No more messages"));
-	$gBitSystem->display( 'messu-read.tpl');
+	$gBitSystem->display( 'bitpackage:messu/messu-read.tpl');
 	die;
 }
 
