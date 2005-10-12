@@ -2,8 +2,8 @@
 /**
 * message package modules
 *
-* @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.4 2005/10/12 15:13:53 spiderr Exp $
+* @author   
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.5 2005/10/12 20:11:32 drewslater Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -39,7 +39,7 @@ if (isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {
 
 // Delete messages if the delete button was pressed
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
-
+	
 	foreach (array_keys($_REQUEST["msg"])as $msg) {
 		$messulib->delete_message( $gBitUser->mUserId, $msg );
 	}
