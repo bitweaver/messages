@@ -16,21 +16,8 @@ $tables = array(
   is_read C(1),
   is_replied C(1),
   is_flagged C(1),
-  group_id I4
   priority I4
-",
-
-'messu_system_message_map' => "
-  msg_id I4
-  to_user_id I4 NOTNULL,
-  is_read C(1),
-  is_flagged C(1),
-  is_replied C(1),
-  priority I4,
-  is_hidden C(1)
-  CONSTRAINTS	', CONSTRAINT `tiki_messu_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messu_messages` (`msg_id`)'
 "
-
 //  CONSTRAINT	', CONSTRAINT tiki_messu_to_user_ref FOREIGN KEY (to_user_id) REFERENCES `".BIT_DB_PREFIX."users_users` (user_id)
 //				 , CONSTRAINT tiki_messu_from_user_ref FOREIGN KEY (from_user_id) REFERENCES `".BIT_DB_PREFIX."users_users` (user_id)'
 

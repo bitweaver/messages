@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.1.1.1.2.4 2005/10/11 19:50:14 drewslater Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.1.1.1.2.5 2005/10/12 13:12:30 spiderr Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -19,15 +19,26 @@ require_once( '../bit_setup_inc.php' );
 
 include_once( MESSU_PKG_PATH.'messu_lib.php' );
 
-if (!$gBitUser->isRegistered()) {
+if (!$user) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
 
 	$gBitSystem->display( 'error.tpl' );
 	die;
 }
 
-$gBitSystem->isPackageActive( 'messu', TRUE );
-$gBitSystem->verifyPermission( 'bit_p_broeadcast_messages' );
+if ($feature_messages != 'y') {
+	$gBitSmarty->assign('msg', tra("This feature is disabled").": feature_messages");
+
+	$gBitSystem->display( 'error.tpl' );
+	die;
+}
+
+if ($bit_p_broadcast != 'y') {
+	$gBitSmarty->assign('msg', tra("Permission denied"));
+
+	$gBitSystem->display( 'error.tpl' );
+	die;
+}
 
 if (!isset($_REQUEST['to']))
 	$_REQUEST['to'] = '';
@@ -54,7 +65,7 @@ $gBitSmarty->assign('subject', $_REQUEST['subject']);
 $gBitSmarty->assign('body', $_REQUEST['body']);
 $gBitSmarty->assign('priority', $_REQUEST['priority']);
 
-
+$gBitSystem->display( 'bitpackage:messu/messu_broadcast.tpl');
 
 $gBitSmarty->assign('sent', 0);
 
@@ -62,41 +73,75 @@ if (isset($_REQUEST['reply']) || isset($_REQUEST['replyall'])) {
 	$messulib->flag_message($user, $_REQUEST['msg_id'], 'is_replied', 'y');
 }
 
+if (isset($_REQUEST['group'])) {
+	if ($_REQUEST['group'] == 'all') {
+		$a_all_users = $userlib->get_users(0, -1, 'login_desc', '');
+
+		$all_users = array();
+
+		foreach ($a_all_users['data'] as $a_user) {
+			$all_users[] = $a_user['user'];
+		}
+	} else {
+		$all_users = $userlib->get_group_users($_REQUEST['group']);
+	}
+}
 
 if (isset($_REQUEST['send'])) {
-
+	
 	$gBitSmarty->assign('sent', 1);
+
 	$message = '';
-	$errors = array();
+
 	// Validation:
 	// must have a subject or body non-empty (or both)
 	if (empty($_REQUEST['subject']) && empty($_REQUEST['body'])) {
-		$errors[] = tra("Subject or body must not be empty");	
+		$gBitSmarty->assign('message', tra('ERROR: Either the subject or body must be non-empty'));
+
+				die;
 	}
-	if (empty($_REQUEST['group'])) {
-		$errors[] = tra("You must select a group to broadcast this message to");	
+
+	// Remove invalid users from the to, cc and bcc fields
+	$users = array();
+
+	foreach ($all_users as $a_user) {
+		if (!empty($a_user)) {
+			if ($messulib->user_exists($a_user)) {
+				if ($messulib->getPreference('allowMsgs', 'y',$a_user )) {
+					$users[] = $a_user;
+				} else {
+					// TODO: needs translation as soon as there is a solution for strings with embedded variables
+					$message .= "User $a_user can not receive messages<br/>";
+				}
+			} else {
+				$message .= tra("Invalid user"). "$a_user<br/>";
+			}
+		}
 	}
-			
-	if (!count($errors)) {
-		$messulib->post_system_message($_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['group']);
-		$message = "Message successfully broadcast";
+
+	$users = array_unique($users);
+
+	// Validation: either to, cc or bcc must have a valid user
+	if (count($users) > 0) {
+		$message .= tra("Message will be sent to: <ul><li>"). implode('<li> ', $users). "</ul><br/>";
+	} else {
+		$message = tra('ERROR: No valid users to send the message');
+
+		$gBitSmarty->assign('message', $message);
+				die;
 	}
+
+	// Insert the message in the inboxes of each user
+	foreach ($users as $a_user) {
+		$messulib->post_message($a_user, $user, $a_user, '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+	}
+
 	$gBitSmarty->assign('message', $message);
-	$gBitSmarty->assign('errors', $errors);
 }
 
 
-if ($gBitUser->isAdmin()) {	
-	$pListHash = array();
-	$groups = $gBitUser->getAllGroups($pListHash);
-} else {
-	$gBitUser->loadGroups();
-	$groups = &$gBitUser->mGroups; 
-	
-}
-
-$gBitSmarty->assign('groups', $groups["data"]);
+$groups = $userlib->get_groups(0, -1, 'group_name_asc', '');
+$gBitSmarty->assign_by_ref('groups', $groups["data"]);
 
 $section = 'user_messages';
-$gBitSystem->display( 'bitpackage:messu/messu_broadcast.tpl');
 ?>

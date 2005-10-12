@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.1.1.1.2.7 $
+* @version  $Revision: 1.1.1.1.2.8 $
 * @package  messages
 */
 
@@ -19,7 +19,7 @@ class Messu extends BitBase {
 		BitBase::BitBase();
 	}
 
-	function post_message( $pToLogin, $to, $cc, $bcc, $subject, $body, $priority, $group_id = NULL) {
+	function post_message( $pToLogin, $to, $cc, $bcc, $subject, $body, $priority) {
 		global $gBitSmarty, $gBitUser, $gBitSystem;
 		
 		$userInfo = $gBitUser->getUserInfo( array('login' => $pToLogin) );
@@ -42,9 +42,9 @@ class Messu extends BitBase {
 
 					$now = $gBitSystem->getUTCTime();
 					$query = "INSERT INTO `".BIT_DB_PREFIX."messu_messages`
-							  (`to_user_id`, `from_user_id`, `msg_to`, `msg_cc`, `msg_bcc`, `subject`, `body`, `date`, `is_read`, `is_replied`, `is_flagged`, `priority`, `hash`, `group_id` )
-							  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-					$this->mDb->query( $query, array( $userInfo['user_id'], $gBitUser->mUserId, $to, $cc, $bcc, $subject, $body,(int) $now,'n','n','n',(int) $priority,$hash, $group_id ) );
+							  (`to_user_id`, `from_user_id`, `msg_to`, `msg_cc`, `msg_bcc`, `subject`, `body`, `date`, `is_read`, `is_replied`, `is_flagged`, `priority`, `hash` )
+							  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					$this->mDb->query( $query, array( $userInfo['user_id'], $gBitUser->mUserId, $to, $cc, $bcc, $subject, $body,(int) $now,'n','n','n',(int) $priority,$hash ) );
 
 					// Now check if the user should be notified by email
 					$foo = parse_url($_SERVER["REQUEST_URI"]);
@@ -77,41 +77,8 @@ class Messu extends BitBase {
 
 		return( count( $this->mErrors ) == 0 );
 	}
-	
-	function post_system_message($subject, $body, $group_id) {
-		return $this->post_message(ROOT_USER_ID, ROOT_USER_ID,NULL,NULL,$subject, $body, 1, $group_id);
-	}
-	
-	function list_system_messages() {
-		$sql = "SELECT mm.* FROM `".BIT_DB_PREFIX."messu_messages` mm WHERE mm.`from_user_id` = ?";
-		$rs = $this->mDb->query($sql, array(ROOT_USER_ID));
-		
-		return $rs->getRows();
-	}
-	
-	function remove_system_message($pMessageID = NULL) {
-		if ($pMessageID) {
-			$sql = "DELETE FROM `".BIT_DB_PREFIX."messu_system_message_map` WHERE msg_id = ?";
-			$rs = $this->mDb->query($sql, array($pMessageID));
-			
-			$sql = "DELETE FROM `".BIT_DB_PREFIX."messu_messages` WHERE msg_id = ?";
-			$rs = $this->mDb->query($sql, array($pMessageID));
-		}
-		
-	}
-	
-	function is_system_message($pMessageID = NULL) {
-		$ret = FALSE;
-		if ($pMessageID) {
-			$query = "SELECT COUNT(msg_id) FROM `".BIT_DB_PREFIX."messu_messages` WHERE `to_user_id` = ? AND `msg_id` = ?";
-			$ret = $this->mDb->getOne($query, array(ROOT_USER_ID, $pMessageID));	
-		}
-		return $ret;
-	}
-	
+
 	function list_messages( $pUserId, $offset, $maxRecords, $sort_mode, $find, $flag = '', $flagval = '', $prio = '' ) {
-		
-		// Load all normal messages (user to user)
 		$bindvars = array($pUserId);
 		$mid="";
 		if ($prio) {
@@ -137,7 +104,7 @@ class Messu extends BitBase {
 		$query_cant = "select count(*) from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? $mid";
 		$result = $this->mDb->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->mDb->getOne($query_cant,$bindvars);
-		$normalMessages = array();
+		$ret = array();
 
 		while ($res = $result->fetchRow()) {
 			$res["len"] = strlen($res["body"]);
@@ -145,144 +112,27 @@ class Messu extends BitBase {
 			if (empty($res['subject']))
 				$res['subject'] = tra('NONE');
 
-			$normalMessages[] = $res;
-		}
-		
-		// Load system messages (i.e. broadcast messages) 
-		$bindvars = array($pUserId, ROOT_USER_ID, $pUserId);
-		$mid="";
-		if ($prio) {
-			$mid = " and mm.priority=? ";
-			$bindvars[] = $prio;
+			$ret[] = $res;
 		}
 
-		if ($flag) {
-			// Process the flags
-			$mid.= " and mm.`$flag`=? ";
-			$bindvars[] = $flagval;
-		}
-		if ($find) {
-			$findesc = '%'.strtoupper( $find ).'%';
-			$mid.= " and (UPPER(mm.`subject`) like ? or UPPER(mm.`body`) like ?)";
-			$bindvars[] = $findesc;
-			$bindvars[] = $findesc;
-		}
-				
-		$query = "SELECT uu.`login` AS `user`, uu.`real_name`, uu.`user_id`, mm.`msg_id` as `msg_id_foo`, mm.`msg_to`, mm.`msg_cc`, mm.`msg_bcc`, mm.`subject`, mm.`body`, mm.`hash`, mm.`date`, msm.* 
-				  FROM `".BIT_DB_PREFIX."messu_messages` mm  
-				  	INNER JOIN `".BIT_DB_PREFIX."users_users` uu ON (mm.`from_user_id` = uu.`user_id`) 
-				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."messu_system_message_map` msm  ON (mm.`msg_id` = msm.`msg_id` AND msm.`to_user_id` = ?)
-				  WHERE mm.`to_user_id` = ? AND mm.`group_id` IN (SELECT `group_id` FROM `".BIT_DB_PREFIX."users_groups_map` WHERE `user_id` = ?) $mid 
-				  ORDER BY ".$this->mDb->convert_sortmode($sort_mode).",".$this->mDb->convert_sortmode("mm.msg_id_desc");
-		
-		$query_cant = "SELECT COUNT(mm.*) 
-		 			   FROM `".BIT_DB_PREFIX."messu_messages` mm 
-		 			     LEFT OUTER JOIN `".BIT_DB_PREFIX."messu_system_message_map` msm ON (mm.`msg_id` = msm.`msg_id` AND msm.`to_user_id` = ?)
-					   WHERE mm.`to_user_id` = ? AND mm.`group_id` IN (SELECT `group_id` FROM `".BIT_DB_PREFIX."users_groups_map` WHERE `user_id` = ?) $mid";
-		$result2 = $this->mDb->query($query, $bindvars);
-		$cant2 = $this->mDb->getOne($query_cant, $bindvars);
-		$systemMessages = array();
-		while ($res = $result2->fetchRow()) {
-			$res['len'] = strlen($res['body']);
-			$res['is_broadcast_message'] = TRUE;
-			if (empty($res['subject'])) {
-				$res['subject'] = tra('NONE');
-			}
-			$res['msg_id'] = $res['msg_id_foo'];	// Due to the left outer join this madness is neccessary
-			unset($res['msg_id_foo']);
-			if ($res['is_hidden'] != 'y') {
-				$systemMessages[] = $res;		
-			}
-		}
-		
-		// Now we merge normalMessages and systemMessages and put them in order
-		$ret = array();
-		$normalMessageCount = count($normalMessages);
-		$systemMessageCount = count($systemMessages);
-		$normalMsg = $systemMsg = NULL;
-		if (strpos($sort_mode, '_asc') !== FALSE) {
-			$sortType = '_asc';
-			$sortKey = substr($sort_mode, 0, strlen($sort_mode)-4);
-		} else {
-			$sortType = '_desc';
-			$sortKey = substr($sort_mode, 0, strlen($sort_mode)-5);
-		}
-		
-		while ($normalMessageCount > 0 || $systemMessageCount > 0) {
-			if (!$normalMsg && $normalMessageCount > 0) {
-				$normalMsg = array_shift($normalMessages);
-			}
-			if (!$systemMsg && $systemMessageCount > 0) {
-				$systemMsg = array_shift($systemMessages);	
-			}
-			if ($normalMessageCount == 0) {
-				$ret[] = $systemMsg;
-				$systemMsg = NULL;
-				$systemMessageCount--;
-			} elseif ($systemMessageCount == 0) {
-				$ret[] = $normalMsg;
-				$normalMsg = NULL;
-				$normalMessageCount--;
-			}elseif ($sortType == '_asc') {
-				if ($normalMsg[$sortKey] < $systemMsg[$sortKey]) {
-					$ret[] = $normalMsg;
-					$normalMsg = NULL;
-					$normalMessageCount--;
-				} else {
-					$ret[] = $systemMsg;
-					$systemMsg = NULL;
-					$systemMessageCount--;
-				}	
-			} else {
-				if ($normalMsg[$sortKey] > $systemMsg[$sortKey]) {
-						$ret[] = $normalMsg;
-					$normalMsg = NULL;
-					$normalMessageCount--;
-				} else {
-					$ret[] = $systemMsg;
-					$systemMsg = NULL;
-					$systemMessageCount--;
-				}				
-			}
-		}
-		
 		$retval = array();
 		$retval["data"] = $ret;
-		$retval["cant"] = $cant + $cant2;
+		$retval["cant"] = $cant;
 		return $retval;
 	}
 
 	function flag_message( $pUserId, $msg_id, $flag, $val ) {
 		if (!$msg_id)
 			return false;
-		if ($this->is_system_message($msg_id)) {
-			$query = "SELECT COUNT(*) FROM `".BIT_DB_PREFIX."messu_system_message_map` WHERE `to_user_id` = ? AND `msg_id` = ?";
-			$rowExists = $this->mDb->getOne($query, array($pUserId, $msg_id));
-			if ($rowExists) {
-				$query = "UPDATE `".BIT_DB_PREFIX."messu_system_message_map` SET `$flag`=? WHERE `to_user_id` = ? AND `msg_id` = ?";
-				$this->mDb->query($query, array($val, $pUserId, (int)$msg_id));	
-			} else {
-				$query = "INSERT INTO `".BIT_DB_PREFIX."messu_system_message_map` (`msg_id`, `to_user_id`, `$flag`) VALUES (?,?,?)";
-				$this->mDb->query($query, array((int)$msg_id, $pUserId, $val));
-			}
-			
-		} else {
-			$query = "update `".BIT_DB_PREFIX."messu_messages` set `$flag`=? where `to_user_id`=? and `msg_id`=?";
-			$this->mDb->query($query,array($val,$pUserId,(int)$msg_id));
-		}
+		$query = "update `".BIT_DB_PREFIX."messu_messages` set `$flag`=? where `to_user_id`=? and `msg_id`=?";
+		$this->mDb->query($query,array($val,$pUserId,(int)$msg_id));
 	}
 
 	function delete_message($pUserId, $msg_id) {
 		if (!$msg_id)
 			return false;
-		if ($this->is_system_message($msg_id)) {
-			// We just mark this user's messu_system_message_map row is_hidden = 'y'
-			$query = "UPDATE `".BIT_DB_PREFIX."messu_system_message_map` SET `is_hidden` = 'y' WHERE `to_user_id` = ? AND `msg_id` = ?";
-			$this->mDb->query($query, array($pUserId, $msg_id));	
-		} else {
-			$query = "delete from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `msg_id`=?";
-			$this->mDb->query($query,array($pUserId,(int)$msg_id));
-		}
+		$query = "delete from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `msg_id`=?";
+		$this->mDb->query($query,array($pUserId,(int)$msg_id));
 	}
 
 	function get_next_message($pUserId, $msg_id, $sort_mode, $find, $flag, $flagval, $prio) {
@@ -350,26 +200,13 @@ class Messu extends BitBase {
 	}
 
 	function get_message( $pUserId, $msg_id ) {
-		if (!$this->is_system_message($msg_id)) {
-			$bindvars = array( $pUserId, (int)$msg_id );
-			$query = "select * from `".BIT_DB_PREFIX."messu_messages` WHERE `to_user_id`=? and `msg_id`=?";
-			$result = $this->mDb->query($query,$bindvars);
-			$res = $result->fetchRow();		
-		} else {
-			$bindvars = array($pUserId, (int)$msg_id);
-			$query = "SELECT msm.*, ug.`group_name`, mm.`from_user_id`, mm.`msg_id` as `msg_id_foo`, mm.`msg_to`, mm.`msg_cc`, mm.`msg_bcc`, mm.`subject`, mm.`body`, mm.`hash`, mm.`date` 
-					  FROM `".BIT_DB_PREFIX."messu_messages` mm 
-					    INNER JOIN `".BIT_DB_PREFIX."users_groups` ug ON (ug.`group_id` = mm.`group_id`)
-					    LEFT OUTER JOIN `".BIT_DB_PREFIX."messu_system_message_map` msm ON (mm.`msg_id` = msm.`msg_id` AND msm.`to_user_id` = ?)
-					  WHERE mm.`msg_id` = ?";
-			$result = $this->mDb->query($query, $bindvars);
-			$res = $result->fetchRow();
-			$res['is_broadcast_message'] = TRUE;
-		}
-			
+		$bindvars = array( $pUserId, (int)$msg_id );
+		$query = "select * from `".BIT_DB_PREFIX."messu_messages` WHERE `to_user_id`=? and `msg_id`=?";
+		$result = $this->mDb->query($query,$bindvars);
+		$res = $result->fetchRow();
 		$content = new LibertyContent();
 		$res['parsed'] = $content->parseData( $res['body'], PLUGIN_GUID_TIKIWIKI );
-	
+
 		if (empty($res['subject']))
 			$res['subject'] = tra('NONE');
 
@@ -378,10 +215,7 @@ class Messu extends BitBase {
 
 	/*shared*/
 	function user_unread_messages( $pUserId ) {
-		$normalCount =  $this->mDb->getOne( "select count( * ) from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `is_read`=?",array( $pUserId,'n' ) );
-		$broadcastCount = $this->mDb->getOne("SELECT COUNT(mm.`msg_id`) FROM `".BIT_DB_PREFIX."messu_messages` mm INNER JOIN `".BIT_DB_PREFIX."messu_system_message_map` msm ON (mm.`msg_id` = msm.`msg_id` AND msm.`is_read` <> 'y' AND `is_hidden` <> 'y' AND msm.`to_user_id`= ?) WHERE mm.`to_user_id` = ?", array($pUserId, ROOT_USER_ID));
-		$broadcastCount2 = $this->mDb->getOne("SELECT COUNT(mm.`msg_id`) FROM `".BIT_DB_PREFIX."messu_messages` mm WHERE mm.`to_user_id` = ? AND NOT EXISTS ( SELECT msm.`msg_id` FROM `".BIT_DB_PREFIX."messu_system_message_map` msm WHERE msm.`msg_id` = mm.`msg_id` AND msm.`to_user_id` = ?)", array(ROOT_USER_ID, $pUserId));
-		return $normalCount + $broadcastCount + $broadcastCount2;
+		return $this->mDb->getOne( "select count( * ) from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `is_read`=?",array( $pUserId,'n' ) );
 	}
 }
 
