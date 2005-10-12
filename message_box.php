@@ -2,8 +2,8 @@
 /**
 * message package modules
 *
-* @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.3 2005/08/01 18:41:08 squareing Exp $
+* @author
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.4 2005/10/12 15:13:53 spiderr Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -39,7 +39,7 @@ if (isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {
 
 // Delete messages if the delete button was pressed
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
-	
+
 	foreach (array_keys($_REQUEST["msg"])as $msg) {
 		$messulib->delete_message( $gBitUser->mUserId, $msg );
 	}
@@ -49,8 +49,8 @@ if (isset($_REQUEST['filter'])) {
 	if ($_REQUEST['flags'] != '') {
 		$parts = explode('_', $_REQUEST['flags']);
 
-		$_REQUEST['flag'] = $parts[0];
-		$_REQUEST['flagval'] = $parts[1];
+		$_REQUEST['flag'] = substr( $_REQUEST['flags'], 0, strrpos( $_REQUEST['flags'], '_' ) );
+		$_REQUEST['flagval'] = substr( $_REQUEST['flags'], strrpos( $_REQUEST['flags'], '_' ) + 1 );
 	}
 }
 
