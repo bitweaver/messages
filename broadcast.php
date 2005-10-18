@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.5 2005/10/12 20:11:32 drewslater Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.6 2005/10/18 21:31:44 lulu_com Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -87,7 +87,7 @@ if (isset($_REQUEST['send'])) {
 
 
 if ($gBitUser->isAdmin()) {	
-	$pListHash = array();
+	$pListHash = array('sort_mode' => 'group_id_asc');
 	$groups = $gBitUser->getAllGroups($pListHash);
 } else {
 	$gBitUser->loadGroups();

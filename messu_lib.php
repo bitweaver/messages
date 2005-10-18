@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.7 $
+* @version  $Revision: 1.8 $
 * @package  messages
 */
 
@@ -39,8 +39,8 @@ class Messu extends BitBase {
 				if ($this->mDb->getOne("select count(*) from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `from_user_id`=? and `hash`=?", array( $userInfo['user_id'], $gBitUser->mUserId, $hash ) ) ) {
 					$this->mErrors['compose'] = $pToLogin.' '.tra( 'has already received this message' );
 				} else {
-
-					$now = $gBitSystem->getUTCTime();
+					$bitDate = $gBitSystem->get_date_converter();
+					$now = $bitDate->getUTCTime();
 					$query = "INSERT INTO `".BIT_DB_PREFIX."messu_messages`
 							  (`to_user_id`, `from_user_id`, `msg_to`, `msg_cc`, `msg_bcc`, `subject`, `body`, `date`, `is_read`, `is_replied`, `is_flagged`, `priority`, `hash`, `group_id` )
 							  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -50,7 +50,7 @@ class Messu extends BitBase {
 					$foo = parse_url($_SERVER["REQUEST_URI"]);
 					$machine = httpPrefix(). $foo["path"];
 
-					if ($gBitUser->getPreference( 'minPrio', 3 ) <= $priority) {
+					if ($gBitUser->getPreference( 'minPrio', 3 ) <= $priority && FALSE) {
 						$mailSite = $gBitSystem->getPreference( 'feature_server_name', $_SERVER["SERVER_NAME"] );
 						$gBitSmarty->assign( 'mail_site', $mailSite );
 						$gBitSmarty->assign( 'mail_machine', $machine);
