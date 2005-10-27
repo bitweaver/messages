@@ -3,20 +3,20 @@
 $tables = array(
 
 'messu_messages' => "
-  msg_id I4 AUTO PRIMARY,
-  to_user_id I4 NOTNULL,
-  from_user_id I4 NOTNULL,
-  msg_to X,
-  msg_cc X,
-  msg_bcc X,
-  subject C(255),
-  body X,
-  hash C(32),
-  date I8,
-  is_read C(1),
-  is_replied C(1),
-  is_flagged C(1),
-  priority I4
+	msg_id I4 AUTO PRIMARY,
+	to_user_id I4 NOTNULL,
+	from_user_id I4 NOTNULL,
+	msg_to X,
+	msg_cc X,
+	msg_bcc X,
+	subject C(255),
+	body X,
+	hash C(32),
+	date I8,
+	is_read C(1),
+	is_replied C(1),
+	is_flagged C(1),
+	priority I4
 "
 //  CONSTRAINT	', CONSTRAINT tiki_messu_to_user_ref FOREIGN KEY (to_user_id) REFERENCES `".BIT_DB_PREFIX."users_users` (user_id)
 //				 , CONSTRAINT tiki_messu_from_user_ref FOREIGN KEY (from_user_id) REFERENCES `".BIT_DB_PREFIX."users_users` (user_id)'
