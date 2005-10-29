@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.1.1.1.2.5 2005/10/12 13:12:30 spiderr Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.1.1.1.2.7 2005/10/29 18:06:26 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -19,26 +19,15 @@ require_once( '../bit_setup_inc.php' );
 
 include_once( MESSU_PKG_PATH.'messu_lib.php' );
 
-if (!$user) {
+if (!$gBitUser->isRegistered()) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
 
 	$gBitSystem->display( 'error.tpl' );
 	die;
 }
 
-if ($feature_messages != 'y') {
-	$gBitSmarty->assign('msg', tra("This feature is disabled").": feature_messages");
-
-	$gBitSystem->display( 'error.tpl' );
-	die;
-}
-
-if ($bit_p_broadcast != 'y') {
-	$gBitSmarty->assign('msg', tra("Permission denied"));
-
-	$gBitSystem->display( 'error.tpl' );
-	die;
-}
+$gBitSystem->isPackageActive( 'messu', TRUE );
+$gBitSystem->verifyPermission( 'bit_p_broeadcast' );
 
 if (!isset($_REQUEST['to']))
 	$_REQUEST['to'] = '';
