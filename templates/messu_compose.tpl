@@ -70,7 +70,7 @@
 
 				<div class="row">
 					{forminput}
-						<textarea rows="20" cols="80" name="body" id="message_body">{$body|escape}</textarea>
+						<textarea rows="20" cols="50" name="body" id="message_body">{$body|escape}</textarea>
 					{/forminput}
 				</div>
 
