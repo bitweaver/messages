@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.8 $
+* @version  $Revision: 1.9 $
 * @package  messages
 */
 
@@ -378,9 +378,12 @@ class Messu extends BitBase {
 
 	/*shared*/
 	function user_unread_messages( $pUserId ) {
+		// Standard user to user messages
 		$normalCount =  $this->mDb->getOne( "select count( * ) from `".BIT_DB_PREFIX."messu_messages` where `to_user_id`=? and `is_read`=?",array( $pUserId,'n' ) );
-		$broadcastCount = $this->mDb->getOne("SELECT COUNT(mm.`msg_id`) FROM `".BIT_DB_PREFIX."messu_messages` mm INNER JOIN `".BIT_DB_PREFIX."messu_system_message_map` msm ON (mm.`msg_id` = msm.`msg_id` AND msm.`is_read` <> 'y' AND `is_hidden` <> 'y' AND msm.`to_user_id`= ?) WHERE mm.`to_user_id` = ?", array($pUserId, ROOT_USER_ID));
-		$broadcastCount2 = $this->mDb->getOne("SELECT COUNT(mm.`msg_id`) FROM `".BIT_DB_PREFIX."messu_messages` mm WHERE mm.`to_user_id` = ? AND NOT EXISTS ( SELECT msm.`msg_id` FROM `".BIT_DB_PREFIX."messu_system_message_map` msm WHERE msm.`msg_id` = mm.`msg_id` AND msm.`to_user_id` = ?)", array(ROOT_USER_ID, $pUserId));
+		// Broadcast messages where they have a messu_system_message_map row but is_read is not yet set
+		$broadcastCount = $this->mDb->getOne("SELECT COUNT(mm.`msg_id`) FROM `".BIT_DB_PREFIX."messu_messages` mm INNER JOIN `".BIT_DB_PREFIX."messu_system_message_map` msm ON (mm.`msg_id` = msm.`msg_id` AND msm.`is_read` <> 'y' AND `is_hidden` <> 'y' AND msm.`to_user_id`= ?) WHERE mm.`to_user_id` = ? AND mm.`group_id` IN (SELECT `group_id` FROM `".BIT_DB_PREFIX."users_groups_map` WHERE `user_id`= ?) ", array($pUserId, ROOT_USER_ID, $pUserId));
+		// Broadcast messages where they do not yet have a messu_system_message_map row
+		$broadcastCount2 = $this->mDb->getOne("SELECT COUNT(mm.`msg_id`) FROM `".BIT_DB_PREFIX."messu_messages` mm WHERE mm.`to_user_id` = ? AND mm.`group_id` IN (SELECT `group_id` FROM `".BIT_DB_PREFIX."users_groups_map` WHERE `user_id` = ?) AND NOT EXISTS ( SELECT msm.`msg_id` FROM `".BIT_DB_PREFIX."messu_system_message_map` msm WHERE msm.`msg_id` = mm.`msg_id` AND msm.`to_user_id` = ?)", array(ROOT_USER_ID, $pUserId, $pUserId));
 		return $normalCount + $broadcastCount + $broadcastCount2;
 	}
 }
