@@ -21,7 +21,7 @@ $tables = array(
 ",
 
 'messu_system_message_map' => "
-  msg_id I4
+  msg_id I4,
   to_user_id I4 NOTNULL,
   is_read C(1),
   is_flagged C(1),
