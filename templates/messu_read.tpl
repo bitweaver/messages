@@ -63,7 +63,7 @@
 
 				<div class="row">
 					{formlabel label="Subject"}
-					{forminput}
+					{forminput class="highlight"}
 						{$msg.subject}
 					{/forminput}
 				</div>
