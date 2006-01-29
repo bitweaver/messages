@@ -20,8 +20,8 @@ array( 'RENAMECOLUMN' => array(
 )),
 array( 'ALTER' => array(
 	'messu_messages' => array(
-		'to_user_id' => array( '`to_user_id`', 'I4' ), // , 'NOTNULL' ),
-		'from_user_id' => array( '`from_user_id`', 'I4' ), // , 'NOTNULL' ),
+		'to_user_id' => array( '`to_user_id`', 'I4' ),
+		'from_user_id' => array( '`from_user_id`', 'I4' ),
 	),
 ))
 )),
@@ -42,7 +42,35 @@ array( 'DATADICT' => array(
 )),
 
 	)
-)
+),
+
+
+
+// next upgrade path
+'BWR1' => array(
+	'BWR2' => array(
+
+array( 'DATADICT' => array(
+	array( 'CREATE' => array (
+		'messu_system_message_map' => "
+			msg_id I4,
+			to_user_id I4 NOTNULL,
+			is_read C(1),
+			is_flagged C(1),
+			is_replied C(1),
+			priority I4,
+			is_hidden C(1)
+			CONSTRAINTS	', CONSTRAINT `tiki_messu_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messu_messages` (`msg_id`)'
+		"
+	)),
+	array( 'ALTER' => array(
+		'messu_messages' => array(
+			'group_id' => array( '`group_id`', 'I4' ),
+		),
+	))
+)),
+
+	),
 );
 
 if( isset( $upgrades[$gUpgradeFrom][$gUpgradeTo] ) ) {
