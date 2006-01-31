@@ -5,7 +5,7 @@
 </div>
 
 {include file="bitpackage:users/my_bitweaver_bar.tpl"}
-{include file="bitpackage:messu/messu_nav.tpl"}
+{include file="bitpackage:messu/messages_nav.tpl"}
 
 <div class="body">
 {formfeedback error=$errors success=$message}
