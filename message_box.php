@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.6 2005/10/29 17:54:36 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.7 2006/01/31 21:27:55 bitweaver Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -16,7 +16,7 @@
  * required setup
  */
 require_once( '../bit_setup_inc.php' );
-require_once( MESSU_PKG_PATH.'messu_lib.php' );
+require_once( MESSU_PKG_PATH.'messages_lib.php' );
 
 if( !$gBitUser->isRegistered() ) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
@@ -112,5 +112,5 @@ $section = 'user_messages';
 
 
 
-$gBitSystem->display( 'bitpackage:messu/messu_mailbox.tpl', 'Message box' );
+$gBitSystem->display( 'bitpackage:messu/messages_mailbox.tpl', 'Message box' );
 ?>

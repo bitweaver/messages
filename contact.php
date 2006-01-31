@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.4 2005/08/01 18:41:08 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.5 2006/01/31 21:27:55 bitweaver Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -21,7 +21,7 @@ if( !$gBitSystem->isFeatureActive( 'feature_contact' ) ) {
 	$gBitSystem->fatalError( "The Contact feature is disabled." );
 }
 
-include_once( MESSU_PKG_PATH.'messu_lib.php' );
+include_once( MESSU_PKG_PATH.'messages_lib.php' );
 
 $userInfo = $gBitUser->getUserInfo( array( 'login' => $gBitSystem->getPreference( 'contact_user' ) ) );
 $email = $userInfo['email'];

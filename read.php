@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.3 2005/08/01 18:41:08 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.4 2006/01/31 21:27:55 bitweaver Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -16,7 +16,7 @@
  * required setup
  */
 require_once( '../bit_setup_inc.php' );
-require_once( MESSU_PKG_PATH.'messu_lib.php' );
+require_once( MESSU_PKG_PATH.'messages_lib.php' );
 
 if( !$gBitUser->isRegistered() ) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
@@ -72,6 +72,6 @@ $msg = $messulib->get_message( $gBitUser->mUserId, $_REQUEST['msg_id']);
 $gBitSmarty->assign('msg', $msg);
 
 $section = 'user_messages';
-$gBitSystem->display( 'bitpackage:messu/messu_read.tpl');
+$gBitSystem->display( 'bitpackage:messu/messages_read.tpl');
 
 ?>

@@ -2,7 +2,7 @@
 
 $tables = array(
 
-'messu_messages' => "
+'messages' => "
 	msg_id I4 AUTO PRIMARY,
 	to_user_id I4 NOTNULL,
 	from_user_id I4 NOTNULL,
@@ -20,7 +20,7 @@ $tables = array(
 	priority I4
 ",
 
-'messu_system_message_map' => "
+'messages_system_map' => "
 	msg_id I4,
 	to_user_id I4 NOTNULL,
 	is_read C(1),
@@ -28,7 +28,7 @@ $tables = array(
 	is_replied C(1),
 	priority I4,
 	is_hidden C(1)
-	CONSTRAINTS	', CONSTRAINT `tiki_messu_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messu_messages` (`msg_id`)'
+	CONSTRAINTS	', CONSTRAINT `tiki_messu_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messages` (`msg_id`)'
 "
 
 //  CONSTRAINT	', CONSTRAINT tiki_messu_to_user_ref FOREIGN KEY (to_user_id) REFERENCES `".BIT_DB_PREFIX."users_users` (user_id)
@@ -58,11 +58,11 @@ $gBitInstaller->registerUserPermissions( MESSU_PKG_NAME, array(
 
 // ### Indexes
 $indices = array (
-	'tiki_messu_to_user_id_idx' => array( 'table' => 'messu_messages', 'cols' => 'to_user_id', 'opts' => NULL ),
-	'tiki_messu_from_user_id_idx' => array( 'table' => 'messu_messages', 'cols' => 'from_user_id', 'opts' => NULL )
+	'tiki_messu_to_user_id_idx' => array( 'table' => 'messages', 'cols' => 'to_user_id', 'opts' => NULL ),
+	'tiki_messu_from_user_id_idx' => array( 'table' => 'messages', 'cols' => 'from_user_id', 'opts' => NULL )
 );
 // TODO - SPIDERR - following seems to cause time _decrease_ cause bigint on postgres. need more investigation
-//	'tiki_blog_posts_created_idx' => array( 'table' => 'tiki_blog_posts', 'cols' => 'created', 'opts' => NULL ),
+//	'blog_posts_created_idx' => array( 'table' => 'blog_posts', 'cols' => 'created', 'opts' => NULL ),
 $gBitInstaller->registerSchemaIndexes( MESSU_PKG_NAME, $indices );
 
 ?>

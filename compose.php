@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.3 2005/08/01 18:41:08 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.4 2006/01/31 21:27:55 bitweaver Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -16,7 +16,7 @@
  * required setup
  */
 require_once( '../bit_setup_inc.php' );
-require_once( MESSU_PKG_PATH.'messu_lib.php' );
+require_once( MESSU_PKG_PATH.'messages_lib.php' );
 require_once( USERS_PKG_PATH.'BitUser.php' );
 
 if( !$gBitUser->isRegistered() ) {
@@ -116,5 +116,5 @@ $section = 'user_messages';
 
 
 
-$gBitSystem->display( 'bitpackage:messu/messu_compose.tpl', 'Compose Message' );
+$gBitSystem->display( 'bitpackage:messu/messages_compose.tpl', 'Compose Message' );
 ?>
