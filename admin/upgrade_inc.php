@@ -2,9 +2,9 @@
 global $gBitSystem, $gUpgradeFrom, $gUpgradeTo;
 
 $upgrades = array(
+	'BONNIE' => array(
+		'BWR1' => array(
 
-'BONNIE' => array(
-	'BWR1' => array(
 // STEP 1
 array( 'DATADICT' => array(
 array( 'RENAMECOLUMN' => array(
@@ -41,14 +41,14 @@ array( 'DATADICT' => array(
 	)),
 )),
 
-	)
-),
+		)
+	),
 
 
 
 // next upgrade path
-'BWR1' => array(
-	'BWR2' => array(
+	'BWR1' => array(
+		'BWR2' => array(
 
 array( 'DATADICT' => array(
 	array( 'CREATE' => array (
@@ -67,9 +67,14 @@ array( 'DATADICT' => array(
 		'messu_messages' => array(
 			'group_id' => array( '`group_id`', 'I4' ),
 		),
-	))
+	)),
+	// de-tikify tables
+	array( 'RENAMETABLE' => array(
+		'messu_messages' => 'messages',
+	)),
 )),
 
+		)
 	),
 );
 
