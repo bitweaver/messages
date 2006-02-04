@@ -28,7 +28,7 @@ $tables = array(
 	is_replied C(1),
 	priority I4,
 	is_hidden C(1)
-	CONSTRAINTS	', CONSTRAINT `messages_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messages` (`msg_id`)'
+	CONSTRAINT	', CONSTRAINT `messages_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messages` (`msg_id`)'
 "
 
 //  CONSTRAINT	', CONSTRAINT messages_to_user_ref FOREIGN KEY (to_user_id) REFERENCES `".BIT_DB_PREFIX."users_users` (user_id)
