@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.4 2006/01/31 21:27:55 bitweaver Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.5 2006/02/04 19:04:34 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -71,7 +71,6 @@ $messulib->flag_message( $gBitUser->mUserId, $_REQUEST['msg_id'], 'is_read', 'y'
 $msg = $messulib->get_message( $gBitUser->mUserId, $_REQUEST['msg_id']);
 $gBitSmarty->assign('msg', $msg);
 
-$section = 'user_messages';
 $gBitSystem->display( 'bitpackage:messu/messages_read.tpl');
 
 ?>

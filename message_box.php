@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.7 2006/01/31 21:27:55 bitweaver Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.8 2006/02/04 19:04:34 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -107,10 +107,6 @@ if ($offset > 0) {
 }
 
 $gBitSmarty->assign_by_ref('items', $items["data"]);
-
-$section = 'user_messages';
-
-
 
 $gBitSystem->display( 'bitpackage:messu/messages_mailbox.tpl', 'Message box' );
 ?>

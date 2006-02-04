@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.4 2006/01/31 21:27:55 bitweaver Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.5 2006/02/04 19:04:34 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -111,10 +111,6 @@ if (isset($_REQUEST['send'])) {
 		$feedback['error'][] = tra( 'ERROR: Either the subject or body must contain text.' );
 	}
 }
-
-$section = 'user_messages';
-
-
 
 $gBitSystem->display( 'bitpackage:messu/messages_compose.tpl', 'Compose Message' );
 ?>

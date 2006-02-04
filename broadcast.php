@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.7 2006/01/31 21:27:55 bitweaver Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.8 2006/02/04 19:04:34 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -64,19 +64,18 @@ if (isset($_REQUEST['reply']) || isset($_REQUEST['replyall'])) {
 
 
 if (isset($_REQUEST['send'])) {
-
 	$gBitSmarty->assign('sent', 1);
 	$message = '';
 	$errors = array();
 	// Validation:
 	// must have a subject or body non-empty (or both)
 	if (empty($_REQUEST['subject']) && empty($_REQUEST['body'])) {
-		$errors[] = tra("Subject or body must not be empty");	
+		$errors[] = tra("Subject or body must not be empty");
 	}
 	if (empty($_REQUEST['group'])) {
-		$errors[] = tra("You must select a group to broadcast this message to");	
+		$errors[] = tra("You must select a group to broadcast this message to");
 	}
-			
+
 	if (!count($errors)) {
 		$messulib->post_system_message($_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['group']);
 		$message = "Message successfully broadcast";
@@ -86,17 +85,15 @@ if (isset($_REQUEST['send'])) {
 }
 
 
-if ($gBitUser->isAdmin()) {	
+if ($gBitUser->isAdmin()) {
 	$pListHash = array('sort_mode' => 'group_id_asc');
 	$groups = $gBitUser->getAllGroups($pListHash);
 } else {
 	$gBitUser->loadGroups();
-	$groups = &$gBitUser->mGroups; 
-	
+	$groups = &$gBitUser->mGroups;
 }
 
 $gBitSmarty->assign('groups', $groups["data"]);
 
-$section = 'user_messages';
 $gBitSystem->display( 'bitpackage:messu/messages_broadcast.tpl');
 ?>
