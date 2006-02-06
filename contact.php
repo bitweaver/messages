@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.5 2006/01/31 21:27:55 bitweaver Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.6 2006/02/06 22:56:47 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -17,7 +17,7 @@
  */
 require_once( '../bit_setup_inc.php' );
 
-if( !$gBitSystem->isFeatureActive( 'feature_contact' ) ) {
+if( !$gBitSystem->isFeatureActive( 'site_contact' ) ) {
 	$gBitSystem->fatalError( "The Contact feature is disabled." );
 }
 
