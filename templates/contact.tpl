@@ -8,7 +8,7 @@
 		{formfeedback hash=$feedback}
 
 		{form legend="Send us a message"}
-			<input type="hidden" name="to" value="{$contact_user|escape}" />
+			<input type="hidden" name="to" value="{$gBitSystemPrefs.contact_user|escape}" />
 			
 			<div class="row">
 				{formlabel label="Priority" for="priority"}
