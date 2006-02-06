@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.2 $
 * @package  messages
 */
 
@@ -109,7 +109,7 @@ class Messu extends BitBase {
 		return $ret;
 	}
 	
-	function list_messages( $pUserId, $offset, $maxRecords, $sort_mode, $find, $flag = '', $flagval = '', $prio = '' ) {
+	function list_messages( $pUserId, $offset, $max_records, $sort_mode, $find, $flag = '', $flagval = '', $prio = '' ) {
 		
 		// Load all normal messages (user to user)
 		$bindvars = array($pUserId);
@@ -135,7 +135,7 @@ class Messu extends BitBase {
 				  WHERE `to_user_id`=? $mid
 				  ORDER BY ".$this->mDb->convert_sortmode($sort_mode).",".$this->mDb->convert_sortmode("msg_id_desc");
 		$query_cant = "select count(*) from `".BIT_DB_PREFIX."messages` where `to_user_id`=? $mid";
-		$result = $this->mDb->query($query,$bindvars,$maxRecords,$offset);
+		$result = $this->mDb->query($query,$bindvars,$max_records,$offset);
 		$cant = $this->mDb->getOne($query_cant,$bindvars);
 		$normalMessages = array();
 

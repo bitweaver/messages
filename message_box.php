@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.8 2006/02/04 19:04:34 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.9 2006/02/06 00:09:17 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -27,7 +27,7 @@ if( !$gBitUser->isRegistered() ) {
 $gBitSystem->isPackageActive( 'messu', TRUE );
 $gBitSystem->verifyPermission( 'bit_p_messages' );
 
-$maxRecords = $gBitSystem->getPreference( 'maxRecords', 20 );
+$max_records = $gBitSystem->getPreference( 'max_records', 20 );
 
 // Mark messages if the mark button was pressed
 if (isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {
@@ -87,21 +87,21 @@ $gBitSmarty->assign_by_ref('offset', $offset);
 $gBitSmarty->assign_by_ref('sort_mode', $sort_mode);
 $gBitSmarty->assign('find', $find);
 // What are we paginating: items
-$items = $messulib->list_messages( $gBitUser->mUserId, $offset, $maxRecords, $sort_mode,
+$items = $messulib->list_messages( $gBitUser->mUserId, $offset, $max_records, $sort_mode,
 	$find, $_REQUEST["flag"], $_REQUEST["flagval"], $_REQUEST['priority']);
 
-$cant_pages = ceil($items["cant"] / $maxRecords);
+$cant_pages = ceil($items["cant"] / $max_records);
 $gBitSmarty->assign_by_ref('cant_pages', $cant_pages);
-$gBitSmarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$gBitSmarty->assign('actual_page', 1 + ($offset / $max_records));
 
-if ($items["cant"] > ($offset + $maxRecords)) {
-	$gBitSmarty->assign('next_offset', $offset + $maxRecords);
+if ($items["cant"] > ($offset + $max_records)) {
+	$gBitSmarty->assign('next_offset', $offset + $max_records);
 } else {
 	$gBitSmarty->assign('next_offset', -1);
 }
 
 if ($offset > 0) {
-	$gBitSmarty->assign('prev_offset', $offset - $maxRecords);
+	$gBitSmarty->assign('prev_offset', $offset - $max_records);
 } else {
 	$gBitSmarty->assign('prev_offset', -1);
 }
