@@ -60,7 +60,7 @@ array( 'DATADICT' => array(
 			is_replied C(1),
 			priority I4,
 			is_hidden C(1)
-			CONSTRAINTS	', CONSTRAINT `tiki_messages_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messu_messages` (`msg_id`)'
+			CONSTRAINT	', CONSTRAINT `messages_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messages` (`msg_id`)'
 		"
 	)),
 	array( 'ALTER' => array(
