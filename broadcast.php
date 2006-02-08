@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.8 2006/02/04 19:04:34 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.9 2006/02/08 18:32:11 mej Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -17,7 +17,7 @@
  */
 require_once( '../bit_setup_inc.php' );
 
-include_once( MESSU_PKG_PATH.'messages_lib.php' );
+include_once( MESSAGES_PKG_PATH.'messages_lib.php' );
 
 if (!$gBitUser->isRegistered()) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
@@ -26,7 +26,7 @@ if (!$gBitUser->isRegistered()) {
 	die;
 }
 
-$gBitSystem->isPackageActive( 'messu', TRUE );
+$gBitSystem->isPackageActive( 'messages', TRUE );
 $gBitSystem->verifyPermission( 'bit_p_broeadcast_messages' );
 
 if (!isset($_REQUEST['to']))
@@ -59,7 +59,7 @@ $gBitSmarty->assign('priority', $_REQUEST['priority']);
 $gBitSmarty->assign('sent', 0);
 
 if (isset($_REQUEST['reply']) || isset($_REQUEST['replyall'])) {
-	$messulib->flag_message($user, $_REQUEST['msg_id'], 'is_replied', 'y');
+	$messageslib->flag_message($user, $_REQUEST['msg_id'], 'is_replied', 'y');
 }
 
 
@@ -77,7 +77,7 @@ if (isset($_REQUEST['send'])) {
 	}
 
 	if (!count($errors)) {
-		$messulib->post_system_message($_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['group']);
+		$messageslib->post_system_message($_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['group']);
 		$message = "Message successfully broadcast";
 	}
 	$gBitSmarty->assign('message', $message);
@@ -95,5 +95,5 @@ if ($gBitUser->isAdmin()) {
 
 $gBitSmarty->assign('groups', $groups["data"]);
 
-$gBitSystem->display( 'bitpackage:messu/messages_broadcast.tpl');
+$gBitSystem->display( 'bitpackage:messages/messages_broadcast.tpl');
 ?>

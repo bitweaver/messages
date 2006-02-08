@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.9 2006/02/06 00:09:17 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.10 2006/02/08 18:32:11 mej Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -16,7 +16,7 @@
  * required setup
  */
 require_once( '../bit_setup_inc.php' );
-require_once( MESSU_PKG_PATH.'messages_lib.php' );
+require_once( MESSAGES_PKG_PATH.'messages_lib.php' );
 
 if( !$gBitUser->isRegistered() ) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
@@ -24,7 +24,7 @@ if( !$gBitUser->isRegistered() ) {
 	die;
 }
 
-$gBitSystem->isPackageActive( 'messu', TRUE );
+$gBitSystem->isPackageActive( 'messages', TRUE );
 $gBitSystem->verifyPermission( 'bit_p_messages' );
 
 $max_records = $gBitSystem->getPreference( 'max_records', 20 );
@@ -33,14 +33,14 @@ $max_records = $gBitSystem->getPreference( 'max_records', 20 );
 if (isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {
 	foreach (array_keys($_REQUEST["msg"])as $msg) {
 		$parts = explode('_', $_REQUEST['action']);
-		$messulib->flag_message($gBitUser->mUserId, $msg, $parts[0].'_'.$parts[1], $parts[2]);
+		$messageslib->flag_message($gBitUser->mUserId, $msg, $parts[0].'_'.$parts[1], $parts[2]);
 	}
 }
 
 // Delete messages if the delete button was pressed
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
 	foreach (array_keys($_REQUEST["msg"])as $msg) {
-		$messulib->delete_message( $gBitUser->mUserId, $msg );
+		$messageslib->delete_message( $gBitUser->mUserId, $msg );
 	}
 }
 
@@ -87,7 +87,7 @@ $gBitSmarty->assign_by_ref('offset', $offset);
 $gBitSmarty->assign_by_ref('sort_mode', $sort_mode);
 $gBitSmarty->assign('find', $find);
 // What are we paginating: items
-$items = $messulib->list_messages( $gBitUser->mUserId, $offset, $max_records, $sort_mode,
+$items = $messageslib->list_messages( $gBitUser->mUserId, $offset, $max_records, $sort_mode,
 	$find, $_REQUEST["flag"], $_REQUEST["flagval"], $_REQUEST['priority']);
 
 $cant_pages = ceil($items["cant"] / $max_records);
@@ -108,5 +108,5 @@ if ($offset > 0) {
 
 $gBitSmarty->assign_by_ref('items', $items["data"]);
 
-$gBitSystem->display( 'bitpackage:messu/messages_mailbox.tpl', 'Message box' );
+$gBitSystem->display( 'bitpackage:messages/messages_mailbox.tpl', 'Message box' );
 ?>

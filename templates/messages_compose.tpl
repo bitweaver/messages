@@ -11,7 +11,7 @@
 		{formfeedback hash=$feedback}
 
 		{if $feedback}
-			{tr}Return to your {smartlink ititle="Message Box" ipackage=messu ifile="message_box.php"}{/tr}
+			{tr}Return to your {smartlink ititle="Message Box" ipackage=messages ifile="message_box.php"}{/tr}
 		{/if}
 
 		{if !$feedback or $feedback.error}

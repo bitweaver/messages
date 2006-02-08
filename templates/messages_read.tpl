@@ -17,7 +17,7 @@
 		<div class="navbar">
 			<ul>
 				{if $msg.is_flagged eq 'y'}
-					<li>{biticon ipackage=messu iname=flagged iexplain=Flagged} {smartlink ititle="Unflag Message" offset=$offset act=is_flagged actval=n msg_id=$msg_id sort_mode=$sort_mode find=$find flag=$flag priority=$priority flagval=$flagval}</li>
+					<li>{biticon ipackage=messages iname=flagged iexplain=Flagged} {smartlink ititle="Unflag Message" offset=$offset act=is_flagged actval=n msg_id=$msg_id sort_mode=$sort_mode find=$find flag=$flag priority=$priority flagval=$flagval}</li>
 				{else}
 					<li>{smartlink ititle="Flag Message" offset=$offset act=is_flagged actval=y msg_id=$msg_id sort_mode=$sort_mode find=$find flag=$flag priority=$priority flagval=$flagval}</li>
 				{/if}
@@ -30,7 +30,7 @@
 		{if $legend}
 			{$legend}
 		{else}
-			{form legend="Message" ipackage=messu ifile='compose.php'}
+			{form legend="Message" ipackage=messages ifile='compose.php'}
 				<div class="row">
 					{formlabel label="Date"}
 					{forminput}
@@ -106,7 +106,7 @@
 {*
 			<table class="panel">
 				<tr class="panelsubmitrow"><td>
-					<form method="post" action="{$smarty.const.MESSU_PKG_URL}read.php">
+					<form method="post" action="{$smarty.const.MESSAGES_PKG_URL}read.php">
 						<input type="hidden" name="offset" value="{$offset}" />
 						<input type="hidden" name="find" value="{$find|escape}" />
 						<input type="hidden" name="sort_mode" value="{$sort_mode}" />
@@ -125,7 +125,7 @@
 					</form>
 					</td>
 					<td>
-					<form method="post" action="{$smarty.const.MESSU_PKG_URL}compose.php">
+					<form method="post" action="{$smarty.const.MESSAGES_PKG_URL}compose.php">
 					<input type="hidden" name="offset" value="{$offset}" />
 					<input type="hidden" name="msg_id" value="{$msg_id}" />
 					<input type="hidden" name="find" value="{$find|escape}" />
@@ -140,7 +140,7 @@
 					</form>
 					</td>
 					<td>
-					<form method="post" action="{$smarty.const.MESSU_PKG_URL}compose.php">
+					<form method="post" action="{$smarty.const.MESSAGES_PKG_URL}compose.php">
 					<input type="hidden" name="offset" value="{$offset}" />
 					<input type="hidden" name="find" value="{$find|escape}" />
 					<input type="hidden" name="msg_id" value="{$msg_id}" />

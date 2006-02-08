@@ -3,19 +3,19 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.2 $
+* @version  $Revision: 1.3 $
 * @package  messages
 */
 
 /**
-* Messu base class
+* Messages base class
 *
 * @package  messages
-* @subpackage  Messu
+* @subpackage  Messages
 */
-class Messu extends BitBase {
+class Messages extends BitBase {
 
-	function Messu() {
+	function Messages() {
 		BitBase::BitBase();
 	}
 
@@ -59,7 +59,7 @@ class Messu extends BitBase {
 						$gBitSmarty->assign( 'mail_from', stripslashes( $gBitUser->getDisplayName() ) );
 						$gBitSmarty->assign( 'mail_subject', stripslashes($subject));
 						$gBitSmarty->assign( 'mail_body', stripslashes($body));
-						$mail_data = $gBitSmarty->fetch('bitpackage:messu/messages_message_notification.tpl');
+						$mail_data = $gBitSmarty->fetch('bitpackage:messages/messages_message_notification.tpl');
 
 						if( !empty( $userInfo['email'] ) ) {
 							@mail($userInfo['email'], tra('New message arrived from '). $mailSite, $mail_data,
@@ -388,7 +388,7 @@ class Messu extends BitBase {
 	}
 }
 
-global $messulib;
-$messulib = new Messu();
+global $messageslib;
+$messageslib = new Messages();
 
 ?>

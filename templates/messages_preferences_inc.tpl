@@ -3,7 +3,7 @@
 	<div class="row">
 		{formlabel label="Personal Messages" for=""}
 		{forminput}
-			<a href="{$smarty.const.MESSU_PKG_URL}message_box.php">
+			<a href="{$smarty.const.MESSAGES_PKG_URL}message_box.php">
 				{tr}You have <strong>{$unreadMsgs|default:no} unread</strong> {if $unreadMsgs eq '1'}message{else}messages{/if}{/tr}
 			</a>
 		{/forminput}

@@ -1,18 +1,18 @@
 <div class="floaticon">{bithelp}</div>
 <div class="contain usermessages">
 <div class="header">
-<h1><a href="{$smarty.const.MESSU_PKG_URL}broadcast.php">{tr}Broadcast message{/tr}</a></h1>
+<h1><a href="{$smarty.const.MESSAGES_PKG_URL}broadcast.php">{tr}Broadcast message{/tr}</a></h1>
 </div>
 
 {include file="bitpackage:users/my_bitweaver_bar.tpl"}
-{include file="bitpackage:messu/messages_nav.tpl"}
+{include file="bitpackage:messages/messages_nav.tpl"}
 
 <div class="body">
 {formfeedback error=$errors success=$message}
 {if $sent}
 	{$message}
 {else}
-<form action="{$smarty.const.MESSU_PKG_URL}broadcast.php" method="post">
+<form action="{$smarty.const.MESSAGES_PKG_URL}broadcast.php" method="post">
 <table class="panel">
   <tr>
     <td><label for="broadcast-group">{tr}Group{/tr}:</label></td>

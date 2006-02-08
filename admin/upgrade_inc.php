@@ -52,7 +52,7 @@ array( 'DATADICT' => array(
 
 array( 'DATADICT' => array(
 	array( 'CREATE' => array (
-		'messu_system_message_map' => "
+		'messages_system_message_map' => "
 			msg_id I4,
 			to_user_id I4 NOTNULL,
 			is_read C(1),
@@ -60,7 +60,7 @@ array( 'DATADICT' => array(
 			is_replied C(1),
 			priority I4,
 			is_hidden C(1)
-			CONSTRAINTS	', CONSTRAINT `tiki_messu_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messu_messages` (`msg_id`)'
+			CONSTRAINTS	', CONSTRAINT `tiki_messages_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messu_messages` (`msg_id`)'
 		"
 	)),
 	array( 'ALTER' => array(
@@ -71,6 +71,8 @@ array( 'DATADICT' => array(
 	// de-tikify tables
 	array( 'RENAMETABLE' => array(
 		'messu_messages' => 'messages',
+		'messu_archive' => 'messages_archive',
+		'messu_sent' => 'messages_sent',
 	)),
 )),
 
@@ -79,7 +81,7 @@ array( 'DATADICT' => array(
 );
 
 if( isset( $upgrades[$gUpgradeFrom][$gUpgradeTo] ) ) {
-	$gBitSystem->registerUpgrade( MESSU_PKG_NAME, $upgrades[$gUpgradeFrom][$gUpgradeTo] );
+	$gBitSystem->registerUpgrade( MESSAGES_PKG_NAME, $upgrades[$gUpgradeFrom][$gUpgradeTo] );
 }
 
 

@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.6 2006/02/06 22:56:47 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.7 2006/02/08 18:32:11 mej Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -21,7 +21,7 @@ if( !$gBitSystem->isFeatureActive( 'site_contact' ) ) {
 	$gBitSystem->fatalError( "The Contact feature is disabled." );
 }
 
-include_once( MESSU_PKG_PATH.'messages_lib.php' );
+include_once( MESSAGES_PKG_PATH.'messages_lib.php' );
 
 $userInfo = $gBitUser->getUserInfo( array( 'login' => $gBitSystem->getPreference( 'contact_user' ) ) );
 $email = $userInfo['email'];
@@ -39,10 +39,10 @@ if (!empty($_REQUEST['send'])) {
 	if( empty( $_REQUEST['subject'] ) && empty( $_REQUEST['body'] ) ) {
 		$gBitSystem->fatalError( "Either a subject or a message body is required." );
 	}
-	$messulib->post_message( $userInfo['login'], $gBitUser->mUsername, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
+	$messageslib->post_message( $userInfo['login'], $gBitUser->mUsername, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
 	$feedback['success'] = tra( 'Your message was sent to' ).': '.( !empty( $userInfo['real_name'] ) ? $userInfo['real_name'] : $userInfo['login'] );
 	$gBitSmarty->assign( 'feedback', $feedback );
 }
 
-$gBitSystem->display( 'bitpackage:messu/contact.tpl');
+$gBitSystem->display( 'bitpackage:messages/contact.tpl');
 ?>
