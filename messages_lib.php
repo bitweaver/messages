@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.3 $
+* @version  $Revision: 1.4 $
 * @package  messages
 */
 
@@ -30,7 +30,7 @@ class Messages extends BitBase {
 		}
 		
 		if( $userInfo ) {
-			if ($gBitUser->getPreference('allowMsgs', 'y', $userInfo['user_id'] )) {
+			if ($gBitUser->getPreference('messages_allow_messages', 'y', $userInfo['user_id'] )) {
 				$subject = strip_tags($subject);
 				$body = strip_tags($body, '<a><b><img><i>');
 				// Prevent duplicates
@@ -51,7 +51,7 @@ class Messages extends BitBase {
 					$machine = httpPrefix(). $foo["path"];
 
 					if ($gBitUser->getPreference( 'minPrio', 3 ) <= $priority && FALSE) {
-						$mailSite = $gBitSystem->getPreference( 'feature_server_name', $_SERVER["SERVER_NAME"] );
+						$mailSite = $gBitSystem->getPreference( 'kernel_server_name', $_SERVER["SERVER_NAME"] );
 						$gBitSmarty->assign( 'mail_site', $mailSite );
 						$gBitSmarty->assign( 'mail_machine', $machine);
 						$gBitSmarty->assign( 'mail_date', $now);

@@ -26,9 +26,9 @@
 	</div>
 
 	<div class="row">
-		{formlabel label="Allow messages from other users" for="allowMsgs"}
+		{formlabel label="Allow messages from other users" for="messages_allow_messages"}
 		{forminput}
-			<input type="checkbox" name="allowMsgs" id="allowMsgs" {if $userPrefs.allowMsgs eq 'y'}checked="checked"{/if} />
+			<input type="checkbox" name="messages_allow_messages" id="messages_allow_messages" {if $userPrefs.messages_allow_messages eq 'y'}checked="checked"{/if} />
 			{formhelp note=""}
 		{/forminput}
 	</div>
