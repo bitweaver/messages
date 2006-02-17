@@ -1,6 +1,11 @@
 <?php
 global $gBitSystem;
-$gBitSystem->registerPackage( 'messages', dirname( __FILE__).'/' );
+
+$registerHash = array(
+	'package_name' => 'messages',
+	'package_path' => dirname( __FILE__ ).'/',
+);
+$gBitSystem->registerPackage( $registerHash );
 
 if( $gBitSystem->isPackageActive( 'messages' ) && $gBitUser->hasPermission( 'bit_p_messages' ) ) {
 	require_once( MESSAGES_PKG_PATH.'messages_lib.php' );
