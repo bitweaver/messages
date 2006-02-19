@@ -26,7 +26,7 @@
 					<th style="width:1%">{smartlink ititle="Flagged" isort=is_flagged ibiticon="messages/flagged" find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
 					<th>{smartlink ititle="From" isort=$displayName find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
 					<th>{smartlink ititle="Subject" isort=subject find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
-					<th>{smartlink ititle="Date" isort=date find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
+					<th>{smartlink ititle="Date" isort=msg_date find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
 					<th>{tr}Size{/tr}</th>
 				</tr>
 
@@ -36,7 +36,7 @@
 						<td>{if $items[user].is_flagged eq 'y'}{biticon ipackage=messages iname=flagged iexplain="Flagged"}{/if}</td>
 						<td>{displayname hash=$items[user]}</td>
 						<td><a href="{$smarty.const.MESSAGES_PKG_URL}read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msg_id={$items[user].msg_id}">{$items[user].subject}</a></td>
-						<td style="text-align:right;">{$items[user].date|bit_short_datetime}</td>
+						<td style="text-align:right;">{$items[user].msg_date|bit_short_datetime}</td>
 						<td style="text-align:right;">{$items[user].len|kbsize}</td>
 					</tr>
 				{sectionelse}

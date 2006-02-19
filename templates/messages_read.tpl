@@ -34,7 +34,7 @@
 				<div class="row">
 					{formlabel label="Date"}
 					{forminput}
-						{$msg.date|bit_long_datetime}
+						{$msg.msg_date|bit_long_datetime}
 					{/forminput}
 				</div>
 

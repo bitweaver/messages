@@ -12,7 +12,7 @@ $tables = array(
 	subject C(255),
 	body X,
 	hash C(32),
-	date I8,
+	msg_date I8,
 	is_read C(1),
 	is_replied C(1),
 	is_flagged C(1),

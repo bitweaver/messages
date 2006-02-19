@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.4 $
+* @version  $Revision: 1.5 $
 * @package  messages
 */
 
@@ -42,7 +42,7 @@ class Messages extends BitBase {
 					$bitDate = $gBitSystem->get_date_converter();
 					$now = $bitDate->getUTCTime();
 					$query = "INSERT INTO `".BIT_DB_PREFIX."messages`
-							  (`to_user_id`, `from_user_id`, `msg_to`, `msg_cc`, `msg_bcc`, `subject`, `body`, `date`, `is_read`, `is_replied`, `is_flagged`, `priority`, `hash`, `group_id` )
+							  (`to_user_id`, `from_user_id`, `msg_to`, `msg_cc`, `msg_bcc`, `subject`, `body`, `msg_date`, `is_read`, `is_replied`, `is_flagged`, `priority`, `hash`, `group_id` )
 							  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 					$this->mDb->query( $query, array( $userInfo['user_id'], $gBitUser->mUserId, $to, $cc, $bcc, $subject, $body,(int) $now,'n','n','n',(int) $priority,$hash, $group_id ) );
 
@@ -168,7 +168,7 @@ class Messages extends BitBase {
 			$bindvars[] = $findesc;
 		}
 				
-		$query = "SELECT uu.`login` AS `user`, uu.`real_name`, uu.`user_id`, mm.`msg_id` as `msg_id_foo`, mm.`msg_to`, mm.`msg_cc`, mm.`msg_bcc`, mm.`subject`, mm.`body`, mm.`hash`, mm.`date`, msm.* 
+		$query = "SELECT uu.`login` AS `user`, uu.`real_name`, uu.`user_id`, mm.`msg_id` as `msg_id_foo`, mm.`msg_to`, mm.`msg_cc`, mm.`msg_bcc`, mm.`subject`, mm.`body`, mm.`hash`, mm.`msg_date`, msm.* 
 				  FROM `".BIT_DB_PREFIX."messages` mm  
 				  	INNER JOIN `".BIT_DB_PREFIX."users_users` uu ON (mm.`from_user_id` = uu.`user_id`) 
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."messages_system_map` msm  ON (mm.`msg_id` = msm.`msg_id` AND msm.`to_user_id` = ?)
@@ -267,7 +267,7 @@ class Messages extends BitBase {
 			}
 			
 		} else {
-			$query = "update `".BIT_DB_PREFIX."messages` set `$flag`=? where `to_user_id`=? and `msg_id`=?";
+			$query = "UPDATE `".BIT_DB_PREFIX."messages` SET `$flag`=? where `to_user_id`=? and `msg_id`=?";
 			$this->mDb->query($query,array($val,$pUserId,(int)$msg_id));
 		}
 	}
@@ -357,7 +357,7 @@ class Messages extends BitBase {
 			$res = $result->fetchRow();		
 		} else {
 			$bindvars = array($pUserId, (int)$msg_id);
-			$query = "SELECT msm.*, ug.`group_name`, mm.`from_user_id`, mm.`msg_id` as `msg_id_foo`, mm.`msg_to`, mm.`msg_cc`, mm.`msg_bcc`, mm.`subject`, mm.`body`, mm.`hash`, mm.`date` 
+			$query = "SELECT msm.*, ug.`group_name`, mm.`from_user_id`, mm.`msg_id` as `msg_id_foo`, mm.`msg_to`, mm.`msg_cc`, mm.`msg_bcc`, mm.`subject`, mm.`body`, mm.`hash`, mm.`msg_date` 
 					  FROM `".BIT_DB_PREFIX."messages` mm 
 					    INNER JOIN `".BIT_DB_PREFIX."users_groups` ug ON (ug.`group_id` = mm.`group_id`)
 					    LEFT OUTER JOIN `".BIT_DB_PREFIX."messages_system_map` msm ON (mm.`msg_id` = msm.`msg_id` AND msm.`to_user_id` = ?)

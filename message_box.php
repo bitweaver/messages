@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.10 2006/02/08 18:32:11 mej Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.11 2006/02/19 19:24:27 lsces Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -63,7 +63,7 @@ if (!isset($_REQUEST["flagval"]))
 	$_REQUEST["flagval"] = '';
 
 if ( empty( $_REQUEST["sort_mode"] ) ) {
-	$sort_mode = 'date_desc';
+	$sort_mode = 'msg_date_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
