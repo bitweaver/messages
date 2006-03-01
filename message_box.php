@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.11 2006/02/19 19:24:27 lsces Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.12 2006/03/01 20:16:15 spiderr Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -27,7 +27,7 @@ if( !$gBitUser->isRegistered() ) {
 $gBitSystem->isPackageActive( 'messages', TRUE );
 $gBitSystem->verifyPermission( 'bit_p_messages' );
 
-$max_records = $gBitSystem->getPreference( 'max_records', 20 );
+$max_records = $gBitSystem->getConfig( 'max_records', 20 );
 
 // Mark messages if the mark button was pressed
 if (isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {

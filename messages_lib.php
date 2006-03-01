@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.5 $
+* @version  $Revision: 1.6 $
 * @package  messages
 */
 
@@ -51,7 +51,7 @@ class Messages extends BitBase {
 					$machine = httpPrefix(). $foo["path"];
 
 					if ($gBitUser->getPreference( 'minPrio', 3 ) <= $priority && FALSE) {
-						$mailSite = $gBitSystem->getPreference( 'kernel_server_name', $_SERVER["SERVER_NAME"] );
+						$mailSite = $gBitSystem->getConfig( 'kernel_server_name', $_SERVER["SERVER_NAME"] );
 						$gBitSmarty->assign( 'mail_site', $mailSite );
 						$gBitSmarty->assign( 'mail_machine', $machine);
 						$gBitSmarty->assign( 'mail_date', $now);
@@ -63,7 +63,7 @@ class Messages extends BitBase {
 
 						if( !empty( $userInfo['email'] ) ) {
 							@mail($userInfo['email'], tra('New message arrived from '). $mailSite, $mail_data,
-								"From: ".$gBitSystem->getPreference( 'sender_email' )."\r\nContent-type: text/plain;charset=utf-8\r\n");
+								"From: ".$gBitSystem->getConfig( 'sender_email' )."\r\nContent-type: text/plain;charset=utf-8\r\n");
 						}
 					}
 				}

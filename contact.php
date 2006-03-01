@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.7 2006/02/08 18:32:11 mej Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.8 2006/03/01 20:16:15 spiderr Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -23,7 +23,7 @@ if( !$gBitSystem->isFeatureActive( 'site_contact' ) ) {
 
 include_once( MESSAGES_PKG_PATH.'messages_lib.php' );
 
-$userInfo = $gBitUser->getUserInfo( array( 'login' => $gBitSystem->getPreference( 'contact_user' ) ) );
+$userInfo = $gBitUser->getUserInfo( array( 'login' => $gBitSystem->getConfig( 'contact_user' ) ) );
 $email = $userInfo['email'];
 if( empty( $email ) ) {
 	$gBitSystem->fatalError( "This feature is not correctly set up. The email address is missing." );
