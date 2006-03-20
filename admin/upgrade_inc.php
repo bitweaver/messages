@@ -51,8 +51,17 @@ array( 'DATADICT' => array(
 		'BWR2' => array(
 
 array( 'DATADICT' => array(
+	array( 'ALTER' => array(
+		'messu_messages' => array(
+			'group_id' => array( '`group_id`', 'I4' ),
+		),
+	)),
+	// de-tikify tables
+	array( 'RENAMETABLE' => array(
+		'messu_messages' => 'messages',
+	)),
 	array( 'CREATE' => array (
-		'messages_system_message_map' => "
+		'messages_system_map' => "
 			msg_id I4,
 			to_user_id I4 NOTNULL,
 			is_read C(1),
@@ -62,17 +71,6 @@ array( 'DATADICT' => array(
 			is_hidden C(1)
 			CONSTRAINT	', CONSTRAINT `messages_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messages` (`msg_id`)'
 		"
-	)),
-	array( 'ALTER' => array(
-		'messu_messages' => array(
-			'group_id' => array( '`group_id`', 'I4' ),
-		),
-	)),
-	// de-tikify tables
-	array( 'RENAMETABLE' => array(
-		'messu_messages' => 'messages',
-		'messu_archive' => 'messages_archive',
-		'messu_sent' => 'messages_sent',
 	)),
 )),
 
