@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.6 $
+* @version  $Revision: 1.7 $
 * @package  messages
 */
 
@@ -175,7 +175,7 @@ class Messages extends BitBase {
 				  WHERE mm.`to_user_id` = ? AND mm.`group_id` IN (SELECT `group_id` FROM `".BIT_DB_PREFIX."users_groups_map` WHERE `user_id` = ?) $mid 
 				  ORDER BY ".$this->mDb->convert_sortmode($sort_mode).",".$this->mDb->convert_sortmode("mm.msg_id_desc");
 		
-		$query_cant = "SELECT COUNT(mm.*) 
+		$query_cant = "SELECT COUNT(mm.`msg_id`) 
 		 			   FROM `".BIT_DB_PREFIX."messages` mm 
 		 			     LEFT OUTER JOIN `".BIT_DB_PREFIX."messages_system_map` msm ON (mm.`msg_id` = msm.`msg_id` AND msm.`to_user_id` = ?)
 					   WHERE mm.`to_user_id` = ? AND mm.`group_id` IN (SELECT `group_id` FROM `".BIT_DB_PREFIX."users_groups_map` WHERE `user_id` = ?) $mid";
