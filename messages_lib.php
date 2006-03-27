@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.7 $
+* @version  $Revision: 1.8 $
 * @package  messages
 */
 
@@ -39,7 +39,9 @@ class Messages extends BitBase {
 				if ($this->mDb->getOne("select count(*) from `".BIT_DB_PREFIX."messages` where `to_user_id`=? and `from_user_id`=? and `hash`=?", array( $userInfo['user_id'], $gBitUser->mUserId, $hash ) ) ) {
 					$this->mErrors['compose'] = $pToLogin.' '.tra( 'has already received this message' );
 				} else {
-					$bitDate = $gBitSystem->get_date_converter();
+//					$bitDate = $gBitSystem->get_date_converter();
+					include_once( KERNEL_PKG_PATH.'BitDate.php' );
+					$bitDate = new BitDate(0);
 					$now = $bitDate->getUTCTime();
 					$query = "INSERT INTO `".BIT_DB_PREFIX."messages`
 							  (`to_user_id`, `from_user_id`, `msg_to`, `msg_cc`, `msg_bcc`, `subject`, `body`, `msg_date`, `is_read`, `is_replied`, `is_flagged`, `priority`, `hash`, `group_id` )
