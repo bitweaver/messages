@@ -16,7 +16,7 @@ $tables = array(
 	is_read C(1),
 	is_replied C(1),
 	is_flagged C(1),
-	group_id I4
+	group_id I4,
 	priority I4
 ",
 
