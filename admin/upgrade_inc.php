@@ -7,23 +7,23 @@ $upgrades = array(
 
 // STEP 1
 array( 'DATADICT' => array(
-array( 'RENAMECOLUMN' => array(
-	'messu_messages' => array(
-		'`msgId`' => '`msg_id` I4 AUTO',
-		'`isRead`' => '`is_read` VARCHAR(1)',
-		'`isReplied`' => '`is_replied` VARCHAR(1)',
-		'`isFlagged`' => '`is_flagged` VARCHAR(1)',
-		'`user_to`' => '`msg_to` X',
-		'`user_cc`' => '`msg_cc` X',
-		'`user_bcc`' => '`msg_bcc` X',
-	),
-)),
-array( 'ALTER' => array(
-	'messu_messages' => array(
-		'to_user_id' => array( '`to_user_id`', 'I4' ),
-		'from_user_id' => array( '`from_user_id`', 'I4' ),
-	),
-))
+	array( 'RENAMECOLUMN' => array(
+		'messu_messages' => array(
+			'`msgId`' => '`msg_id` I4 AUTO',
+			'`isRead`' => '`is_read` VARCHAR(1)',
+			'`isReplied`' => '`is_replied` VARCHAR(1)',
+			'`isFlagged`' => '`is_flagged` VARCHAR(1)',
+			'`user_to`' => '`msg_to` X',
+			'`user_cc`' => '`msg_cc` X',
+			'`user_bcc`' => '`msg_bcc` X',
+		),
+	)),
+	array( 'ALTER' => array(
+		'messu_messages' => array(
+			'to_user_id' => array( '`to_user_id`', 'I4' ),
+			'from_user_id' => array( '`from_user_id`', 'I4' ),
+		),
+	))
 )),
 
 // STEP 3
@@ -71,6 +71,11 @@ array( 'DATADICT' => array(
 			is_hidden C(1)
 			CONSTRAINT	', CONSTRAINT `messages_system_message_ref` FOREIGN KEY (`msg_id`) REFERENCES `".BIT_DB_PREFIX."messages` (`msg_id`)'
 		"
+	)),
+	array( 'RENAMECOLUMN' => array(
+		'messages' => array(
+			'`date`' => 'msg_date'
+		),
 	)),
 )),
 
