@@ -74,7 +74,7 @@ array( 'DATADICT' => array(
 	)),
 	array( 'RENAMECOLUMN' => array(
 		'messages' => array(
-			'`date`' => 'msg_date'
+			'`date`' => '`msg_date` I8'
 		),
 	)),
 )),
