@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.7 2006/03/01 20:16:15 spiderr Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.8 2006/04/11 13:05:55 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -26,7 +26,7 @@ if( !$gBitUser->isRegistered() ) {
 }
 
 $gBitSystem->isPackageActive( 'messages', TRUE );
-$gBitSystem->verifyPermission( 'bit_p_messages' );
+$gBitSystem->verifyPermission( 'p_messages_send' );
 
 // Configure quicktags list
 if ($gBitSystem->getConfig('package_quicktags','n') == 'y') {

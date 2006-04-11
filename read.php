@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.6 2006/02/08 18:32:11 mej Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.7 2006/04/11 13:05:55 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -25,7 +25,7 @@ if( !$gBitUser->isRegistered() ) {
 }
 
 $gBitSystem->isPackageActive( 'messages', TRUE );
-$gBitSystem->verifyPermission( 'bit_p_messages' );
+$gBitSystem->verifyPermission( 'p_messages_send' );
 
 if (isset($_REQUEST["msgdel"])) {
 	

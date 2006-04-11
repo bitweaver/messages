@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.12 2006/03/01 20:16:15 spiderr Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.13 2006/04/11 13:05:55 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -25,7 +25,7 @@ if( !$gBitUser->isRegistered() ) {
 }
 
 $gBitSystem->isPackageActive( 'messages', TRUE );
-$gBitSystem->verifyPermission( 'bit_p_messages' );
+$gBitSystem->verifyPermission( 'p_messages_send' );
 
 $max_records = $gBitSystem->getConfig( 'max_records', 20 );
 
