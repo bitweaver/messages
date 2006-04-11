@@ -53,7 +53,8 @@ $gBitInstaller->registerPackageInfo( MESSAGES_PKG_NAME, array(
 
 // ### Default User Permissions
 $gBitInstaller->registerUserPermissions( MESSAGES_PKG_NAME, array(
-	array('p_messages_send', 'Can use the messaging system', 'registered', 'messages'),
+	array('p_messages_send', 'Can use the messaging system', 'registered', MESSAGES_PKG_NAME),
+	array('p_messages_broadcast', 'Can send internal messages to all users', 'editors', MESSAGES_PKG_NAME),
 ) );
 
 // ### Indexes

@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.9 2006/02/08 18:32:11 mej Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.10 2006/04/11 17:52:10 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -27,7 +27,7 @@ if (!$gBitUser->isRegistered()) {
 }
 
 $gBitSystem->isPackageActive( 'messages', TRUE );
-$gBitSystem->verifyPermission( 'bit_p_broeadcast_messages' );
+$gBitSystem->verifyPermission( 'p_messages_broadcast' );
 
 if (!isset($_REQUEST['to']))
 	$_REQUEST['to'] = '';
