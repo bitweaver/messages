@@ -66,4 +66,9 @@ $indices = array (
 //	'blog_posts_created_idx' => array( 'table' => 'blog_posts', 'cols' => 'created', 'opts' => NULL ),
 $gBitInstaller->registerSchemaIndexes( MESSAGES_PKG_NAME, $indices );
 
+// ### Default Preferences
+$gBitInstaller->registerPreferences( MESSAGES_PKG_NAME, array(
+	//array(MESSAGES_PKG_NAME,'site_contact','n'),
+	array(MESSAGES_PKG_NAME,'contact_user','admin'),
+) );
 ?>
