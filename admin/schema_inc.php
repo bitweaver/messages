@@ -68,7 +68,7 @@ $gBitInstaller->registerSchemaIndexes( MESSAGES_PKG_NAME, $indices );
 
 // ### Default Preferences
 $gBitInstaller->registerPreferences( MESSAGES_PKG_NAME, array(
-	//array(MESSAGES_PKG_NAME,'site_contact','n'),
-	array(MESSAGES_PKG_NAME,'contact_user','admin'),
+	//array(MESSAGES_PKG_NAME,'messages_site_contact','n'),
+	array(MESSAGES_PKG_NAME,'messages_contact_user','admin'),
 ) );
 ?>
