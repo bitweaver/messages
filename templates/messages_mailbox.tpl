@@ -18,7 +18,7 @@
 
 			<a href="{$smarty.const.MESSAGES_PKG_URL}compose.php">{biticon ipackage=messages iname=send_mail iexplain="Compose Message" iforce=icon_text}</a>
 
-			{assign var=displayName value=$gBitSystem->getConfig("display_name","real_name") }
+			{assign var=displayName value=$gBitSystem->getConfig("users_display_name","real_name") }
 			<table class="data">
 				<caption>{tr}Messages{/tr}</caption>
 				<tr>
