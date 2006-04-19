@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.8 $
+* @version  $Revision: 1.9 $
 * @package  messages
 */
 
@@ -65,7 +65,7 @@ class Messages extends BitBase {
 
 						if( !empty( $userInfo['email'] ) ) {
 							@mail($userInfo['email'], tra('New message arrived from '). $mailSite, $mail_data,
-								"From: ".$gBitSystem->getConfig( 'sender_email' )."\r\nContent-type: text/plain;charset=utf-8\r\n");
+								"From: ".$gBitSystem->getConfig( 'site_sender_email' )."\r\nContent-type: text/plain;charset=utf-8\r\n");
 						}
 					}
 				}
