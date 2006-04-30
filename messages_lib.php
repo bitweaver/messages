@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.9 $
+* @version  $Revision: 1.10 $
 * @package  messages
 */
 
@@ -52,7 +52,7 @@ class Messages extends BitBase {
 					$foo = parse_url($_SERVER["REQUEST_URI"]);
 					$machine = httpPrefix(). $foo["path"];
 
-					if ($gBitUser->getPreference( 'minPrio', 3 ) <= $priority && FALSE) {
+					if ($gBitUser->getPreference( 'messages_min_priority', 3 ) <= $priority && FALSE) {
 						$mailSite = $gBitSystem->getConfig( 'kernel_server_name', $_SERVER["SERVER_NAME"] );
 						$gBitSmarty->assign( 'mail_site', $mailSite );
 						$gBitSmarty->assign( 'mail_machine', $machine);
