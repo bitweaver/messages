@@ -45,9 +45,6 @@ foreach( array_keys( $tables ) AS $tableName ) {
 $gBitInstaller->registerPackageInfo( MESSAGES_PKG_NAME, array(
 	'description' => "An intra-site messaging system for users.",
 	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
-	'version' => '0.1',
-	'state' => 'beta',
-	'dependencies' => '',
 ) );
 
 
@@ -68,7 +65,6 @@ $gBitInstaller->registerSchemaIndexes( MESSAGES_PKG_NAME, $indices );
 
 // ### Default Preferences
 $gBitInstaller->registerPreferences( MESSAGES_PKG_NAME, array(
-	//array(MESSAGES_PKG_NAME,'messages_site_contact','n'),
 	array(MESSAGES_PKG_NAME,'messages_contact_user','admin'),
 ) );
 ?>
