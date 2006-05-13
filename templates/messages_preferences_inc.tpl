@@ -33,7 +33,6 @@
 		{/forminput}
 	</div>
 
-	{* the header_inc.tpl file needs some better js for this to work - xing
 	<div class="row">
 		{formlabel label="Message Alert" for="messages_alert"}
 		{forminput}
@@ -41,7 +40,6 @@
 			{formhelp note="Whenever you have new messages, a popup will apear and take you directly to your message box."}
 		{/forminput}
 	</div>
-	*}
 
 	<div class="row">
 		{formlabel label="Send an email" for="messages_min_priority"}
