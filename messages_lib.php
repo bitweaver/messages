@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.10 $
+* @version  $Revision: 1.11 $
 * @package  messages
 */
 
@@ -133,7 +133,7 @@ class Messages extends BitBase {
 			$bindvars[] = $findesc;
 		}
 
-		$query = "SELECT uu.`login` AS `user`, uu.`real_name`, uu.`user_id`, mm.* from `".BIT_DB_PREFIX."messages` mm INNER JOIN `".BIT_DB_PREFIX."users_users` uu ON( mm.`from_user_id`=uu.`user_id` )
+		$query = "SELECT uu.`login`, uu.`real_name`, uu.`user_id`, mm.* from `".BIT_DB_PREFIX."messages` mm INNER JOIN `".BIT_DB_PREFIX."users_users` uu ON( mm.`from_user_id`=uu.`user_id` )
 				  WHERE `to_user_id`=? $mid
 				  ORDER BY ".$this->mDb->convert_sortmode($sort_mode).",".$this->mDb->convert_sortmode("msg_id_desc");
 		$query_cant = "select count(*) from `".BIT_DB_PREFIX."messages` where `to_user_id`=? $mid";
@@ -170,7 +170,7 @@ class Messages extends BitBase {
 			$bindvars[] = $findesc;
 		}
 				
-		$query = "SELECT uu.`login` AS `user`, uu.`real_name`, uu.`user_id`, mm.`msg_id` as `msg_id_foo`, mm.`msg_to`, mm.`msg_cc`, mm.`msg_bcc`, mm.`subject`, mm.`body`, mm.`hash`, mm.`msg_date`, msm.* 
+		$query = "SELECT uu.`login` AS `creator_user`, uu.`real_name`, uu.`user_id`, mm.`msg_id` as `msg_id_foo`, mm.`msg_to`, mm.`msg_cc`, mm.`msg_bcc`, mm.`subject`, mm.`body`, mm.`hash`, mm.`msg_date`, msm.* 
 				  FROM `".BIT_DB_PREFIX."messages` mm  
 				  	INNER JOIN `".BIT_DB_PREFIX."users_users` uu ON (mm.`from_user_id` = uu.`user_id`) 
 				  	LEFT OUTER JOIN `".BIT_DB_PREFIX."messages_system_map` msm  ON (mm.`msg_id` = msm.`msg_id` AND msm.`to_user_id` = ?)
