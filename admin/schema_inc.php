@@ -45,6 +45,7 @@ foreach( array_keys( $tables ) AS $tableName ) {
 $gBitInstaller->registerPackageInfo( MESSAGES_PKG_NAME, array(
 	'description' => "An intra-site messaging system for users.",
 	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
+	'requirements' => 'If you are using MySQL, at least version 4.1',
 ) );
 
 
