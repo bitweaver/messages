@@ -51,5 +51,5 @@
 </form>
 {/if}
 
-</div> {* end .body *}
-</div> {* end .messages *}
+</div><!-- end .body -->
+</div><!-- end .messages -->
