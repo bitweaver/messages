@@ -1,5 +1,5 @@
 <?php
-global $gBitSystem;
+global $gBitSystem, $gBitUser, $gBitSmarty;
 
 $registerHash = array(
 	'package_name' => 'messages',
