@@ -16,7 +16,7 @@
 			<input type="hidden" name="flagval" value="{$flagval|escape}" />
 			<input type="hidden" name="priority" value="{$priority|escape}" />
 
-			<a href="{$smarty.const.MESSAGES_PKG_URL}compose.php">{biticon ipackage="icons" iname="mail-send-receive" iexplain="Compose Message" iforce=icon_text}</a>
+			<a href="{$smarty.const.MESSAGES_PKG_URL}compose.php">{biticon ipackage="icons" iname="mail-forward" iexplain="Compose Message" iforce=icon_text}</a>
 
 			{assign var=displayName value=$gBitSystem->getConfig("users_display_name","real_name") }
 			<table class="data">
