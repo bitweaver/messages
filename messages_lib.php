@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.12 $
+* @version  $Revision: 1.13 $
 * @package  messages
 */
 
@@ -370,7 +370,8 @@ class Messages extends BitBase {
 		}
 			
 		$content = new LibertyContent();
-		$res['parsed'] = $content->parseData( $res['body'], PLUGIN_GUID_TIKIWIKI );
+		global $gBitSystem;
+		$res['parsed'] = $content->parseData( $res['body'], $gBitSystem->getConfig( 'default_format'));
 	
 		if (empty($res['subject']))
 			$res['subject'] = tra('NONE');
