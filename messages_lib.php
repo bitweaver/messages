@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Revision: 1.11 $
+* @version  $Revision: 1.12 $
 * @package  messages
 */
 
@@ -74,7 +74,7 @@ class Messages extends BitBase {
 				$this->mErrors['compose'] = $pToLogin.' '.tra( 'can not receive messages' );
 			}
 		} else {
-			$this->mErrors['compose'] .= tra( 'Unknown user' ).": $pToLogin";
+			$this->mErrors['compose'] = tra( 'Unknown user' ).": $pToLogin";
 		}
 
 		return( count( $this->mErrors ) == 0 );
