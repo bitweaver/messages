@@ -31,9 +31,9 @@
 				</tr>
 
 				{section name=user loop=$items}
-					<tr class="{cycle values="odd,even"} prio{$items[user].priority}{if $items[user].is_read eq 'n'} highlight{/if}">
+					<tr class="{cycle values="odd,even"}{if $items[user].is_read eq 'n'} highlight{/if}">
 						<td><input type="checkbox" name="msg[{$items[user].msg_id}]" /></td>
-						<td>{if $items[user].is_flagged eq 'y'}{biticon ipackage="icons" iname="mail-mark-important" iexplain="Flagged"}{/if}</td>
+						<td class="prio{$items[user].priority}">{if $items[user].is_flagged eq 'y'}{biticon ipackage="icons" iname="mail-mark-important" iexplain="Flagged"}{/if}</td>
 						<td>{displayname hash=$items[user]}</td>
 						<td><a href="{$smarty.const.MESSAGES_PKG_URL}read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msg_id={$items[user].msg_id}">{$items[user].subject}</a></td>
 						<td style="text-align:right;">{$items[user].msg_date|bit_short_datetime}</td>
