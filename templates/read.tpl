@@ -5,6 +5,7 @@
 	</div>
 
 	{include file="bitpackage:users/my_bitweaver_bar.tpl"}
+	{include file="bitpackage:messages/messages_nav.tpl"}
 
 	{if $next}
 		{assign var=read_id value=$next}

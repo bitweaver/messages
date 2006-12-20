@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.8 2006/04/11 13:05:55 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.9 2006/12/20 20:50:17 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -16,8 +16,7 @@
  * required setup
  */
 require_once( '../bit_setup_inc.php' );
-require_once( MESSAGES_PKG_PATH.'messages_lib.php' );
-require_once( USERS_PKG_PATH.'BitUser.php' );
+require_once( MESSAGES_PKG_PATH.'Messages.php' );
 
 if( !$gBitUser->isRegistered() ) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
@@ -27,6 +26,8 @@ if( !$gBitUser->isRegistered() ) {
 
 $gBitSystem->isPackageActive( 'messages', TRUE );
 $gBitSystem->verifyPermission( 'p_messages_send' );
+
+$messages = new Messages();
 
 // Configure quicktags list
 if ($gBitSystem->getConfig('package_quicktags','n') == 'y') {
@@ -77,7 +78,7 @@ $feedback = array();
 $gBitSmarty->assign_by_ref( 'feedback', $feedback );
 
 if (isset($_REQUEST['replyto']) || isset($_REQUEST['replyallto'])) {
-	$messageslib->flag_message( $gBitUser->mUserId, $_REQUEST['msg_id'], 'is_replied', 'y' );
+	$messages->flagMessage( $gBitUser->mUserId, $_REQUEST['msg_id'], 'is_replied', 'y' );
 }
 
 if (isset($_REQUEST['send'])) {
@@ -96,10 +97,11 @@ if (isset($_REQUEST['send'])) {
 			// Insert the message in the inboxes of each user
 			foreach ($toUsers as $toUser) {
 				if( !empty( $toUser ) ) {
-					if( $messageslib->post_message( $toUser, $_REQUEST['to'], $_REQUEST['cc'], $_REQUEST['bcc'], $_REQUEST['subject'], $_REQUEST['body'],$_REQUEST['priority'] ) ) {
+					$_REQUEST['to_login'] = $toUser;
+					if( $messages->postMessage( $_REQUEST ) ) {
 						$feedback['success'][] =  tra( "Message will be sent to: " ).' '.$toUser;
 					} else {
-						$feedback['error'][] = $messageslib->mErrors['compose'];
+						$feedback['error'][] = $messages->mErrors['compose'];
 					}
 				}
 			}
@@ -112,5 +114,5 @@ if (isset($_REQUEST['send'])) {
 	}
 }
 
-$gBitSystem->display( 'bitpackage:messages/messages_compose.tpl', 'Compose Message' );
+$gBitSystem->display( 'bitpackage:messages/compose.tpl', 'Compose Message' );
 ?>

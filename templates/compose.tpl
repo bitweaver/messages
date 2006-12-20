@@ -6,6 +6,7 @@
 	</div>
 
 	{include file="bitpackage:users/my_bitweaver_bar.tpl"}
+	{include file="bitpackage:messages/messages_nav.tpl"}
 
 	<div class="body">
 		{formfeedback hash=$feedback}

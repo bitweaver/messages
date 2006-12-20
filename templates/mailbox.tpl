@@ -6,10 +6,10 @@
 	</div>
 
 	{include file="bitpackage:users/my_bitweaver_bar.tpl"}
+	{include file="bitpackage:messages/messages_nav.tpl"}
 
 	<div class="body">
 		{form legend="Your Personal Messages"}
-			<input type="hidden" name="offset" value="{$offset|escape}" />
 			<input type="hidden" name="find" value="{$find|escape}" />
 			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 			<input type="hidden" name="flag" value="{$flag|escape}" />
@@ -23,10 +23,10 @@
 				<caption>{tr}Messages{/tr}</caption>
 				<tr>
 					<th style="width:1%">&nbsp;</th>
-					<th style="width:1%">{smartlink ititle="Flagged" isort=is_flagged ibiticon="icons/mail-mark-important" find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
-					<th>{smartlink ititle="From" isort=$displayName find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
-					<th>{smartlink ititle="Subject" isort=subject find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
-					<th>{smartlink ititle="Date" isort=msg_date find=$find flag=$flag offset=$offset priority=$priority flagval=$flagval}</th>
+					<th style="width:1%">{smartlink ititle="Flagged" isort=is_flagged ibiticon="icons/mail-mark-important" find=$find flag=$flag priority=$priority flagval=$flagval}</th>
+					<th>{smartlink ititle="From" isort=$displayName find=$find flag=$flag priority=$priority flagval=$flagval}</th>
+					<th>{smartlink ititle="Subject" isort=subject find=$find flag=$flag priority=$priority flagval=$flagval}</th>
+					<th>{smartlink ititle="Date" isort=msg_date find=$find flag=$flag priority=$priority flagval=$flagval}</th>
 					<th>{tr}Size{/tr}</th>
 				</tr>
 
@@ -35,7 +35,10 @@
 						<td><input type="checkbox" name="msg[{$items[user].msg_id}]" /></td>
 						<td class="prio{$items[user].priority}">{if $items[user].is_flagged eq 'y'}{biticon ipackage="icons" iname="mail-mark-important" iexplain="Flagged"}{/if}</td>
 						<td>{displayname hash=$items[user]}</td>
-						<td><a href="{$smarty.const.MESSAGES_PKG_URL}read.php?offset={$offset}&amp;flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msg_id={$items[user].msg_id}">{$items[user].subject}</a></td>
+						<td>
+							<a href="{$smarty.const.MESSAGES_PKG_URL}read.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msg_id={$items[user].msg_id}">{$items[user].subject}</a>
+							{if $items[user].is_broadcast_message} <small>[{tr}broadcast{/tr}]</small>{/if}
+						</td>
 						<td style="text-align:right;">{$items[user].msg_date|bit_short_datetime}</td>
 						<td style="text-align:right;">{$items[user].len|kbsize}</td>
 					</tr>
@@ -63,11 +66,11 @@
 				{formlabel label="Messages" for="messages"}
 				{forminput}
 					<select name="flags" id="messages">
-						<option value="is_read_y" {if $flag eq 'is_read' and $flagval eq 'y'}selected="selected"{/if}>{tr}Read{/tr}</option>
-						<option value="is_read_n" {if $flag eq 'is_read' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unread{/tr}</option>
-						<option value="is_flagged_y" {if $flag eq 'is_flagged' and $flagval eq 'y'}selected="selected"{/if}>{tr}Flagged{/tr}</option>
-						<option value="is_flagged_y" {if $flag eq 'isflagged' and $flagval eq 'n'}selected="selected"{/if}>{tr}Unflagged{/tr}</option>
-						<option value="" {if $flag eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
+						<option value="">{tr}All{/tr}</option>
+						<option value="is_read_y"    {if $smarty.request.flag eq 'is_read'    and $smarty.request.flagval eq 'y'}selected="selected"{/if}>{tr}Read{/tr}</option>
+						<option value="is_read_n"    {if $smarty.request.flag eq 'is_read'    and $smarty.request.flagval eq 'n'}selected="selected"{/if}>{tr}Unread{/tr}</option>
+						<option value="is_flagged_y" {if $smarty.request.flag eq 'is_flagged' and $smarty.request.flagval eq 'y'}selected="selected"{/if}>{tr}Flagged{/tr}</option>
+						<option value="is_flagged_y" {if $smarty.request.flag eq 'isflagged'  and $smarty.request.flagval eq 'n'}selected="selected"{/if}>{tr}Unflagged{/tr}</option>
 					</select>
 					{formhelp note=""}
 				{/forminput}
@@ -77,12 +80,12 @@
 				{formlabel label="Priority" for="priority"}
 				{forminput}
 					<select name="priority" id="priority">
-						<option value="" {if $priority eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
-						<option value="1" {if $priority eq 1}selected="selected"{/if}>{tr}1{/tr}</option>
-						<option value="2" {if $priority eq 2}selected="selected"{/if}>{tr}2{/tr}</option>
-						<option value="3" {if $priority eq 3}selected="selected"{/if}>{tr}3{/tr}</option>
-						<option value="4" {if $priority eq 4}selected="selected"{/if}>{tr}4{/tr}</option>
-						<option value="5" {if $priority eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
+						<option value=""  {if $smarty.request.priority eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
+						<option value="1" {if $smarty.request.priority eq 1}selected="selected"{/if}>{tr}1{/tr}</option>
+						<option value="2" {if $smarty.request.priority eq 2}selected="selected"{/if}>{tr}2{/tr}</option>
+						<option value="3" {if $smarty.request.priority eq 3}selected="selected"{/if}>{tr}3{/tr}</option>
+						<option value="4" {if $smarty.request.priority eq 4}selected="selected"{/if}>{tr}4{/tr}</option>
+						<option value="5" {if $smarty.request.priority eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
 					</select>
 					{formhelp note=""}
 				{/forminput}

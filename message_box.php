@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.13 2006/04/11 13:05:55 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.14 2006/12/20 20:50:17 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -16,7 +16,7 @@
  * required setup
  */
 require_once( '../bit_setup_inc.php' );
-require_once( MESSAGES_PKG_PATH.'messages_lib.php' );
+require_once( MESSAGES_PKG_PATH.'Messages.php' );
 
 if( !$gBitUser->isRegistered() ) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
@@ -27,25 +27,27 @@ if( !$gBitUser->isRegistered() ) {
 $gBitSystem->isPackageActive( 'messages', TRUE );
 $gBitSystem->verifyPermission( 'p_messages_send' );
 
+$messages = new Messages();
+
 $max_records = $gBitSystem->getConfig( 'max_records', 20 );
 
 // Mark messages if the mark button was pressed
 if (isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {
 	foreach (array_keys($_REQUEST["msg"])as $msg) {
 		$parts = explode('_', $_REQUEST['action']);
-		$messageslib->flag_message($gBitUser->mUserId, $msg, $parts[0].'_'.$parts[1], $parts[2]);
+		$messages->flagMessage($gBitUser->mUserId, $msg, $parts[0].'_'.$parts[1], $parts[2]);
 	}
 }
 
 // Delete messages if the delete button was pressed
-if (isset($_REQUEST["delete"]) && isset($_REQUEST["msg"])) {
-	foreach (array_keys($_REQUEST["msg"])as $msg) {
-		$messageslib->delete_message( $gBitUser->mUserId, $msg );
+if( !empty( $_REQUEST["delete"] ) && !empty( $_REQUEST["msg"] ) ) {
+	foreach( array_keys( $_REQUEST["msg"] ) as $msg ) {
+		$messages->expunge( $gBitUser->mUserId, $msg );
 	}
 }
 
-if (isset($_REQUEST['filter'])) {
-	if ($_REQUEST['flags'] != '') {
+if( !empty( $_REQUEST['filter'] ) ) {
+	if( $_REQUEST['flags'] != '' ) {
 		$parts = explode('_', $_REQUEST['flags']);
 
 		$_REQUEST['flag'] = substr( $_REQUEST['flags'], 0, strrpos( $_REQUEST['flags'], '_' ) );
@@ -53,25 +55,10 @@ if (isset($_REQUEST['filter'])) {
 	}
 }
 
-if (!isset($_REQUEST["priority"]))
-	$_REQUEST["priority"] = '';
-
-if (!isset($_REQUEST["flag"]))
-	$_REQUEST["flag"] = '';
-
-if (!isset($_REQUEST["flagval"]))
-	$_REQUEST["flagval"] = '';
-
 if ( empty( $_REQUEST["sort_mode"] ) ) {
 	$sort_mode = 'msg_date_desc';
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
-}
-
-if (!isset($_REQUEST["offset"])) {
-	$offset = 0;
-} else {
-	$offset = $_REQUEST["offset"];
 }
 
 if (isset($_REQUEST["find"])) {
@@ -80,33 +67,17 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 
-$gBitSmarty->assign_by_ref('flag', $_REQUEST['flag']);
-$gBitSmarty->assign_by_ref('priority', $_REQUEST['priority']);
 $gBitSmarty->assign_by_ref('flagval', $_REQUEST['flagval']);
-$gBitSmarty->assign_by_ref('offset', $offset);
 $gBitSmarty->assign_by_ref('sort_mode', $sort_mode);
 $gBitSmarty->assign('find', $find);
 // What are we paginating: items
-$items = $messageslib->list_messages( $gBitUser->mUserId, $offset, $max_records, $sort_mode,
-	$find, $_REQUEST["flag"], $_REQUEST["flagval"], $_REQUEST['priority']);
+//$items = $messages->list_messages( $gBitUser->mUserId, $offset, $max_records, $sort_mode,
+//	$find, $_REQUEST["flag"], $_REQUEST["flagval"], $_REQUEST['priority']);
 
-$cant_pages = ceil($items["cant"] / $max_records);
-$gBitSmarty->assign_by_ref('cant_pages', $cant_pages);
-$gBitSmarty->assign('actual_page', 1 + ($offset / $max_records));
+$listHash = $_REQUEST;
+$items = $messages->getList( $listHash );
+$gBitSmarty->assign( 'items', $items );
+$gBitSmarty->assign( 'listInfo', $listHash['listInfo'] );
 
-if ($items["cant"] > ($offset + $max_records)) {
-	$gBitSmarty->assign('next_offset', $offset + $max_records);
-} else {
-	$gBitSmarty->assign('next_offset', -1);
-}
-
-if ($offset > 0) {
-	$gBitSmarty->assign('prev_offset', $offset - $max_records);
-} else {
-	$gBitSmarty->assign('prev_offset', -1);
-}
-
-$gBitSmarty->assign_by_ref('items', $items["data"]);
-
-$gBitSystem->display( 'bitpackage:messages/messages_mailbox.tpl', 'Message box' );
+$gBitSystem->display( 'bitpackage:messages/mailbox.tpl', 'Message box' );
 ?>

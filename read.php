@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.7 2006/04/11 13:05:55 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.8 2006/12/20 20:50:17 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -16,7 +16,7 @@
  * required setup
  */
 require_once( '../bit_setup_inc.php' );
-require_once( MESSAGES_PKG_PATH.'messages_lib.php' );
+require_once( MESSAGES_PKG_PATH.'Messages.php' );
 
 if( !$gBitUser->isRegistered() ) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
@@ -27,9 +27,10 @@ if( !$gBitUser->isRegistered() ) {
 $gBitSystem->isPackageActive( 'messages', TRUE );
 $gBitSystem->verifyPermission( 'p_messages_send' );
 
+$messages = new Messages();
+
 if (isset($_REQUEST["msgdel"])) {
-	
-	$messageslib->delete_message($gBitUser->mUserId, $_REQUEST['msgdel']);
+	$messages->expunge($gBitUser->mUserId, $_REQUEST['msgdel']);
 }
 
 $sort_mode = !empty( $_REQUEST['sort_mode'] ) ? $_REQUEST['sort_mode'] : '';
@@ -54,23 +55,23 @@ if (!isset($_REQUEST['msg_id']) || $_REQUEST['msg_id'] == 0) {
 }
 
 if (isset($_REQUEST['act'])) {
-	$messageslib->flag_message( $gBitUser->mUserId, $_REQUEST['msg_id'], $_REQUEST['act'], $_REQUEST['actval'] );
+	$messages->flagMessage( $gBitUser->mUserId, $_REQUEST['msg_id'], $_REQUEST['act'], $_REQUEST['actval'] );
 }
 
 // Using the sort_mode, flag, flagval and find get the next and prev messages
 $gBitSmarty->assign('msg_id', $_REQUEST['msg_id']);
-$next = $messageslib->get_next_message( $gBitUser->mUserId, $_REQUEST['msg_id'], $sort_mode, $find, $flag, $flagval, $priority );
-$prev = $messageslib->get_prev_message( $gBitUser->mUserId, $_REQUEST['msg_id'], $sort_mode, $find, $flag, $flagval, $priority );
+$next = $messages->getNextMessage( $gBitUser->mUserId, $_REQUEST['msg_id'], $sort_mode, $find, $flag, $flagval, $priority );
+$prev = $messages->getPrevMessage( $gBitUser->mUserId, $_REQUEST['msg_id'], $sort_mode, $find, $flag, $flagval, $priority );
 $gBitSmarty->assign('next', $next);
 $gBitSmarty->assign('prev', $prev);
 
 // Mark the message as read
-$messageslib->flag_message( $gBitUser->mUserId, $_REQUEST['msg_id'], 'is_read', 'y');
+$messages->flagMessage( $gBitUser->mUserId, $_REQUEST['msg_id'], 'is_read', 'y');
 
 // Get the message and assign its data to template vars
-$msg = $messageslib->get_message( $gBitUser->mUserId, $_REQUEST['msg_id']);
+$msg = $messages->getMessage( $gBitUser->mUserId, $_REQUEST['msg_id']);
 $gBitSmarty->assign('msg', $msg);
 
-$gBitSystem->display( 'bitpackage:messages/messages_read.tpl');
+$gBitSystem->display( 'bitpackage:messages/read.tpl');
 
 ?>
