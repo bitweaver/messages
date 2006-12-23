@@ -70,7 +70,7 @@
 				</div>
 
 				<div class="row">
-					{forminput}
+					{forminput class="message"}
 						{$msg.parsed}
 					{/forminput}
 				</div>
