@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Revision: 1.2 $
+* @version  $Revision: 1.3 $
 * @package  messages
 */
 
@@ -291,23 +291,27 @@ class Messages extends BitBase {
 		return $ret;
 	}
 
-	function flagMessage( $pUserId, $msg_id, $flag, $val ) {
-		if (!$msg_id)
-			return false;
-		if ($this->isSystemMessage($msg_id)) {
+	//function flagMessage( $pUserId, $msg_id, $flag, $val ) {
+	function flagMessage( $pFlagHash ) {
+		global $gBitUser;
+		if( !@BitBase::verifyId( $pFlagHash['msg_id'] ) ) {
+			return FALSE;
+		}
+
+		if( $this->isSystemMessage($pFlagHash['msg_id'] )) {
 			$query = "SELECT COUNT(*) FROM `".BIT_DB_PREFIX."messages_system_map` WHERE `to_user_id` = ? AND `msg_id` = ?";
-			$rowExists = $this->mDb->getOne($query, array($pUserId, $msg_id));
-			if ($rowExists) {
-				$query = "UPDATE `".BIT_DB_PREFIX."messages_system_map` SET `$flag`=? WHERE `to_user_id` = ? AND `msg_id` = ?";
-				$this->mDb->query($query, array($val, $pUserId, (int)$msg_id));
+			$rowExists = $this->mDb->getOne( $query, array( $gBitUser->mUserId, $pFlagHash['msg_id'] ) );
+			if( $rowExists ) {
+				$query = "UPDATE `".BIT_DB_PREFIX."messages_system_map` SET `{$pFlagHash['act']}`=? WHERE `to_user_id` = ? AND `msg_id` = ?";
+				$this->mDb->query( $query, array( $pFlagHash['actval'], $gBitUser->mUserId, (int)$pFlagHash['msg_id'] ) );
 			} else {
-				$query = "INSERT INTO `".BIT_DB_PREFIX."messages_system_map` (`msg_id`, `to_user_id`, `$flag`) VALUES (?,?,?)";
-				$this->mDb->query($query, array((int)$msg_id, $pUserId, $val));
+				$query = "INSERT INTO `".BIT_DB_PREFIX."messages_system_map` (`msg_id`, `to_user_id`, `{$pFlagHash['act']}`) VALUES (?,?,?)";
+				$this->mDb->query( $query, array( (int)$pFlagHash['msg_id'], $gBitUser->mUserId, $pFlagHash['actval'] ) );
 			}
 
 		} else {
-			$query = "UPDATE `".BIT_DB_PREFIX."messages` SET `$flag`=? where `to_user_id`=? and `msg_id`=?";
-			$this->mDb->query($query,array($val,$pUserId,(int)$msg_id));
+			$query = "UPDATE `".BIT_DB_PREFIX."messages` SET `{$pFlagHash['act']}`=? where `to_user_id`=? and `msg_id`=?";
+			$this->mDb->query( $query, array( $pFlagHash['actval'], $gBitUser->mUserId, (int)$pFlagHash['msg_id'] ) );
 		}
 	}
 
@@ -324,68 +328,42 @@ class Messages extends BitBase {
 		}
 	}
 
-	function getNextMessage($pUserId, $msg_id, $sort_mode, $find, $flag, $flagval, $prio) {
-		if (!$msg_id)
-			return 0;
+	function getNeighbourMessage( &$pListHash ) {
+		global $gBitUser;
 
-		$mid = "";
-		$bindvars = array($pUserId,(int)$msg_id);
-		if ($prio) {
-			$mid.= " and priority=? ";
-			$bindvars[] = $prio;
+		if( !@BitBase::verifyId( $pListHash['msg_id'] ) ) {
+			return FALSE;
 		}
 
-		if ($flag) {
-			// Process the flags
-			$mid.= " and `$flag`=? ";
-			$bindvars[] = $flagval;
-		}
-		if ($find) {
-			$findesc = '%'.strtoupper( $find ).'%';
-			$mid.= " and (UPPER(`subject`) like ? or UPPER(`body`) like ?)";
-			$bindvars[] = $findesc;
-			$bindvars[] = $findesc;
+		$ret = $bindVars = array();
+		$whereSql = '';
+		$bindVars[] = $gBitUser->mUserId;
+		$bindVars[] = $pListHash['msg_id'];
+
+		if( !empty( $pListHash['priority'] ) ) {
+			$whereSql .= " AND mm.`priority`=? ";
+			$bindVars[] = $pListHash['priority'];
 		}
 
-		$query = "select min(`msg_id`) as `nextmsg` from `".BIT_DB_PREFIX."messages` where `to_user_id`=? and `msg_id` > ? $mid ";
-		$result = $this->mDb->query($query,$bindvars,1,0);
-		$res = $result->fetchRow();
-
-		if (!$res)
-			return false;
-		return $res['nextmsg'];
-	}
-
-	function getPrevMessage($pUserId, $msg_id, $sort_mode, $find, $flag, $flagval, $prio) {
-		if (!$msg_id)
-			return 0;
-
-		$bindvars = array( $pUserId, (int)$msg_id );
-		$mid="";
-		if ($prio) {
-			$mid.= " AND priority=? ";
-			$bindvars[] = $prio;
+		if( !empty( $pListHash['flag'] ) && !empty( $pListHash['flagval'] ) ) {
+			$whereSql .= " AND mm.`{$pListHash['flag']}`=? ";
+			$bindVars[] = $pListHash['flagval'];
 		}
 
-		if ($flag) {
-			// Process the flags
-			$mid.= " AND `$flag`=? ";
-			$bindvars[] = $flagval;
+		if( !empty( $pListHash['find'] ) ) {
+			$whereSql .= " AND( UPPER( mm.`subject` ) LIKE ? OR UPPER( mm.`body` ) LIKE ? ) ";
+			$bindVars[] = '%'.strtoupper( $pListHash['find'] ).'%';
+			$bindVars[] = '%'.strtoupper( $pListHash['find'] ).'%';
 		}
-		if ($find) {
-			$findesc = '%'.strtoupper( $find ).'%';
-			$mid.= " and (UPPER(`subject`) like ? or UPPER(`body`) like ?)";
-			$bindvars[] = $findesc;
-			$bindvars[] = $findesc;
+
+		if( !empty( $pListHash['neighbour'] ) && $pListHash['neighbour'] == 'prev' ) {
+			$query = "SELECT MAX(`msg_id`) FROM `".BIT_DB_PREFIX."messages` mm WHERE `to_user_id`=? AND `msg_id` < ? $whereSql";
+		} else {
+			$query = "SELECT MIN(`msg_id`) FROM `".BIT_DB_PREFIX."messages` mm WHERE `to_user_id`=? AND `msg_id` > ? $whereSql";
 		}
-		$query = "select max(`msg_id`) as `prevmsg` from `".BIT_DB_PREFIX."messages` where `to_user_id`=? and `msg_id` < ? $mid";
-		$result = $this->mDb->query( $query, $bindvars, 1, 0 );
-		$res = $result->fetchRow();
 
-		if (!$res)
-			return false;
-
-		return $res['prevmsg'];
+		$msg_id = $this->mDb->getOne( $query, $bindVars );
+		return( !empty( $msg_id ) ? $msg_id : FALSE );
 	}
 
 	function getMessage( $pUserId, $msg_id ) {

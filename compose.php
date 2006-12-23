@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.9 2006/12/20 20:50:17 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.10 2006/12/23 12:00:09 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -78,7 +78,12 @@ $feedback = array();
 $gBitSmarty->assign_by_ref( 'feedback', $feedback );
 
 if (isset($_REQUEST['replyto']) || isset($_REQUEST['replyallto'])) {
-	$messages->flagMessage( $gBitUser->mUserId, $_REQUEST['msg_id'], 'is_replied', 'y' );
+	$flagHash = array(
+		'msg_id' => $_REQUEST['msg_id'],
+		'act'    => 'is_replied',
+		'actval' => 'y',
+	);
+	$messages->flagMessage( $flagHash );
 }
 
 if (isset($_REQUEST['send'])) {

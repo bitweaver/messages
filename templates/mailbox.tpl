@@ -10,11 +10,11 @@
 
 	<div class="body">
 		{form legend="Your Personal Messages"}
-			<input type="hidden" name="find" value="{$find|escape}" />
-			<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-			<input type="hidden" name="flag" value="{$flag|escape}" />
-			<input type="hidden" name="flagval" value="{$flagval|escape}" />
-			<input type="hidden" name="priority" value="{$priority|escape}" />
+			<input type="hidden" name="find" value="{$smarty.request.find|escape}" />
+			<input type="hidden" name="sort_mode" value="{$smarty.request.sort_mode|escape}" />
+			<input type="hidden" name="flag" value="{$smarty.request.flag|escape}" />
+			<input type="hidden" name="flagval" value="{$smarty.request.flagval|escape}" />
+			<input type="hidden" name="priority" value="{$smarty.request.priority|escape}" />
 
 			<a href="{$smarty.const.MESSAGES_PKG_URL}compose.php">{biticon ipackage="icons" iname="mail-forward" iexplain="Compose Message" iforce=icon_text}</a>
 
@@ -23,10 +23,10 @@
 				<caption>{tr}Messages{/tr}</caption>
 				<tr>
 					<th style="width:1%">&nbsp;</th>
-					<th style="width:1%">{smartlink ititle="Flagged" isort=is_flagged ibiticon="icons/mail-mark-important" find=$find flag=$flag priority=$priority flagval=$flagval}</th>
-					<th>{smartlink ititle="From" isort=$displayName find=$find flag=$flag priority=$priority flagval=$flagval}</th>
-					<th>{smartlink ititle="Subject" isort=subject find=$find flag=$flag priority=$priority flagval=$flagval}</th>
-					<th>{smartlink ititle="Date" isort=msg_date find=$find flag=$flag priority=$priority flagval=$flagval}</th>
+					<th style="width:1%">{smartlink ititle="Flagged" isort=is_flagged ibiticon="icons/mail-mark-important" find=$smarty.request.find flag=$smarty.request.flag priority=$smarty.request.priority flagval=$smarty.request.flagval}</th>
+					<th>{smartlink ititle="From" isort=$displayName find=$smarty.request.find flag=$smarty.request.flag priority=$smarty.request.priority flagval=$smarty.request.flagval}</th>
+					<th>{smartlink ititle="Subject" isort=subject find=$smarty.request.find flag=$smarty.request.flag priority=$smarty.request.priority flagval=$smarty.request.flagval}</th>
+					<th>{smartlink ititle="Date" isort=msg_date find=$smarty.request.find flag=$smarty.request.flag priority=$smarty.request.priority flagval=$smarty.request.flagval}</th>
 					<th>{tr}Size{/tr}</th>
 				</tr>
 
@@ -36,7 +36,7 @@
 						<td class="prio{$items[user].priority}">{if $items[user].is_flagged eq 'y'}{biticon ipackage="icons" iname="mail-mark-important" iexplain="Flagged"}{/if}</td>
 						<td>{displayname hash=$items[user]}</td>
 						<td>
-							<a href="{$smarty.const.MESSAGES_PKG_URL}read.php?flag={$flag}&amp;priority={$priority}&amp;flagval={$flagval}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;msg_id={$items[user].msg_id}">{$items[user].subject}</a>
+							<a href="{$smarty.const.MESSAGES_PKG_URL}read.php?flag={$smarty.request.flag}&amp;priority={$smarty.request.priority}&amp;flagval={$smarty.request.flagval}&amp;sort_mode={$smarty.request.sort_mode}&amp;find={$smarty.request.find}&amp;msg_id={$items[user].msg_id}">{$items[user].subject}</a>
 							{if $items[user].is_broadcast_message} <small>[{tr}broadcast{/tr}]</small>{/if}
 						</td>
 						<td style="text-align:right;">{$items[user].msg_date|bit_short_datetime}</td>
@@ -94,7 +94,7 @@
 			<div class="row">
 				{formlabel label="Containing" for="find"}
 				{forminput}
-					<input type="text" name="find" size="40" id="find" value="{$find|escape}" />
+					<input type="text" name="find" size="40" id="find" value="{$smarty.request.find|escape}" />
 					{formhelp note=""}
 				{/forminput}
 			</div>

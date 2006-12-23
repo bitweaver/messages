@@ -18,13 +18,13 @@
 		<div class="navbar">
 			<ul>
 				{if $msg.is_flagged eq 'y'}
-					<li>{biticon ipackage="icons" iname="mail-mark-important" iexplain=Flagged} {smartlink ititle="Unflag Message" offset=$offset act=is_flagged actval=n msg_id=$msg_id sort_mode=$sort_mode find=$find flag=$flag priority=$priority flagval=$flagval}</li>
+					<li>{biticon ipackage="icons" iname="mail-mark-important" iexplain=Flagged} {smartlink ititle="Unflag Message" offset=$smarty.request.offset act=is_flagged actval=n msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
 				{else}
-					<li>{smartlink ititle="Flag Message" offset=$offset act=is_flagged actval=y msg_id=$msg_id sort_mode=$sort_mode find=$find flag=$flag priority=$priority flagval=$flagval}</li>
+					<li>{smartlink ititle="Flag Message" offset=$smarty.request.offset act=is_flagged actval=y msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
 				{/if}
-				<li>{smartlink ititle="Delete" msg_id=$read_id offset=$offset msgdel=$msg_id sort_mode=$sort_mode find=$find flag=$flag priority=$priority flagval=$flagval}</li>
-				{if $prev}<li>{smartlink ianchor=top ititle="Previous message" ibiticon="icons/go-previous" sort_mode=$sort_mode msg_id=$prev find=$find flag=$flag priority=$priority flagval=$flagval}</li>{/if}
-				{if $next}<li>{smartlink ianchor=top ititle="Next message" ibiticon="icons/go-next" sort_mode=$sort_mode msg_id=$next find=$find flag=$flag priority=$priority flagval=$flagval}</li>{/if}
+				<li>{smartlink ititle="Delete" msg_id=$read_id offset=$smarty.request.offset msgdel=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
+				{if $prev}<li>{smartlink ianchor=top ititle="Previous message" ibiticon="icons/go-previous" sort_mode=$smarty.request.sort_mode msg_id=$prev find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
+				{if $next}<li>{smartlink ianchor=top ititle="Next message" ibiticon="icons/go-next" sort_mode=$smarty.request.sort_mode msg_id=$next find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
 			</ul>
 		</div>
 
@@ -75,17 +75,17 @@
 					{/forminput}
 				</div>
 
-				<input type="hidden" name="offset" value="{$offset}" />
-				<input type="hidden" name="find" value="{$find|escape}" />
-				<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-				<input type="hidden" name="flag" value="{$flag}" />
-				<input type="hidden" name="flagval" value="{$flagval}" />
-				<input type="hidden" name="priority" value="{$priority}" />
-				<input type="hidden" name="msgdel" value="{$msg_id}" />
-				<input type="hidden" name="replyto" value="{$msg.from_user_id}" />
-				<input type="hidden" name="replyallto" value="{$msg.msg_to},{$msg.msg_cc}" />
-				<input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject}" />
-				<input type="hidden" name="body" value="{$msg.body|quoted|escape}" />
+				<input type="hidden" name="offset"     value="{$smarty.request.offset}" />
+				<input type="hidden" name="find"       value="{$smarty.request.find|escape}" />
+				<input type="hidden" name="sort_mode"  value="{$smarty.request.sort_mode}" />
+				<input type="hidden" name="flag"       value="{$smarty.request.flag}" />
+				<input type="hidden" name="flagval"    value="{$smarty.request.flagval}" />
+				<input type="hidden" name="priority"   value="{$smarty.request.priority}" />
+				<input type="hidden" name="msgdel"     value="{$smarty.request.msg_id}" />
+				<input type="hidden" name="replyto"    value="{$smarty.request.msg.from_user_id}" />
+				<input type="hidden" name="replyallto" value="{$smarty.request.msg.msg_to},{$msg.msg_cc}" />
+				<input type="hidden" name="subject"    value="{tr}Re:{/tr} {$msg.subject}" />
+				<input type="hidden" name="body"       value="{$msg.body|quoted|escape}" />
 				{if $next}
 					<input type="hidden" name="msg_id" value="{$next}" />
 				{elseif $prev}
@@ -99,60 +99,7 @@
 					<input type="submit" name="action[replyall]" value="{tr}Reply All{/tr}" />
 				</div>
 			{/form}
-
 		{/if}
 	</div><!-- end .body -->
 </div><!-- end .usermessages -->
 {/strip}
-{*
-			<table class="panel">
-				<tr class="panelsubmitrow"><td>
-					<form method="post" action="{$smarty.const.MESSAGES_PKG_URL}read.php">
-						<input type="hidden" name="offset" value="{$offset}" />
-						<input type="hidden" name="find" value="{$find|escape}" />
-						<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-						<input type="hidden" name="flag" value="{$flag}" />
-						<input type="hidden" name="flagval" value="{$flagval}" />
-						<input type="hidden" name="priority" value="{$priority}" />
-						<input type="hidden" name="msgdel" value="{$msg_id}" />
-						{if $next}
-							<input type="hidden" name="msg_id" value="{$next}" />
-						{elseif $prev}
-							<input type="hidden" name="msg_id" value="{$prev}" />
-						{else}
-							<input type="hidden" name="msg_id" value="" />
-						{/if}
-						<input type="submit" name="delete" value="{tr}Delete{/tr}" />
-					</form>
-					</td>
-					<td>
-					<form method="post" action="{$smarty.const.MESSAGES_PKG_URL}compose.php">
-					<input type="hidden" name="offset" value="{$offset}" />
-					<input type="hidden" name="msg_id" value="{$msg_id}" />
-					<input type="hidden" name="find" value="{$find|escape}" />
-					<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-					<input type="hidden" name="flag" value="{$flag}" />
-					<input type="hidden" name="priority" value="{$priority}" />
-					<input type="hidden" name="flagval" value="{$flagval}" />
-					<input type="hidden" name="to" value="{$msg.user_from|escape}" />
-					<input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject}" />
-					<input type="hidden" name="body" value="{$msg.body|quoted|escape}" />
-					<input type="submit" name="reply" value="{tr}reply{/tr}" />
-					</form>
-					</td>
-					<td>
-					<form method="post" action="{$smarty.const.MESSAGES_PKG_URL}compose.php">
-					<input type="hidden" name="offset" value="{$offset}" />
-					<input type="hidden" name="find" value="{$find|escape}" />
-					<input type="hidden" name="msg_id" value="{$msg_id}" />
-					<input type="hidden" name="sort_mode" value="{$sort_mode}" />
-					<input type="hidden" name="flag" value="{$flag}" />
-					<input type="hidden" name="priority" value="{$priority}" />
-					<input type="hidden" name="flagval" value="{$flagval}" />
-					<input type="hidden" name="to" value="{$msg.user_from},{$msg.user_cc},{$msg.user_to}" />
-					<input type="hidden" name="subject" value="{tr}Re:{/tr} {$msg.subject}" />
-					<input type="hidden" name="body" value="{$msg.body|quoted|escape}" />
-					<input type="submit" name="replyall" value="{tr}Reply All{/tr}" />
-				</td></tr>
-			</table>
-*}

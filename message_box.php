@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.14 2006/12/20 20:50:17 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.15 2006/12/23 12:00:09 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -33,16 +33,21 @@ $max_records = $gBitSystem->getConfig( 'max_records', 20 );
 
 // Mark messages if the mark button was pressed
 if (isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {
-	foreach (array_keys($_REQUEST["msg"])as $msg) {
-		$parts = explode('_', $_REQUEST['action']);
-		$messages->flagMessage($gBitUser->mUserId, $msg, $parts[0].'_'.$parts[1], $parts[2]);
+	foreach( array_keys( $_REQUEST["msg"] ) as $msg_id ) {
+		$parts = explode( '_', $_REQUEST['action'] );
+		$flagHash = array(
+			'msg_id' => $msg_id ,
+			'act'    => $parts[0].'_'.$parts[1],
+			'actval' => $parts[2],
+		);
+		$messages->flagMessage( $flagHash );
 	}
 }
 
 // Delete messages if the delete button was pressed
 if( !empty( $_REQUEST["delete"] ) && !empty( $_REQUEST["msg"] ) ) {
-	foreach( array_keys( $_REQUEST["msg"] ) as $msg ) {
-		$messages->expunge( $gBitUser->mUserId, $msg );
+	foreach( array_keys( $_REQUEST["msg"] ) as $msg_id  ) {
+		$messages->expunge( $gBitUser->mUserId, $msg_id  );
 	}
 }
 
@@ -56,9 +61,9 @@ if( !empty( $_REQUEST['filter'] ) ) {
 }
 
 if ( empty( $_REQUEST["sort_mode"] ) ) {
-	$sort_mode = 'msg_date_desc';
+	$_REQUEST['sort_mode'] = 'msg_date_desc';
 } else {
-	$sort_mode = $_REQUEST["sort_mode"];
+	$_REQUEST['sort_mode'] = $_REQUEST["sort_mode"];
 }
 
 if (isset($_REQUEST["find"])) {
@@ -66,13 +71,6 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
-
-$gBitSmarty->assign_by_ref('flagval', $_REQUEST['flagval']);
-$gBitSmarty->assign_by_ref('sort_mode', $sort_mode);
-$gBitSmarty->assign('find', $find);
-// What are we paginating: items
-//$items = $messages->list_messages( $gBitUser->mUserId, $offset, $max_records, $sort_mode,
-//	$find, $_REQUEST["flag"], $_REQUEST["flagval"], $_REQUEST['priority']);
 
 $listHash = $_REQUEST;
 $items = $messages->getList( $listHash );
