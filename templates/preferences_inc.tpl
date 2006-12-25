@@ -45,12 +45,12 @@
 		{formlabel label="Send an email" for="messages_min_priority"}
 		{forminput}
 			<select name="messages_min_priority" id="messages_min_priority">
-				<option value="1" {if $userPrefs.messages_min_priority eq 1}selected="selected"{/if}>{tr}at least priority:{/tr} 1</option>
-				<option value="2" {if $userPrefs.messages_min_priority eq 2}selected="selected"{/if}>{tr}at least priority:{/tr} 2</option>
-				<option value="3" {if $userPrefs.messages_min_priority eq 3}selected="selected"{/if}>{tr}at least priority:{/tr} 3</option>
-				<option value="4" {if $userPrefs.messages_min_priority eq 4}selected="selected"{/if}>{tr}at least priority:{/tr} 4</option>
-				<option value="5" {if $userPrefs.messages_min_priority eq 5}selected="selected"{/if}>{tr}at least priority:{/tr} 5</option>
-				<option value="6" {if $userPrefs.messages_min_priority eq 6}selected="selected"{/if}>{tr}never send message{/tr}</option>
+				<option value="0">{tr}Never send message{/tr}</option>
+				<option value="1" {if $userPrefs.messages_min_priority eq 1}selected="selected"{/if}>{tr}Always send message{/tr}</option>
+				<option value="2" {if $userPrefs.messages_min_priority eq 2}selected="selected"{/if}>{tr}At least priority{/tr}: 2</option>
+				<option value="3" {if $userPrefs.messages_min_priority eq 3}selected="selected"{/if}>{tr}At least priority{/tr}: 3</option>
+				<option value="4" {if $userPrefs.messages_min_priority eq 4}selected="selected"{/if}>{tr}At least priority{/tr}: 4</option>
+				<option value="5" {if $userPrefs.messages_min_priority eq 5}selected="selected"{/if}>{tr}At least priority{/tr}: 5</option>
 			</select>
 			{formhelp note="Here you can indicate when an email should be sent to you when you recieve a personal message."}
 		{/forminput}

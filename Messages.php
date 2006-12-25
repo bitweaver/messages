@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Revision: 1.3 $
+* @version  $Revision: 1.4 $
 * @package  messages
 */
 
@@ -31,7 +31,7 @@ class Messages extends BitBase {
 		if( $this->verifyMessage( $pParamHash ) ) {
 			$this->mDb->associateInsert( BIT_DB_PREFIX."messages", $pParamHash['message_store'] );
 			// Now check if the user should be notified by email
-			if( $gBitUser->getPreference( 'messages_min_priority', 3 ) <= $pParamHash['message_store']['priority'] && FALSE) {
+			if( $gBitUser->getPreference( 'messages_min_priority' ) && $gBitUser->getPreference( 'messages_min_priority' ) <= $pParamHash['message_store']['priority'] ) {
 				if( !empty( $pParamHash['userInfo']['email'] ) ) {
 					$gBitSmarty->assign( 'msgHash', $pParamHash['message_store'] );
 					$gBitSmarty->assign( 'from', stripslashes( $gBitUser->getDisplayName() ) );
