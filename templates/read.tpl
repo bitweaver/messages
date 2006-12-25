@@ -81,9 +81,9 @@
 				<input type="hidden" name="flag"       value="{$smarty.request.flag}" />
 				<input type="hidden" name="flagval"    value="{$smarty.request.flagval}" />
 				<input type="hidden" name="priority"   value="{$smarty.request.priority}" />
-				<input type="hidden" name="msgdel"     value="{$smarty.request.msg_id}" />
-				<input type="hidden" name="replyto"    value="{$smarty.request.msg.from_user_id}" />
-				<input type="hidden" name="replyallto" value="{$smarty.request.msg.msg_to},{$msg.msg_cc}" />
+				<input type="hidden" name="msgdel"     value="{$msg.msg_id}" />
+				<input type="hidden" name="replyto"    value="{$msg.from_user_id}" />
+				<input type="hidden" name="replyallto" value="{$msg.msg_to},{$msg.msg_cc}" />
 				<input type="hidden" name="subject"    value="{tr}Re:{/tr} {$msg.subject}" />
 				<input type="hidden" name="body"       value="{$msg.body|quoted|escape}" />
 				{if $next}
