@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Revision: 1.4 $
+* @version  $Revision: 1.5 $
 * @package  messages
 */
 
@@ -157,7 +157,7 @@ class Messages extends BitBase {
 			FROM `".BIT_DB_PREFIX."messages` mm
 				INNER JOIN `".BIT_DB_PREFIX."users_users` uu ON( mm.`from_user_id`=uu.`user_id` )
 			WHERE mm.`to_user_id`=? $whereSql
-			ORDER BY ".$this->mDb->convert_sortmode( $pListHash['sort_mode'] );
+			ORDER BY ".$this->mDb->convertSortmode( $pListHash['sort_mode'] );
 		$normalMessages = $this->mDb->getAll( $query, $bindVars );
 
 		// Get the total count of private messages
@@ -198,7 +198,7 @@ class Messages extends BitBase {
 				INNER JOIN `".BIT_DB_PREFIX."users_users` uu ON (mm.`from_user_id` = uu.`user_id`)
 				LEFT OUTER JOIN `".BIT_DB_PREFIX."messages_system_map` msm  ON (mm.`msg_id` = msm.`msg_id` AND msm.`to_user_id` = ?)
 			WHERE mm.`to_user_id`=? AND mm.`group_id` IN (SELECT `group_id` FROM `".BIT_DB_PREFIX."users_groups_map` WHERE `user_id` = ?) $whereSql
-			ORDER BY ".$this->mDb->convert_sortmode( $pListHash['sort_mode'] );
+			ORDER BY ".$this->mDb->convertSortmode( $pListHash['sort_mode'] );
 		$result = $this->mDb->query( $query, $bindVars );
 
 		$systemMessages = array();
