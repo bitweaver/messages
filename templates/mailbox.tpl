@@ -40,7 +40,7 @@
 							{if $items[user].is_broadcast_message} <small>[{tr}broadcast{/tr}]</small>{/if}
 						</td>
 						<td style="text-align:right;">{$items[user].msg_date|bit_short_datetime}</td>
-						<td style="text-align:right;">{$items[user].len|kbsize}</td>
+						<td style="text-align:right;">{$items[user].len|display_bytes}</td>
 					</tr>
 				{sectionelse}
 					<tr class="norecords"><td colspan="6">{tr}No messages to display{/tr}</td></tr>
