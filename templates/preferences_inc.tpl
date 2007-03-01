@@ -16,7 +16,7 @@
 				<option value="2"  {if $userPrefs.messages_max_records eq 2}selected="selected"{/if}>{tr}2{/tr}</option>
 				<option value="5"  {if $userPrefs.messages_max_records eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
 				<option value="10" {if $userPrefs.messages_max_records eq 10}selected="selected"{/if}>{tr}10{/tr}</option>
-				<option value="20" {if $userPrefs.messages_max_records eq 20}selected="selected"{/if}>{tr}20{/tr}</option>
+				<option value="20" {if $userPrefs.messages_max_records eq 20 || !$userPrefs.messages_max_records}selected="selected"{/if}>{tr}20{/tr}</option>
 				<option value="30" {if $userPrefs.messages_max_records eq 30}selected="selected"{/if}>{tr}30{/tr}</option>
 				<option value="40" {if $userPrefs.messages_max_records eq 40}selected="selected"{/if}>{tr}40{/tr}</option>
 				<option value="50" {if $userPrefs.messages_max_records eq 50}selected="selected"{/if}>{tr}50{/tr}</option>
