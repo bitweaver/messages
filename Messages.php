@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Revision: 1.5 $
+* @version  $Revision: 1.6 $
 * @package  messages
 */
 
@@ -28,13 +28,14 @@ class Messages extends BitBase {
 	function postMessage( $pParamHash ) {
 		global $gBitSmarty, $gBitUser, $gBitSystem;
 
-		if( $this->verifyMessage( $pParamHash ) ) {
+		if( $this->verifyMessage( $pParamHash )) {
 			$this->mDb->associateInsert( BIT_DB_PREFIX."messages", $pParamHash['message_store'] );
-			// Now check if the user should be notified by email
-			if( $gBitUser->getPreference( 'messages_min_priority' ) && $gBitUser->getPreference( 'messages_min_priority' ) <= $pParamHash['message_store']['priority'] ) {
-				if( !empty( $pParamHash['userInfo']['email'] ) ) {
+			// we need to load the user this message is being sent to that we can check if the user should be notified by email
+			$queryUser = new BitUser( $pParamHash['userInfo']['user_id'] );
+			if( $queryUser->getPreference( 'messages_min_priority' ) && $queryUser->getPreference( 'messages_min_priority' ) <= $pParamHash['message_store']['priority'] ) {
+				if( !empty( $pParamHash['userInfo']['email'] )) {
 					$gBitSmarty->assign( 'msgHash', $pParamHash['message_store'] );
-					$gBitSmarty->assign( 'from', stripslashes( $gBitUser->getDisplayName() ) );
+					$gBitSmarty->assign( 'from', stripslashes( $gBitUser->getDisplayName() ));
 
 					@mail(
 						$pParamHash['userInfo']['email'],
@@ -64,7 +65,7 @@ class Messages extends BitBase {
 
 			// if that didn't work, we'll see if we were passed a user_id
 			if( empty( $userInfo ) && @BitBase::verifyId( $pParamHash['to_login'] ) ) {
-				$userInfo = $gBitUser->getUserInfo( array('user_id' => $pParamHash['to_login'] ) );
+				$userInfo = $gBitUser->getUserInfo( array( 'user_id' => $pParamHash['to_login'] ) );
 			}
 		} else {
 			$this->mErrors['to_login'] = tra( 'No message recipient was specified' );
