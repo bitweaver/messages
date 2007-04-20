@@ -47,24 +47,7 @@
 					{/forminput}
 				</div>
 
-				{* only display quicktags if tikiwiki quicktags are available *}
-				{if $gBitSystem->isPackageActive( 'quicktags' ) and $gLibertySystem->mPlugins.tikiwiki.is_active eq 'y'}
-					{include file="bitpackage:quicktags/quicktags_full.tpl" textarea_id=message_body default_format=tikiwiki}
-				{/if}
-
-				{* only display quicktags if tikiwiki quicktags are available *}
-				{if $gBitSystem->isPackageActive( 'smileys' ) and $gLibertySystem->mPlugins.tikiwiki.is_active eq 'y'}
-					{include file="bitpackage:smileys/smileys_full.tpl" textarea_id=message_body default_format=tikiwiki}
-				{/if}
-
-				<div class="row">
-					{formlabel label="" for=""}
-					{forminput}
-						<textarea rows="20" cols="50" name="body" id="message_body">{$body|escape}</textarea>
-						{formhelp note=""}
-					{/forminput}
-				</div>
-
+				{textarea noformat=1 id="message_body" name="body}{$body}{/textarea}
 				<div class="submit">
 					<input type="submit" name="send" value="{tr}Send message{/tr}" />
 				</div>

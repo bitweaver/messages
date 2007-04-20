@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.12 2006/12/25 10:45:43 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.13 2007/04/20 11:53:21 nickpalmer Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -23,11 +23,6 @@ $gBitSystem->isPackageActive( 'messages', TRUE );
 $gBitSystem->verifyPermission( 'p_messages_broadcast' );
 
 $messages = new Messages();
-
-// Configure quicktags list
-if( $gBitSystem->isPackageActive( 'quicktags' ) ) {
-	include_once( QUICKTAGS_PKG_PATH.'quicktags_inc.php' );
-}
 
 $feedback = array();
 
