@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.10 2006/12/20 20:50:17 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.11 2007/04/20 13:36:20 nickpalmer Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -30,10 +30,6 @@ if( empty( $email ) ) {
 	$gBitSystem->fatalError( "This feature is not correctly set up. The email address is missing." );
 } else {
 	$gBitSmarty->assign( 'email', $email );
-}
-
-if( $gBitSystem->isPackageActive( 'quicktags' ) ) {
-	include_once( QUICKTAGS_PKG_PATH.'quicktags_inc.php' );
 }
 
 if (!empty($_REQUEST['send'])) {
