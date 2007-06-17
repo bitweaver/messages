@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.13 2007/04/20 11:53:21 nickpalmer Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.14 2007/06/17 13:53:04 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -41,7 +41,7 @@ if( $gBitUser->isAdmin() ) {
 	$gBitUser->loadGroups();
 	$groups = &$gBitUser->mGroups;
 }
-$gBitSmarty->assign( 'groups', $groups["data"] );
+$gBitSmarty->assign( 'groups', $groups );
 $gBitSmarty->assign( 'feedback', $feedback );
 
 $gBitSystem->display( 'bitpackage:messages/broadcast.tpl');
