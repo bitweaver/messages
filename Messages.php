@@ -3,16 +3,15 @@
 * message package modules
 *
 * @author
-* @version  $Revision: 1.7 $
+* @version  $Revision: 1.8 $
 * @package  messages
 */
 
 /**
-* Messages base class
-*
-* @package  messages
-* @subpackage  Messages
-*/
+ * Messages base class
+ *
+ * @package  messages
+ */
 class Messages extends BitBase {
 	function Messages() {
 		BitBase::BitBase();
