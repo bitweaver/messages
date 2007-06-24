@@ -1,5 +1,6 @@
 {strip}
 {form legend="User Messages"}
+	<input type="hidden" name="view_user" value="{$view_user}" />
 	<div class="row">
 		{formlabel label="Personal Messages" for=""}
 		{forminput}
