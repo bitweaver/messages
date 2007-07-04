@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Revision: 1.8 $
+* @version  $Revision: 1.9 $
 * @package  messages
 */
 
@@ -129,7 +129,7 @@ class Messages extends BitBase {
 			$pListHash['sort_mode'] = 'msg_date_desc';
 		}
 
-		LibertyContent::prepGetList( $pListHash );
+		LibertyBase::prepGetList( $pListHash );
 
 		$ret = $bindVars = array();
 		$whereSql = '';
@@ -288,7 +288,7 @@ class Messages extends BitBase {
 
 
 		$pListHash["cant"] = $cant + $cant2;
-		LibertyContent::postGetList( $pListHash );
+		LibertyBase::postGetList( $pListHash );
 		return $ret;
 	}
 
