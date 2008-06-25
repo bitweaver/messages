@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.9 2006/12/23 12:00:09 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.10 2008/06/25 22:21:13 spiderr Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -58,6 +58,6 @@ $messages->flagMessage( $flagHash );
 $msg = $messages->getMessage( $gBitUser->mUserId, $_REQUEST['msg_id']);
 $gBitSmarty->assign( 'msg', $msg );
 
-$gBitSystem->display( 'bitpackage:messages/read.tpl');
+$gBitSystem->display( 'bitpackage:messages/read.tpl', NULL, array( 'display_mode' => 'display' ));
 
 ?>

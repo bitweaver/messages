@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.15 2006/12/23 12:00:09 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/message_box.php,v 1.16 2008/06/25 22:21:13 spiderr Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -20,7 +20,7 @@ require_once( MESSAGES_PKG_PATH.'Messages.php' );
 
 if( !$gBitUser->isRegistered() ) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
-	$gBitSystem->display( 'error.tpl' );
+	$gBitSystem->display( 'error.tpl' , NULL, array( 'display_mode' => 'display' ));
 	die;
 }
 
@@ -77,5 +77,5 @@ $items = $messages->getList( $listHash );
 $gBitSmarty->assign( 'items', $items );
 $gBitSmarty->assign( 'listInfo', $listHash['listInfo'] );
 
-$gBitSystem->display( 'bitpackage:messages/mailbox.tpl', 'Message box' );
+$gBitSystem->display( 'bitpackage:messages/mailbox.tpl', 'Message box' , array( 'display_mode' => 'display' ));
 ?>

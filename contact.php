@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.12 2007/04/23 09:36:31 squareing Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.13 2008/06/25 22:21:13 spiderr Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -41,5 +41,5 @@ if (!empty($_REQUEST['send'])) {
 	$gBitSmarty->assign( 'feedback', $feedback );
 }
 
-$gBitSystem->display( 'bitpackage:messages/contact.tpl');
+$gBitSystem->display( 'bitpackage:messages/contact.tpl', NULL, array( 'display_mode' => 'display' ));
 ?>

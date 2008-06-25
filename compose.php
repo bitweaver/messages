@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.12 2007/04/20 13:36:20 nickpalmer Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/compose.php,v 1.13 2008/06/25 22:21:13 spiderr Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -20,7 +20,7 @@ require_once( MESSAGES_PKG_PATH.'Messages.php' );
 
 if( !$gBitUser->isRegistered() ) {
 	$gBitSmarty->assign('msg', tra("You are not logged in"));
-	$gBitSystem->display( 'error.tpl' );
+	$gBitSystem->display( 'error.tpl' , NULL, array( 'display_mode' => 'display' ));
 	die;
 }
 
@@ -114,5 +114,5 @@ if (isset($_REQUEST['send'])) {
 	}
 }
 
-$gBitSystem->display( 'bitpackage:messages/compose.tpl', 'Compose Message' );
+$gBitSystem->display( 'bitpackage:messages/compose.tpl', 'Compose Message' , array( 'display_mode' => 'display' ));
 ?>
