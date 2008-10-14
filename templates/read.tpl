@@ -49,7 +49,7 @@
 				<div class="row">
 					{formlabel label="To"}
 					{forminput}
-						{$msg.msg_to}
+						{$msg.msg_to|default:"&nbsp;"}
 					{/forminput}
 				</div>
 

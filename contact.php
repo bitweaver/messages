@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.13 2008/06/25 22:21:13 spiderr Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/contact.php,v 1.14 2008/10/14 22:03:40 squareing Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -16,28 +16,21 @@
  * required setup
  */
 require_once( '../bit_setup_inc.php' );
+require_once( MESSAGES_PKG_PATH.'Messages.php' );
 
-if( !$gBitSystem->isFeatureActive( 'messages_site_contact' ) ) {
-	$gBitSystem->fatalError( tra( "The Contact feature is disabled." ));
-}
-
-include_once( MESSAGES_PKG_PATH.'Messages.php' );
+$gBitSystem->verifyFeature( 'messages_site_contact' );
 $messages = new Messages();
 
-$userInfo = $gBitUser->getUserInfo( array( 'login' => $gBitSystem->getConfig( 'messages_contact_user' ) ) );
-$email = $userInfo['email'];
-if( empty( $email ) ) {
-	$gBitSystem->fatalError( tra( "This feature is not correctly set up. The email address is missing." ));
-} else {
-	$gBitSmarty->assign( 'email', $email );
-}
-
-if (!empty($_REQUEST['send'])) {
+if( !empty( $_REQUEST['send'] )) {
 	if( empty( $_REQUEST['subject'] ) && empty( $_REQUEST['body'] ) ) {
 		$gBitSystem->fatalError( tra( "Either a subject or a message body is required." ));
 	}
-	$messages->postMessage( $userInfo['login'], $gBitUser->mUsername, $_REQUEST['to'], '', $_REQUEST['subject'], $_REQUEST['body'], $_REQUEST['priority']);
-	$feedback['success'] = tra( 'Your message was sent to' ).': '.( !empty( $userInfo['real_name'] ) ? $userInfo['real_name'] : $userInfo['login'] );
+
+	$postHash = $_REQUEST;
+	$postHash['to_login'] = $postHash['msg_to'] = $gBitSystem->getConfig( 'messages_contact_user' );
+	$messages->postMessage( $postHash );
+
+	$feedback['success'] = tra( 'Your message was sent to' ).': '.$gBitSystem->getConfig( 'messages_contact_user' );
 	$gBitSmarty->assign( 'feedback', $feedback );
 }
 
