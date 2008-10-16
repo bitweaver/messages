@@ -1,17 +1,13 @@
 <?php
 
-// $Header: /cvsroot/bitweaver/_bit_messages/admin/admin_messages_inc.php,v 1.2 2006/04/14 20:25:52 squareing Exp $
+// $Header: /cvsroot/bitweaver/_bit_messages/admin/admin_messages_inc.php,v 1.3 2008/10/16 09:48:23 squareing Exp $
 
 // Copyright (c) 2002-2003, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-//This doen't scale very well when you have 1000's of users
-//$users_list = $gBitUser->get_users_names();
-//$gBitSmarty->assign( 'users_list',$users_list );
-
-$users_list = $gBitUser->get_users_names();
-$gBitSmarty->assign( 'users_list', ( count( $users_list ) < 50 ) ? $users_list : NULL );
+$usersList = $gBitUser->getSelectionList();
+$gBitSmarty->assign( 'usersList', ( count( $usersList ) < 50 ) ? $usersList : NULL );
 
 if( !empty( $_REQUEST['anonymous_settings'] ) ) {
 	simple_set_toggle( "messages_site_contact", MESSAGES_PKG_NAME );

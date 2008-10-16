@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_messages/templates/admin_messages.tpl,v 1.2 2006/04/14 20:25:52 squareing Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_messages/templates/admin_messages.tpl,v 1.3 2008/10/16 09:48:23 squareing Exp $ *}
 {strip}
 {form legend="Anonymous Contact"}
 	<input type="hidden" name="page" value="{$page}" />
@@ -14,8 +14,8 @@
 	<div class="row">
 		{formlabel label="Contact user" for="messages_contact_user"}
 		{forminput}
-			{if $users_list}
-				{html_options name="messages_contact_user" output=$users_list values=$users_list selected=$gBitSystem->getConfig('messages_contact_user') id="messages_contact_user"}
+			{if $usersList}
+				{html_options name="messages_contact_user" output=$usersList values=$usersList selected=$gBitSystem->getConfig('messages_contact_user') id="messages_contact_user"}
 			{else}
 				<input name="messages_contact_user"  value="{$gBitSystem->getConfig('messages_contact_user')}"  id="messages_contact_user" />
 			{/if}
