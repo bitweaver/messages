@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.15 2008/06/25 22:21:13 spiderr Exp $
+* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.16 2010/02/08 21:27:24 wjames5 Exp $
 * @package  messages
 * @subpackage functions
 */
@@ -11,7 +11,7 @@
 /**
  * required setup
  */
-require_once( '../bit_setup_inc.php' );
+require_once( '../kernel/setup_inc.php' );
 
 include_once( MESSAGES_PKG_PATH.'Messages.php' );
 
