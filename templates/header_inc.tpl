@@ -4,6 +4,6 @@
 		if( redirect == true ) {ldelim}
 			window.location="{$smarty.const.MESSAGES_PKG_URL}message_box.php";
 		{rdelim}
-		setCookie( 'messages_alert_sent', true );
+		BitBase.setCookie( 'messages_alert_sent', true );
 	</script>
 {/if}
