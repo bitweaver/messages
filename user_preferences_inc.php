@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/user_preferences_inc.php,v 1.5 2007/03/01 09:44:18 squareing Exp $
+* @version  $Header$
 * @package  messages
 * @subpackage functions
 */

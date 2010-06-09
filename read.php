@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/read.php,v 1.13 2010/02/08 21:27:24 wjames5 Exp $
+* @version  $Header$
 * @package  messages
 * @subpackage functions
 */

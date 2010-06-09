@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_messages/templates/admin_messages.tpl,v 1.3 2008/10/16 09:48:23 squareing Exp $ *}
+{* $Header$ *}
 {strip}
 {form legend="Anonymous Contact"}
 	<input type="hidden" name="page" value="{$page}" />

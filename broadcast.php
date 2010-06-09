@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author   
-* @version  $Header: /cvsroot/bitweaver/_bit_messages/broadcast.php,v 1.16 2010/02/08 21:27:24 wjames5 Exp $
+* @version  $Header$
 * @package  messages
 * @subpackage functions
 */

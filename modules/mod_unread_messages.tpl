@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_messages/modules/mod_unread_messages.tpl,v 1.4 2006/04/11 13:05:56 squareing Exp $ *}
+{* $Header$ *}
 {if $gBitUser->isRegistered() and $gBitSystem->isPackageActive( 'messages') and $gBitUser->hasPermission( 'p_messages_send' )}
 	{bitmodule title="$moduleTitle" name="messages_unread_messages"}
 		<a href="{$smarty.const.MESSAGES_PKG_URL}message_box.php">

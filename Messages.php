@@ -3,7 +3,7 @@
 * message package modules
 *
 * @author
-* @version  $Revision: 1.9 $
+* @version  $Revision$
 * @package  messages
 */
 
