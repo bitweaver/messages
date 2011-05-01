@@ -6,6 +6,7 @@ $tables = array(
 	msg_id I4 AUTO PRIMARY,
 	to_user_id I4 NOTNULL,
 	from_user_id I4 NOTNULL,
+    content_id I4,
 	msg_to X,
 	msg_cc X,
 	msg_bcc X,
