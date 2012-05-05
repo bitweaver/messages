@@ -14,7 +14,7 @@
  */
 class Messages extends BitBase {
 	function Messages() {
-		BitBase::BitBase();
+		parent::__construct();
 	}
 
 	/**
