@@ -13,9 +13,6 @@
  * @package  messages
  */
 class Messages extends BitBase {
-	function Messages() {
-		parent::__construct();
-	}
 
 	/**
 	 * postMessage 
