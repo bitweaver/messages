@@ -15,38 +15,36 @@
 		{assign var=read_id value=$msg_id}
 	{/if}
 	<div class="body">
-		<div class="navbar">
-			<ul>
-				{if $msg.is_flagged eq 'y'}
-					<li>{biticon ipackage="icons" iname="mail-mark-important" iexplain=Flagged} {smartlink ititle="Unflag Message" offset=$smarty.request.offset act=is_flagged actval=n msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
-				{else}
-					<li>{smartlink ititle="Flag Message" offset=$smarty.request.offset act=is_flagged actval=y msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
-				{/if}
-				<li>{smartlink ititle="Delete" msg_id=$read_id offset=$smarty.request.offset msgdel=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
-				{if $prev}<li>{smartlink ianchor=top ititle="Previous message" ibiticon="icons/go-previous" sort_mode=$smarty.request.sort_mode msg_id=$prev find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
-				{if $next}<li>{smartlink ianchor=top ititle="Next message" ibiticon="icons/go-next" sort_mode=$smarty.request.sort_mode msg_id=$next find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
-			</ul>
-		</div>
+		<ul class="inline navbar">
+			{if $msg.is_flagged eq 'y'}
+				<li>{biticon ipackage="icons" iname="mail-mark-important" iexplain=Flagged} {smartlink ititle="Unflag Message" offset=$smarty.request.offset act=is_flagged actval=n msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
+			{else}
+				<li>{smartlink ititle="Flag Message" offset=$smarty.request.offset act=is_flagged actval=y msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
+			{/if}
+			<li>{smartlink ititle="Delete" msg_id=$read_id offset=$smarty.request.offset msgdel=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
+			{if $prev}<li>{smartlink ianchor=top ititle="Previous message" ibiticon="icons/go-previous" sort_mode=$smarty.request.sort_mode msg_id=$prev find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
+			{if $next}<li>{smartlink ianchor=top ititle="Next message" ibiticon="icons/go-next" sort_mode=$smarty.request.sort_mode msg_id=$next find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
+		</ul>
 
 		{if $legend}
 			{$legend}
 		{else}
 			{form legend="Message" ipackage=messages ifile='compose.php'}
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Date"}
 					{forminput}
 						{$msg.msg_date|bit_long_datetime}
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="From"}
 					{forminput}
 						{displayname user_id=$msg.from_user_id}
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="To"}
 					{forminput}
 						{$msg.msg_to|default:"&nbsp;"}
@@ -54,7 +52,7 @@
 				</div>
 
 				{if $msg.msg_cc}
-					<div class="row">
+					<div class="control-group">
 						{formlabel label="Carbon Copy"}
 						{forminput}
 							{$msg.msg_cc}
@@ -62,14 +60,14 @@
 					</div>
 				{/if}
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Subject"}
 					{forminput}
 						{$msg.subject}
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{forminput class="message"}
 						{$msg.parsed}
 					{/forminput}
@@ -94,7 +92,7 @@
 					<input type="hidden" name="msg_id" value="{$msg_id}" />
 				{/if}
 
-				<div class="row submit">
+				<div class="control-group submit">
 					<input type="submit" name="action[reply]" value="{tr}Reply{/tr}" />&nbsp;
 					<input type="submit" name="action[replyall]" value="{tr}Reply All{/tr}" />
 				</div>

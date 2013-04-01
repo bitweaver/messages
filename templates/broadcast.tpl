@@ -11,7 +11,7 @@
 
 		{if !$feedback}
 			{form legend="Broadcast message"}
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Group" for="broadcast-group"}
 					{forminput}
 						<select name="group_id" id="broadcast-group">
@@ -25,7 +25,7 @@
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Priority" for="broadcast-priority"}
 					{forminput}
 						<select name="priority" id="broadcast-priority">
@@ -39,7 +39,7 @@
 					{/forminput}
 				</div>
 
-				<div class="row">
+				<div class="control-group">
 					{formlabel label="Subject" for="broadcast-subject"}
 					{forminput}
 						<input type="text" name="subject" id="broadcast-subject" value="{$subject|escape}" size="50" maxlength="255" />

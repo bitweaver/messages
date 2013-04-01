@@ -3,7 +3,7 @@
 {form legend="Anonymous Contact"}
 	<input type="hidden" name="page" value="{$page}" />
 
-	<div class="row">
+	<div class="control-group">
 		{formlabel label="Contact Us" for="messages_site_contact"}
 		{forminput}
 			{html_checkboxes name="messages_site_contact" values="y" checked=$gBitSystem->getConfig('messages_site_contact') labels=false id="messages_site_contact"}
@@ -11,7 +11,7 @@
 		{/forminput}
 	</div>
 
-	<div class="row">
+	<div class="control-group">
 		{formlabel label="Contact user" for="messages_contact_user"}
 		{forminput}
 			{if $usersList}
@@ -23,7 +23,7 @@
 		{/forminput}
 	</div>
 
-	<div class="row submit">
+	<div class="control-group submit">
 		<input type="submit" name="anonymous_settings" value="{tr}Change preferences{/tr}" />
 	</div>
 {/form}
