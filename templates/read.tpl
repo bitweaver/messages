@@ -22,7 +22,7 @@
 				<li>{smartlink ititle="Flag Message" offset=$smarty.request.offset act=is_flagged actval=y msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
 			{/if}
 			<li>{smartlink ititle="Delete" msg_id=$read_id offset=$smarty.request.offset msgdel=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
-			{if $prev}<li>{smartlink ianchor=top ititle="Previous message" ibiticon="icons/go-previous" sort_mode=$smarty.request.sort_mode msg_id=$prev find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
+			{if $prev}<li>{smartlink ianchor=top ititle="Previous message" booticon="icon-arrow-left" sort_mode=$smarty.request.sort_mode msg_id=$prev find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
 			{if $next}<li>{smartlink ianchor=top ititle="Next message" ibiticon="icons/go-next" sort_mode=$smarty.request.sort_mode msg_id=$next find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
 		</ul>
 
