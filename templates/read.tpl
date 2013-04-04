@@ -93,8 +93,8 @@
 				{/if}
 
 				<div class="control-group submit">
-					<input type="submit" name="action[reply]" value="{tr}Reply{/tr}" />&nbsp;
-					<input type="submit" name="action[replyall]" value="{tr}Reply All{/tr}" />
+					<input type="submit" class="btn" name="action[reply]" value="{tr}Reply{/tr}" />&nbsp;
+					<input type="submit" class="btn" name="action[replyall]" value="{tr}Reply All{/tr}" />
 				</div>
 			{/form}
 		{/if}

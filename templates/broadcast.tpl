@@ -49,7 +49,7 @@
 
 				{textarea noformat=1 id="message_body" name="body}{$body}{/textarea}
 				<div class="submit">
-					<input type="submit" name="send" value="{tr}Send message{/tr}" />
+					<input type="submit" class="btn" name="send" value="{tr}Send message{/tr}" />
 				</div>
 			{/form}
 		{/if}

@@ -24,7 +24,7 @@
 	</div>
 
 	<div class="control-group submit">
-		<input type="submit" name="anonymous_settings" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn" name="anonymous_settings" value="{tr}Change preferences{/tr}" />
 	</div>
 {/form}
 {/strip}

@@ -58,7 +58,7 @@
 	</div>
 
 	<div class="control-group submit">
-		<input type="submit" name="messprefs" value="{tr}Change preferences{/tr}" />
+		<input type="submit" class="btn" name="messprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 {/form}
 {/strip}

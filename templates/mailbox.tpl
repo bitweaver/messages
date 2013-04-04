@@ -49,7 +49,7 @@
 
 			{if $items}
 				{tr}Checked items:{/tr}<br />
-				<input type="submit" name="delete" value="{tr}Delete{/tr}" />
+				<input type="submit" class="btn" name="delete" value="{tr}Delete{/tr}" />
 				&nbsp;{tr}or{/tr}&nbsp;
 				<select name="action">
 					<option value="is_read_n">{tr}Mark as unread{/tr}</option>
@@ -57,7 +57,7 @@
 					<option value="is_flagged_n">{tr}Unflag{/tr}</option>
 					<option value="is_flagged_y">{tr}Flag{/tr}</option>
 				</select>
-				<input type="submit" name="mark" value="{tr}Mark{/tr}" />
+				<input type="submit" class="btn" name="mark" value="{tr}Mark{/tr}" />
 			{/if}
 		{/form}
 
@@ -100,7 +100,7 @@
 			</div>
 
 			<div class="control-group submit">
-				<input type="submit" name="filter" value="{tr}Filter{/tr}" />
+				<input type="submit" class="btn" name="filter" value="{tr}Filter{/tr}" />
 			</div>
 		{/form}
 
