@@ -47,7 +47,7 @@
 					{/forminput}
 				</div>
 
-				{textarea noformat=1 id="message_body" name="body}{$body}{/textarea}
+				{textarea noformat=1 id="message_body" name="body" edit=$body}
 				<div class="submit">
 					<input type="submit" class="btn" name="send" value="{tr}Send message{/tr}" />
 				</div>

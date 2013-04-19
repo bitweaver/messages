@@ -32,7 +32,7 @@
 				{/forminput}
 			</div>
 
-			{textarea noformat=1 id="message_body" name="body}{/textarea}
+			{textarea noformat=1 id="message_body" name="body"}
 			<div class="control-group submit">
 				<input type="submit" class="btn" name="send" value="{tr}Send Message{/tr}" />
 			</div>
