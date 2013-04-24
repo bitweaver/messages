@@ -27,19 +27,17 @@
 	</div>
 
 	<div class="control-group">
-		{formlabel label="Allow messages from other users" for="messages_allow_messages"}
-		{forminput}
-			<input type="checkbox" name="messages_allow_messages" id="messages_allow_messages" {if $userPrefs.messages_allow_messages eq 'y'}checked="checked"{/if} />
+		<label class="checkbox">
+			<input type="checkbox" name="messages_allow_messages" id="messages_allow_messages" {if $userPrefs.messages_allow_messages eq 'y'}checked="checked"{/if} />Allow messages from other users
 			{formhelp note=""}
-		{/forminput}
+		</label>
 	</div>
 
 	<div class="control-group">
-		{formlabel label="Message Alert" for="messages_alert"}
-		{forminput}
-			<input type="checkbox" name="messages_alert" id="messages_alert" {if $userPrefs.messages_alert eq 'y'}checked="checked"{/if} />
+		<label class="checkbox">
+			<input type="checkbox" name="messages_alert" id="messages_alert" {if $userPrefs.messages_alert eq 'y'}checked="checked"{/if} />Message Alert
 			{formhelp note="Whenever you have new messages, a popup will apear and take you directly to your message box."}
-		{/forminput}
+		</label>
 	</div>
 
 	<div class="control-group">
