@@ -60,7 +60,7 @@
 				</div>
 				{textarea noformat=1 id="message_body" name="body" edit=$body}
 				<div class="control-group submit">
-					<input type="submit" class="btn" name="send" value="{tr}Send Message{/tr}" />
+					<input type="submit" class="btn btn-default" name="send" value="{tr}Send Message{/tr}" />
 				</div>
 			{/form}
 		{/if}
