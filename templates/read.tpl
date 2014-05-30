@@ -15,7 +15,7 @@
 		{assign var=read_id value=$msg_id}
 	{/if}
 	<div class="body">
-		<ul class="inline navbar">
+		<ul class="list-inline navbar">
 			{if $msg.is_flagged eq 'y'}
 				<li>{biticon ipackage="icons" iname="mail-mark-important" iexplain=Flagged} {smartlink ititle="Unflag Message" offset=$smarty.request.offset act=is_flagged actval=n msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
 			{else}
