@@ -10,7 +10,7 @@
 		{form legend="Send us a message"}
 			<input type="hidden" name="to" value="{$gBitSystem->getConfig('messages_contact_user')|escape}" />
 
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Priority" for="priority"}
 				{forminput}
 					<select name="priority" id="priority">
@@ -24,7 +24,7 @@
 				{/forminput}
 			</div>
 
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Subject" for="subject"}
 				{forminput}
 					<input type="text" name="subject" id="subject" size="50" maxlength="255" />
@@ -33,7 +33,7 @@
 			</div>
 
 			{textarea noformat=1 id="message_body" name="body"}
-			<div class="control-group submit">
+			<div class="form-group submit">
 				<input type="submit" class="btn btn-default" name="send" value="{tr}Send Message{/tr}" />
 			</div>
 		{/form}

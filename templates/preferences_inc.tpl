@@ -1,7 +1,7 @@
 {strip}
 {form legend="User Messages"}
 	<input type="hidden" name="view_user" value="{$view_user}" />
-	<div class="control-group">
+	<div class="form-group">
 		{formlabel label="Personal Messages" for=""}
 		{forminput}
 			<a href="{$smarty.const.MESSAGES_PKG_URL}message_box.php">
@@ -10,7 +10,7 @@
 		{/forminput}
 	</div>
 
-	<div class="control-group">
+	<div class="form-group">
 		{formlabel label="Messages per page" for="messages_max_records"}
 		{forminput}
 			<select name="messages_max_records" id="messages_max_records">
@@ -26,21 +26,21 @@
 		{/forminput}
 	</div>
 
-	<div class="control-group">
+	<div class="form-group">
 		<label class="checkbox">
 			<input type="checkbox" name="messages_allow_messages" id="messages_allow_messages" {if $userPrefs.messages_allow_messages eq 'y'}checked="checked"{/if} />Allow messages from other users
 			{formhelp note=""}
 		</label>
 	</div>
 
-	<div class="control-group">
+	<div class="form-group">
 		<label class="checkbox">
 			<input type="checkbox" name="messages_alert" id="messages_alert" {if $userPrefs.messages_alert eq 'y'}checked="checked"{/if} />Message Alert
 			{formhelp note="Whenever you have new messages, a popup will apear and take you directly to your message box."}
 		</label>
 	</div>
 
-	<div class="control-group">
+	<div class="form-group">
 		{formlabel label="Send an email" for="messages_min_priority"}
 		{forminput}
 			<select name="messages_min_priority" id="messages_min_priority">
@@ -55,7 +55,7 @@
 		{/forminput}
 	</div>
 
-	<div class="control-group submit">
+	<div class="form-group submit">
 		<input type="submit" class="btn btn-default" name="messprefs" value="{tr}Change preferences{/tr}" />
 	</div>
 {/form}

@@ -17,7 +17,7 @@
 
 		{if !$feedback or $feedback.error}
 			{form legend="Compose Private Message"}
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="To" for="to"}
 					{forminput}
 						<input type="text" name="to" id="to" size="30" value="{$to}" />
@@ -25,21 +25,21 @@
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="Carbon Copy" for="cc"}
 					{forminput}
 						<input type="text" name="cc" id="cc" size="30" value="{$cc}" />
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="Blind Carbon Copy" for="bcc"}
 					{forminput}
 						<input type="text" name="bcc" id="bcc" size="30" value="{$bcc}" />
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="Priority" for="priority"}
 					{forminput}
 						<select name="priority" id="mess-prio">
@@ -52,14 +52,14 @@
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="Subject" for="subject"}
 					{forminput}
 						<input type="text" name="subject" id="subject" size="50" value="{$subject|escape}" />
 					{/forminput}
 				</div>
 				{textarea noformat=1 id="message_body" name="body" edit=$body}
-				<div class="control-group submit">
+				<div class="form-group submit">
 					<input type="submit" class="btn btn-default" name="send" value="{tr}Send Message{/tr}" />
 				</div>
 			{/form}

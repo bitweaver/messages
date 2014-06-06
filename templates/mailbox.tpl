@@ -62,7 +62,7 @@
 		{/form}
 
 		{form legend="Search your Personal Messages"}
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Messages" for="messages"}
 				{forminput}
 					<select name="flags" id="messages">
@@ -76,7 +76,7 @@
 				{/forminput}
 			</div>
 
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Priority" for="priority"}
 				{forminput}
 					<select name="priority" id="priority">
@@ -91,7 +91,7 @@
 				{/forminput}
 			</div>
 
-			<div class="control-group">
+			<div class="form-group">
 				{formlabel label="Containing" for="find"}
 				{forminput}
 					<input type="text" name="find" size="40" id="find" value="{$smarty.request.find|escape}" />
@@ -99,7 +99,7 @@
 				{/forminput}
 			</div>
 
-			<div class="control-group submit">
+			<div class="form-group submit">
 				<input type="submit" class="btn btn-default" name="filter" value="{tr}Filter{/tr}" />
 			</div>
 		{/form}

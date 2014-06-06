@@ -30,21 +30,21 @@
 			{$legend}
 		{else}
 			{form legend="Message" ipackage=messages ifile='compose.php'}
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="Date"}
 					{forminput}
 						{$msg.msg_date|bit_long_datetime}
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="From"}
 					{forminput}
 						{displayname user_id=$msg.from_user_id}
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="To"}
 					{forminput}
 						{$msg.msg_to|default:"&nbsp;"}
@@ -52,7 +52,7 @@
 				</div>
 
 				{if $msg.msg_cc}
-					<div class="control-group">
+					<div class="form-group">
 						{formlabel label="Carbon Copy"}
 						{forminput}
 							{$msg.msg_cc}
@@ -60,14 +60,14 @@
 					</div>
 				{/if}
 
-				<div class="control-group">
+				<div class="form-group">
 					{formlabel label="Subject"}
 					{forminput}
 						{$msg.subject}
 					{/forminput}
 				</div>
 
-				<div class="control-group">
+				<div class="form-group">
 					{forminput class="message"}
 						{$msg.parsed}
 					{/forminput}
@@ -92,7 +92,7 @@
 					<input type="hidden" name="msg_id" value="{$msg_id}" />
 				{/if}
 
-				<div class="control-group submit">
+				<div class="form-group submit">
 					<input type="submit" class="btn btn-default" name="action[reply]" value="{tr}Reply{/tr}" />&nbsp;
 					<input type="submit" class="btn btn-default" name="action[replyall]" value="{tr}Reply All{/tr}" />
 				</div>
