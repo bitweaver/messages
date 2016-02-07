@@ -70,7 +70,7 @@ $gBitSmarty->assign('priority', $_REQUEST['priority']);
 
 $gBitSmarty->assign('sent', 0);
 $feedback = array();
-$gBitSmarty->assign_by_ref( 'feedback', $feedback );
+$gBitSmarty->assignByRef( 'feedback', $feedback );
 
 if (isset($_REQUEST['replyto']) || isset($_REQUEST['replyallto'])) {
 	$flagHash = array(

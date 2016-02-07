@@ -11,6 +11,6 @@ if( $gBitSystem->isPackageActive( 'messages' ) && $gBitUser->hasPermission( 'p_m
 	require_once( MESSAGES_PKG_PATH.'Messages.php' );
 	$messages = new Messages();
 	$unreadMsgs = $messages->unreadMessages( $gBitUser->mUserId );
-	$gBitSmarty->assign_by_ref( 'unreadMsgs', $unreadMsgs );
+	$gBitSmarty->assignByRef( 'unreadMsgs', $unreadMsgs );
 }
 ?>
