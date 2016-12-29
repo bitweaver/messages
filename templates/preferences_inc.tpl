@@ -13,7 +13,7 @@
 	<div class="form-group">
 		{formlabel label="Messages per page" for="messages_max_records"}
 		{forminput}
-			<select name="messages_max_records" id="messages_max_records">
+			<select name="messages_max_records" id="messages_max_records" class="form-control">
 				<option value="2"  {if $userPrefs.messages_max_records eq 2}selected="selected"{/if}>{tr}2{/tr}</option>
 				<option value="5"  {if $userPrefs.messages_max_records eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
 				<option value="10" {if $userPrefs.messages_max_records eq 10}selected="selected"{/if}>{tr}10{/tr}</option>
@@ -43,7 +43,7 @@
 	<div class="form-group">
 		{formlabel label="Send an email" for="messages_min_priority"}
 		{forminput}
-			<select name="messages_min_priority" id="messages_min_priority">
+			<select name="messages_min_priority" id="messages_min_priority" class="form-control">
 				<option value="0">{tr}Never send message{/tr}</option>
 				<option value="1" {if $userPrefs.messages_min_priority eq 1}selected="selected"{/if}>{tr}Always send email{/tr}</option>
 				<option value="2" {if $userPrefs.messages_min_priority eq 2}selected="selected"{/if}>{tr}At least priority{/tr}: 2</option>
