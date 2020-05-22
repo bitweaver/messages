@@ -47,7 +47,7 @@ if (isset($_REQUEST["mark"]) && isset($_REQUEST["msg"])) {
 // Delete messages if the delete button was pressed
 if( !empty( $_REQUEST["delete"] ) && !empty( $_REQUEST["msg"] ) ) {
 	foreach( array_keys( $_REQUEST["msg"] ) as $msg_id  ) {
-		$messages->expunge( $gBitUser->mUserId, $msg_id  );
+		$messages->expungeMessage( $gBitUser->mUserId, $msg_id  );
 	}
 }
 

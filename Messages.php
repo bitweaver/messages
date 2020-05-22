@@ -313,7 +313,7 @@ class Messages extends BitBase {
 		}
 	}
 
-	function expunge($pUserId, $msg_id) {
+	function expungeMessage($pUserId, $msg_id) {
 		if (!$msg_id)
 			return false;
 		if ($this->isSystemMessage($msg_id)) {

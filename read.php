@@ -28,7 +28,7 @@ $gBitSystem->verifyPermission( 'p_messages_send' );
 $messages = new Messages();
 
 if( isset( $_REQUEST["msgdel"] ) ) {
-	$messages->expunge( $gBitUser->mUserId, $_REQUEST['msgdel'] );
+	$messages->expungeMessage( $gBitUser->mUserId, $_REQUEST['msgdel'] );
 }
 
 if( !empty( $_REQUEST['act'] ) ) {
