@@ -382,9 +382,8 @@ class Messages extends BitBase {
 			$res['is_broadcast_message'] = TRUE;
 		}
 
-		$content = new LibertyContent();
 		global $gBitSystem;
-		$res['parsed'] = $content->parseData( $res['body'], $gBitSystem->getConfig( 'default_format'));
+		$res['parsed'] = LibertyContent::parseDataHash( $res['body'], $gBitSystem->getConfig( 'default_format') );
 
 		if (empty($res['subject']))
 			$res['subject'] = tra('NONE');
@@ -448,4 +447,3 @@ class Messages extends BitBase {
 	}
 
 }
-?>
