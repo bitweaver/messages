@@ -16,7 +16,7 @@
  * required setup
  */
 require_once( '../kernel/includes/setup_inc.php' );
-require_once( MESSAGES_PKG_PATH.'Messages.php' );
+require_once( MESSAGES_PKG_CLASS_PATH.'Messages.php' );
 
 if( !$gBitUser->isRegistered() ) {
 	$gBitSystem->fatalError( tra( "You are not logged in" ) );

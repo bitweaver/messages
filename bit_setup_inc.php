@@ -8,7 +8,7 @@ $registerHash = array(
 $gBitSystem->registerPackage( $registerHash );
 
 if( $gBitSystem->isPackageActive( 'messages' ) && $gBitUser->hasPermission( 'p_messages_send' ) ) {
-	require_once( MESSAGES_PKG_PATH.'Messages.php' );
+	require_once( MESSAGES_PKG_CLASS_PATH.'Messages.php' );
 	$messages = new Messages();
 	$unreadMsgs = $messages->unreadMessages( $gBitUser->mUserId );
 	$gBitSmarty->assignByRef( 'unreadMsgs', $unreadMsgs );

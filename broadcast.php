@@ -13,7 +13,7 @@
  */
 require_once( '../kernel/includes/setup_inc.php' );
 
-include_once( MESSAGES_PKG_PATH.'Messages.php' );
+include_once( MESSAGES_PKG_CLASS_PATH.'Messages.php' );
 
 if( !$gBitUser->isRegistered() ) {
 	$gBitSmarty->fatalError( tra( "You are not logged in" ) );
