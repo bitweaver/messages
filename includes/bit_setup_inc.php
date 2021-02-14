@@ -3,7 +3,7 @@ global $gBitSystem, $gBitUser, $gBitSmarty;
 
 $registerHash = array(
 	'package_name' => 'messages',
-	'package_path' => dirname( __FILE__ ).'/',
+	'package_path' => dirname( dirname( __FILE__ ) ).'/',
 );
 $gBitSystem->registerPackage( $registerHash );
 
