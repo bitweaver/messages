@@ -17,13 +17,13 @@
 	<div class="body">
 		<ul class="list-inline navbar">
 			{if $msg.is_flagged eq 'y'}
-				<li>{biticon ipackage="icons" iname="mail-mark-important" iexplain=Flagged} {smartlink ititle="Unflag Message" offset=$smarty.request.offset act=is_flagged actval=n msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
+				<li>{booticon iname="fa-enevelope-dot" iexplain=Flagged} {smartlink ititle="Unflag Message" offset=$smarty.request.offset act=is_flagged actval=n msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
 			{else}
 				<li>{smartlink ititle="Flag Message" offset=$smarty.request.offset act=is_flagged actval=y msg_id=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
 			{/if}
 			<li>{smartlink ititle="Delete" msg_id=$read_id offset=$smarty.request.offset msgdel=$msg_id sort_mode=$smarty.request.sort_mode find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>
-			{if $prev}<li>{smartlink ianchor=top ititle="Previous message" booticon="icon-arrow-left" sort_mode=$smarty.request.sort_mode msg_id=$prev find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
-			{if $next}<li>{smartlink ianchor=top ititle="Next message" ibiticon="icons/go-next" sort_mode=$smarty.request.sort_mode msg_id=$next find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
+			{if $prev}<li>{smartlink ianchor=top ititle="Previous message" booticon="fa-arrow-left" sort_mode=$smarty.request.sort_mode msg_id=$prev find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
+			{if $next}<li>{smartlink ianchor=top ititle="Next message" booticon="fa-arrow-right" sort_mode=$smarty.request.sort_mode msg_id=$next find=$smarty.request.find flag=$smarty.request.flag priority=$priority flagval=$smarty.request.flagval}</li>{/if}
 		</ul>
 
 		{if $legend}

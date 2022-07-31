@@ -16,7 +16,7 @@
 			<input type="hidden" name="flagval" value="{$smarty.request.flagval|escape}" />
 			<input type="hidden" name="priority" value="{$smarty.request.priority|escape}" />
 
-			<a href="{$smarty.const.MESSAGES_PKG_URL}compose.php">{booticon iname="icon-envelope"  ipackage="icons"  iexplain="Compose Message" iforce=icon_text}</a>
+			<a href="{$smarty.const.MESSAGES_PKG_URL}compose.php">{booticon iname="fa-envelope" iexplain="Compose Message"_text}</a>
 
 			{assign var=displayName value=$gBitSystem->getConfig("users_display_name","real_name") }
 			<table class="table data">
